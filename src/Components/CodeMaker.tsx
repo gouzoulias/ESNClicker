@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { KeyboardEventHandler, useCallback, useContext, useEffect, useState } from 'react';
 import sourceCode from '../assets/code.txt';
 import { GameContext, gameContext } from '../Game/GameContext.ts';
@@ -21,16 +22,20 @@ export const CodeMaker = () => {
   }, []);
 
   const onKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = useCallback(() => {
-    const codeToAdd: string = code.substring(iCode, iCode + 2);
+    const codeToAdd: string = code.substring(iCode, iCode + game.manualProductivity);
     if (codeToAdd.includes('\n')) {
-      game.createManualLine();
+      game.createManualLine(
+        _(codeToAdd)
+          .filter((codeChar) => codeChar === '\n')
+          .size(),
+      );
     }
     setTextAreaValue((prevState) => {
       if (iCode === 0) return '' + codeToAdd;
       return prevState + codeToAdd;
     });
     setICode((prevState) => {
-      let newState: number = prevState + 2;
+      let newState: number = prevState + game.manualProductivity;
       if (newState > code.length) newState = 0;
       return newState;
     });

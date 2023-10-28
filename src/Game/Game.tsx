@@ -10,6 +10,9 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const [boughtUpgrades, setBoughtUpgrades] = useState(gameContextDefaultValues.boughtUpgrades);
   const [activatedUpgrades, setActivatedUpgrades] = useState(gameContextDefaultValues.activatedUpgrades);
 
+  const [manualProductivity, setManualProductivity] = useState(gameContextDefaultValues.manualProductivity);
+  const [codePrice, setCodePrice] = useState(gameContextDefaultValues.codePrice);
+
   const [devTeam, setDevTeam] = useState(gameContextDefaultValues.devTeam);
   const [devProductivity, setDevProductivity] = useState(gameContextDefaultValues.devProductivity);
 
@@ -56,6 +59,11 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     }));
   }, []);
 
+  const sellCode = useCallback(() => {
+    setMoney((prevState) => prevState + codeLines * codePrice);
+    setCodeLines(0);
+  }, [codeLines, codePrice]);
+
   return (
     <gameContext.Provider
       value={{
@@ -71,13 +79,19 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         poTeam,
         poProductivity,
 
+        manualProductivity,
+        codePrice,
+
         unlockedAux,
         auxTeam,
 
         createManualLine,
+
         buyDev,
         buyPO,
         buyAux,
+
+        sellCode,
       }}
     >
       {children}

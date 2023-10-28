@@ -61,6 +61,9 @@ export type GameContext = {
   boughtUpgrades: Record<Upgrades, boolean>;
   activatedUpgrades: Record<Upgrades, { devs: Record<Dev, boolean>; pos: Record<PO, boolean> }>;
 
+  manualProductivity: number;
+  codePrice: number;
+
   devTeam: Record<Dev, number>;
   devProductivity: Record<Dev, number>;
 
@@ -70,10 +73,11 @@ export type GameContext = {
   unlockedAux: Record<Aux, boolean>;
   auxTeam: Record<Aux, number>;
 
-  createManualLine: () => void;
+  createManualLine: (numberOfLinesToCreate: number) => void;
   buyDev: (dev: Dev) => void;
   buyPO: (po: PO) => void;
   buyAux: (aux: Aux) => void;
+  sellCode: () => void;
 };
 
 export const gameContextDefaultValues: GameContext = {
@@ -89,6 +93,9 @@ export const gameContextDefaultValues: GameContext = {
   devTeam: initFromEnum(Dev, 0),
   devProductivity: initFromEnum(Dev, (dev) => BaseLinePerDev ** DevLvl[dev]),
 
+  manualProductivity: 1,
+  codePrice: 1,
+
   poTeam: initFromEnum(PO, 0),
   poProductivity: initFromEnum(PO, (po) => BaseLinePerPo ** POLvl[po]),
 
@@ -99,6 +106,7 @@ export const gameContextDefaultValues: GameContext = {
   buyDev: () => {},
   buyPO: () => {},
   buyAux: () => {},
+  sellCode: () => {},
 };
 
 console.log(gameContextDefaultValues);
