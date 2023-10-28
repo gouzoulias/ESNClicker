@@ -21,8 +21,11 @@ export const CodeMaker = () => {
   }, []);
 
   const onKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = useCallback(() => {
+    const codeToAdd: string = code.substring(iCode, iCode + 2);
+    if (codeToAdd.includes('\n')) {
+      game.createManualLine();
+    }
     setTextAreaValue((prevState) => {
-      const codeToAdd: string = code.substring(iCode, iCode + 2);
       if (iCode === 0) return '' + codeToAdd;
       return prevState + codeToAdd;
     });
@@ -31,14 +34,11 @@ export const CodeMaker = () => {
       if (newState > code.length) newState = 0;
       return newState;
     });
-  }, [code, iCode]);
+  }, [code, game, iCode]);
 
   return (
     <>
-      <textarea disabled={loading} value={textAreaValue} onKeyDown={onKeyDown} onChange={() => {}}></textarea>
-      <button type={'button'} onClick={game.createManualLine}>
-        Coder !
-      </button>
+      <textarea disabled={loading} value={textAreaValue} onKeyDown={onKeyDown} onChange={() => {}} rows={30} cols={150}></textarea>
     </>
   );
 };
