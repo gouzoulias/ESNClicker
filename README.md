@@ -1,27 +1,40 @@
-# React + TypeScript + Vite
+ESN Clicker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Idle Game "à la cookie clicker"
 
-Currently, two official plugins are available:
+- On produit des lignes de code en tapant sur le clavier plutôt qu'en cliquant
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Il faut vendre les lignes de code pour faire de l'argent
 
-## Expanding the ESLint configuration
+- On peut acheter des devs de différents niveaux pour produire plus vite du code
+- On peut acheter des ProductOwner pour vendre les lignes de code à des clients
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Idées : - Les gens travaillent sur un cycle Jour / Nuit de 5 minutes. Au début c'est 3 minutes / 5 ? Puis il y a des upgrades qui améliorent ce cycle.
+  Des gens commencent à la seconde 0 du cycle, d'autres à la seconde 120, comme ça on a une répartition gaussienne moyenne de la quantité de lignes de codes produites, avec une vitesse variable.
+  à tester, si le cycle est trop long, ça sera sur une minute avec des journées de 30 secondes au début.
 
-- Configure the top-level `parserOptions` property like this:
+- Différents niveaux de dev :
+    - Stagiaire
+    - Alternant
+    - Dev FullStackJunior
+    - Intégrateur
+    - Dev FullStackSenior
+    - Lead Dev
+    - Architecte
+    - CTO
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+- Différents niveaux de ProductOwner :
+    - Customer Success Manager
+    - ProductOwner
+    - ProductManagerOfficer
+    - Chef de projet
+    - Marketing
+    - Commercial
+    - Directeur Commercial
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Rôles parallèles
+
+- Dev Ops (augmente la productivité des devs mais a une chance de bloquer la production pendant 1 jour)
+- Chief Happiness Officer (augmente le taux de vente des ProductOwner et le taux de dev mais réduit le temps de travail)
+- Designer (augmente le prix des lignes)
+- Manager (augmente le temps de travail mais augmente aussi le taux de démission)
