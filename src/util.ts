@@ -8,8 +8,6 @@ export const initFromEnum = <A extends Enum, B extends object | number | boolean
 ): Record<A[keyof A], B> => {
   const enumObject: Record<A[keyof A], B> = {} as Record<A[keyof A], B>;
 
-  console.log('init ', enumType, ' with ', defaultValue);
-
   _.forEach(enumType, (value: A[keyof A]) => {
     if (typeof defaultValue === 'function') {
       enumObject[value] = defaultValue(value);

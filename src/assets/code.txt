@@ -1,3 +1,50 @@
+// util.ts
+
+import * as _ from 'lodash';
+
+type Enum = Record<string, number | string>;
+
+export const initFromEnum = <A extends Enum, B extends object | number | boolean | string>(
+  enumType: A,
+  defaultValue: B | ((val: A[keyof A]) => B),
+): Record<A[keyof A], B> => {
+  const enumObject: Record<A[keyof A], B> = {} as Record<A[keyof A], B>;
+
+  _.forEach(enumType, (value: A[keyof A]) => {
+    if (typeof defaultValue === 'function') {
+      enumObject[value] = defaultValue(value);
+    } else {
+      enumObject[value] = defaultValue;
+    }
+  });
+
+  return enumObject;
+};
+
+
+// useTick.ts
+
+import { useEffect, useRef } from 'react';
+
+export const useTick = (callback: () => void, deltaTimeMS: number) => {
+  const intervalRef = useRef<number>();
+  const callbackRef = useRef(callback);
+
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    intervalRef.current = window.setInterval(() => callbackRef.current(), deltaTimeMS);
+
+    return () => window.clearInterval(intervalRef.current);
+  }, [deltaTimeMS]);
+
+  return intervalRef;
+};
+
+// Game.tsx
+
 import * as _ from 'lodash';
 import React, { useCallback, useState } from 'react';
 import { useTick } from '../useTick.ts';
@@ -20,7 +67,6 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const [auxTeam, setAuxTeam] = useState(gameContextDefaultValues.auxTeam);
 
   const gameTick = useCallback(() => {
-    console.log('tick !');
     setCodeLines(
       (prevState) =>
         prevState +

@@ -34,10 +34,10 @@ Idle Game "à la cookie clicker"
 - Différents niveaux de dev :
     - Stagiaire
     - Alternant
-    - Dev FullStackJunior
     - Intégrateur
-    - Dev FullStackSenior
-    - Lead Dev
+    - FullStack Junior
+    - FullStack Senior
+    - Lead
     - Architecte
     - CTO
 

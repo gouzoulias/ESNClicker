@@ -20,7 +20,6 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const [auxTeam, setAuxTeam] = useState(gameContextDefaultValues.auxTeam);
 
   const gameTick = useCallback(() => {
-    console.log('tick !');
     setCodeLines(
       (prevState) =>
         prevState +
