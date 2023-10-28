@@ -15,9 +15,7 @@ export const CodeMaker = () => {
   useEffect(() => {
     fetch(sourceCode)
       .then((value) => value.text())
-      .then((value) => {
-        setCode(value);
-      })
+      .then(setCode)
       .finally(() => setLoading(false));
   }, []);
 
@@ -42,8 +40,8 @@ export const CodeMaker = () => {
   }, [code, game, iCode]);
 
   return (
-    <>
-      <textarea disabled={loading} value={textAreaValue} onKeyDown={onKeyDown} onChange={() => {}} rows={30} cols={150}></textarea>
-    </>
+    <div>
+      <textarea disabled={loading} value={textAreaValue} onKeyDown={onKeyDown} onChange={() => {}} rows={30} cols={150} placeholder={'Codez ici !'}></textarea>
+    </div>
   );
 };

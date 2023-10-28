@@ -46,7 +46,6 @@ Idle Game "à la cookie clicker"
     - ProductOwner
     - ProductManagerOfficer
     - Chef de projet
-    - Marketing
     - Commercial
     - Directeur Commercial
 
@@ -56,3 +55,17 @@ Rôles parallèles
 - Chief Happiness Officer (augmente le taux de vente des ProductOwner et le taux de dev mais réduit le temps de travail)
 - Designer (augmente le prix des lignes)
 - Manager (augmente le temps de travail mais augmente aussi le taux de démission)
+
+# Roadmap
+
+- [X] Ajouter une roadmap
+- [X] Ajouter des compteurs de lignes de code et d'argent
+- [X] Ajouter la génération manuelle de code
+- [ ] Ajouter le recrutement de developpeurs
+- [ ] Ajouter le recrutement de PO
+- [ ] Faire un peu d'UI
+- [ ] Ajouter des upgrades de génération manuelle
+- [ ] Implémenter le cycle jour/nuit des devs & PO
+- [ ] Ajouter des upgrades de génération automatique
+- [ ] Ajouter des rôles parallèles
+- [ ] Ajouter des upgrades de rôles parallèles

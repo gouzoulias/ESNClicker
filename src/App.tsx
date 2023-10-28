@@ -23,8 +23,8 @@ function App() {
       <GameDebugger />
       <LinesViewer />
       <MoneyViewer />
-      <CodeMaker />
       <CodeSeller />
+      <CodeMaker />
     </Game>
   );
 }
