@@ -1,5 +1,23 @@
 ESN Clicker
 
+# Installer le jeu
+
+Exectuer les lignes suivantes :
+
+```
+npm i
+```
+
+# Lancer le jeu
+
+Executer les lignes suivantes
+
+```
+npm run dev
+```
+
+# À Venir
+
 Idle Game "à la cookie clicker"
 
 - On produit des lignes de code en tapant sur le clavier plutôt qu'en cliquant
