@@ -63,6 +63,7 @@ export type GameContext = {
 
   manualProductivity: number;
   codePrice: number;
+  manualSellingForce: number;
 
   devTeam: Record<Dev, number>;
   devProductivity: Record<Dev, number>;
@@ -95,6 +96,7 @@ export const gameContextDefaultValues: GameContext = {
 
   manualProductivity: 1,
   codePrice: 1,
+  manualSellingForce: 1,
 
   poTeam: initFromEnum(PO, 0),
   poProductivity: initFromEnum(PO, (po) => BaseLinePerPo ** POLvl[po]),

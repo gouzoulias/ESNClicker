@@ -12,6 +12,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
 
   const [manualProductivity, setManualProductivity] = useState(gameContextDefaultValues.manualProductivity);
   const [codePrice, setCodePrice] = useState(gameContextDefaultValues.codePrice);
+  const [manualSellingForce, setManualSellingForce] = useState(gameContextDefaultValues.manualSellingForce);
 
   const [devTeam, setDevTeam] = useState(gameContextDefaultValues.devTeam);
   const [devProductivity, setDevProductivity] = useState(gameContextDefaultValues.devProductivity);
@@ -60,9 +61,12 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   }, []);
 
   const sellCode = useCallback(() => {
-    setMoney((prevState) => prevState + codeLines * codePrice);
-    setCodeLines(0);
-  }, [codeLines, codePrice]);
+    if (codeLines >= 0) {
+      const codeLinesToSell = Math.min(codeLines, manualSellingForce);
+      setMoney((prevState) => prevState + codeLinesToSell * codePrice);
+      setCodeLines((prevState) => prevState - codeLinesToSell);
+    }
+  }, [codeLines, codePrice, manualSellingForce]);
 
   return (
     <gameContext.Provider
@@ -81,6 +85,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
 
         manualProductivity,
         codePrice,
+        manualSellingForce,
 
         unlockedAux,
         auxTeam,
