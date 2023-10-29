@@ -7,15 +7,9 @@ export const DevShop = () => {
   const game = useContext(gameContext);
 
   const shouldShowDevBuyButton = useCallback(
-    (dev: Dev) => {
-      return game.totalCodeLinesAccumulated > DevInitialProductivity[dev] * 60n && game.totalMoneyAccumulated > DevInitialPrice[dev];
-    },
+    (dev: Dev) => game.totalCodeLinesAccumulated > DevInitialProductivity[dev] * 5 && game.totalMoneyAccumulated > DevInitialPrice[dev],
     [game.totalCodeLinesAccumulated, game.totalMoneyAccumulated],
   );
-
-  if (game.totalMoneyAccumulated < 20n) {
-    return null;
-  }
 
   return (
     <div>
@@ -24,7 +18,7 @@ export const DevShop = () => {
         (dev) =>
           shouldShowDevBuyButton(dev) && (
             <button onClick={() => game.buyDev(dev)}>
-              Engager un {dev} pour {game.devPrice[Dev.Stagiaire].toString()}
+              Engager un {dev} pour {game.devPrice[dev].toString()}
             </button>
           ),
       )}

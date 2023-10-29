@@ -3,5 +3,5 @@ import { GameContext, gameContext } from '../Game/GameContext.ts';
 
 export const LinesViewer = () => {
   const game: GameContext = useContext(gameContext);
-  return <div>Lignes de code : {game.codeLines.toString()}</div>;
+  return <div>Lignes de code : {game.codeLines}</div>;
 };

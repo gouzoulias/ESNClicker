@@ -1,6 +1,5 @@
 import * as _ from 'lodash';
 import React, { useCallback, useState } from 'react';
-import { BigIntMath } from '../Utils/BigInt.ts';
 import { useTick } from '../Utils/useTick.ts';
 import { Aux } from './Aux.ts';
 import { Dev } from './Dev.ts';
@@ -32,18 +31,18 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const [unlockedAux, setUnlockedAux] = useState(gameContextDefaultValues.unlockedAux);
   const [auxTeam, setAuxTeam] = useState(gameContextDefaultValues.auxTeam);
 
-  const addCodeLines = useCallback((nb: bigint) => {
+  const addCodeLines = useCallback((nb: number) => {
     setCodeLines((prevState) => prevState + nb);
     setTotalCodeLinesAccumulated((prevState) => prevState + nb);
   }, []);
 
-  const addMoney = useCallback((nb: bigint) => {
+  const addMoney = useCallback((nb: number) => {
     setMoney((prevState) => prevState + nb);
     setTotalMoneyAccumulated((prevState) => prevState + nb);
   }, []);
 
   const createManualLine = useCallback(() => {
-    addCodeLines(BigInt(manualProductivity));
+    addCodeLines(manualProductivity);
   }, [addCodeLines, manualProductivity]);
 
   const buyDev = useCallback(
@@ -56,20 +55,29 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         }));
         setDevPrice((prevState) => ({
           ...prevState,
-          // Will only works with bigDecimal if division is made in last
-          [dev]: (prevState[dev] * PriceIncreaseInPercent) / 100n,
+          [dev]: prevState[dev] * PriceIncreaseInPercent,
         }));
       }
     },
     [devPrice, money],
   );
 
-  const buyPO = useCallback((po: PO) => {
-    setPoTeam((prevState) => ({
-      ...prevState,
-      [po]: prevState[po] + 1,
-    }));
-  }, []);
+  const buyPO = useCallback(
+    (po: PO) => {
+      if (money > poPrice[po]) {
+        setMoney((prevState) => prevState - poPrice[po]);
+        setPoTeam((prevState) => ({
+          ...prevState,
+          [po]: prevState[po] + 1,
+        }));
+        setPoPrice((prevState) => ({
+          ...prevState,
+          [po]: prevState[po] * PriceIncreaseInPercent,
+        }));
+      }
+    },
+    [money, poPrice],
+  );
 
   const buyAux = useCallback((aux: Aux) => {
     setAuxTeam((prevState) => ({
@@ -80,8 +88,8 @@ export const Game = ({ children }: React.PropsWithChildren) => {
 
   const sellCode = useCallback(() => {
     if (codeLines >= 0) {
-      const codeLinesToSell = BigIntMath.min(codeLines, BigInt(manualSellingForce));
-      addMoney(codeLinesToSell * BigInt(codePrice));
+      const codeLinesToSell = Math.min(codeLines, manualSellingForce);
+      addMoney(codeLinesToSell * codePrice);
       setCodeLines((prevState) => prevState - codeLinesToSell);
     }
   }, [addMoney, codeLines, codePrice, manualSellingForce]);
@@ -89,8 +97,8 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const gameTick = useCallback(() => {
     addCodeLines(
       _.chain(devTeam)
-        .map<bigint>((numberOfDev, devType) => BigInt(numberOfDev) * devProductivity[devType as Dev])
-        .reduce((prev, curr) => prev + curr, 0n)
+        .map<number>((numberOfDev, devType) => numberOfDev * devProductivity[devType as Dev])
+        .reduce((prev, curr) => prev + curr, 0)
         .value(),
     );
   }, [addCodeLines, devProductivity, devTeam]);

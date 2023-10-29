@@ -5,14 +5,14 @@ import { Dev, DevInitialPrice, DevInitialProductivity } from './Dev.ts';
 import { PO, POInitialPrice, POInitialProductivity } from './POs.ts';
 import { Upgrades } from './Upgrades.ts';
 
-export const PriceIncreaseInPercent = 105n;
+export const PriceIncreaseInPercent = 1.05;
 
 export type GameContext = {
-  codeLines: bigint;
-  totalCodeLinesAccumulated: bigint;
+  codeLines: number;
+  totalCodeLinesAccumulated: number;
 
-  money: bigint;
-  totalMoneyAccumulated: bigint;
+  money: number;
+  totalMoneyAccumulated: number;
 
   boughtUpgrades: Record<Upgrades, boolean>;
   activatedUpgrades: Record<Upgrades, { devs: Record<Dev, boolean>; pos: Record<PO, boolean> }>;
@@ -22,12 +22,12 @@ export type GameContext = {
   manualSellingForce: number;
 
   devTeam: Record<Dev, number>;
-  devPrice: Record<Dev, bigint>;
-  devProductivity: Record<Dev, bigint>;
+  devPrice: Record<Dev, number>;
+  devProductivity: Record<Dev, number>;
 
   poTeam: Record<PO, number>;
-  poPrice: Record<PO, bigint>;
-  poProductivity: Record<PO, bigint>;
+  poPrice: Record<PO, number>;
+  poProductivity: Record<PO, number>;
 
   unlockedAux: Record<Aux, boolean>;
   auxTeam: Record<Aux, number>;
@@ -40,11 +40,11 @@ export type GameContext = {
 };
 
 export const gameContextDefaultValues: GameContext = {
-  codeLines: 0n,
-  totalCodeLinesAccumulated: 0n,
+  codeLines: 0,
+  totalCodeLinesAccumulated: 0,
 
-  money: 0n,
-  totalMoneyAccumulated: 0n,
+  money: 0,
+  totalMoneyAccumulated: 0,
 
   boughtUpgrades: initFromEnum(Upgrades, false),
   activatedUpgrades: initFromEnum(Upgrades, {

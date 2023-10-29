@@ -20,24 +20,24 @@ export const POOrder: PO[] = [
   PO.DirecteurCommercial,
 ];
 
-export const POInitialPrice: Record<PO, bigint> = {
-  [PO.CustomerSuccessManager]: 100n,
-  [PO.ProductOwner]: 12_000n,
-  [PO.PO1]: 1_400_000n,
-  [PO.ChefDeProjet]: 330_000_000n,
-  [PO.Commercial]: 75_000_000_000n,
-  [PO.ProductManagerOfficer]: 14_000_000_000_000n,
-  [PO.PO2]: 2_100_000_000_000_000n,
-  [PO.DirecteurCommercial]: 310_000_000_000_000_000n,
+export const POInitialPrice: Record<PO, number> = {
+  [PO.CustomerSuccessManager]: 10 ** 2,
+  [PO.ProductOwner]: 1.2 * 10 ** 4,
+  [PO.PO1]: 1.4 * 10 ** 6,
+  [PO.ChefDeProjet]: 3.3 * 10 ** 8,
+  [PO.Commercial]: 7.5 * 10 ** 10,
+  [PO.ProductManagerOfficer]: 1.4 * 10 ** 13,
+  [PO.PO2]: 2.1 * 10 ** 15,
+  [PO.DirecteurCommercial]: 3.1 * 10 ** 17,
 };
 
-export const POInitialProductivity: Record<PO, bigint> = {
-  [PO.CustomerSuccessManager]: 8n,
-  [PO.ProductOwner]: 260n,
-  [PO.PO1]: 7_800n,
-  [PO.ChefDeProjet]: 260_000n,
-  [PO.Commercial]: 10_000_000n,
-  [PO.ProductManagerOfficer]: 430_000_000n,
-  [PO.PO2]: 21_000_000_000n,
-  [PO.DirecteurCommercial]: 1_100_000_000_000n,
+export const POInitialProductivity: Record<PO, number> = {
+  [PO.CustomerSuccessManager]: 8,
+  [PO.ProductOwner]: 2.6 * 10 ** 2,
+  [PO.PO1]: 7.8 * 10 ** 3,
+  [PO.ChefDeProjet]: 2.6 * 10 ** 5,
+  [PO.Commercial]: 10 ** 7,
+  [PO.ProductManagerOfficer]: 4.3 * 10 ** 8,
+  [PO.PO2]: 2.1 * 10 ** 10,
+  [PO.DirecteurCommercial]: 1.1 * 10 ** 12,
 };
