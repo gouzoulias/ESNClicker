@@ -86,24 +86,36 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     }));
   }, []);
 
-  const sellCode = useCallback(() => {
-    if (codeLines >= 0) {
-      const codeLinesToSell = Math.min(codeLines, manualSellingForce);
-      addMoney(codeLinesToSell * codePrice);
-      setCodeLines((prevState) => prevState - codeLinesToSell);
-    }
-  }, [addMoney, codeLines, codePrice, manualSellingForce]);
+  const sellCode = useCallback(
+    (nbLines: number) => {
+      setCodeLines((currentCodeLines) => {
+        const codeLinesToSell = Math.min(currentCodeLines, nbLines);
+        addMoney(codeLinesToSell * codePrice);
+        return currentCodeLines - codeLinesToSell;
+      });
+    },
+    [addMoney, codePrice],
+  );
 
-  const gameTick = useCallback(() => {
-    addCodeLines(
-      _.chain(devTeam)
-        .map<number>((numberOfDev, devType) => numberOfDev * devProductivity[devType as Dev])
-        .reduce((prev, curr) => prev + curr, 0)
-        .value(),
-    );
-  }, [addCodeLines, devProductivity, devTeam]);
+  const gameTick = useCallback(
+    (deltaTimeInSecond: number) => {
+      addCodeLines(
+        _.chain(devTeam)
+          .map<number>((numberOfDev, dev) => numberOfDev * devProductivity[dev as Dev] * deltaTimeInSecond)
+          .reduce((prev, curr) => prev + curr, 0)
+          .value(),
+      );
+      sellCode(
+        _.chain(poTeam)
+          .map((numberOfPO, po) => numberOfPO * poProductivity[po as PO] * deltaTimeInSecond)
+          .sum()
+          .value(),
+      );
+    },
+    [addCodeLines, devProductivity, devTeam, poProductivity, poTeam, sellCode],
+  );
 
-  useTick(gameTick, 1000);
+  useTick(gameTick, 100);
 
   return (
     <gameContext.Provider

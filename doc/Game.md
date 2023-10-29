@@ -67,3 +67,4 @@ En voici la liste :
 - Salle de conférence : Augmente le taux de vente de tous les ProductOwner de 10%
 - Salle de réunion : Augmente le taux de vente de tous les ProductOwner de 20%
 - Salle de formation : Augmente le taux de vente de tous les ProductOwner de 30%
+- Bureaux individuels : Augmente la productivité des Customer Success Manager, des Chefs de projets, des Commerciaux et des Directeurs Commerciaux de 100%

@@ -5,6 +5,7 @@ import { CodeSeller } from './Components/CodeSeller.tsx';
 import { DevShop } from './Components/DevShop.tsx';
 import { LinesViewer } from './Components/LinesViewer.tsx';
 import { MoneyViewer } from './Components/MoneyViewer.tsx';
+import { POShop } from './Components/POShop.tsx';
 import { Game } from './Game/Game.tsx';
 import { GameContext, gameContext } from './Game/GameContext.ts';
 
@@ -27,6 +28,7 @@ function App() {
       <CodeSeller />
       <CodeMaker />
       <DevShop />
+      <POShop />
     </Game>
   );
 }

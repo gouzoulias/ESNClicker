@@ -13,13 +13,19 @@ export const DevShop = () => {
 
   return (
     <div>
+      <h2>Recrutement de Developpeurs</h2>
       {_.map(
         Dev,
         (dev) =>
           shouldShowDevBuyButton(dev) && (
-            <button onClick={() => game.buyDev(dev)}>
-              Engager un {dev} pour {game.devPrice[dev].toString()}
-            </button>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <div>
+                {dev} : {game.devTeam[dev as Dev]}
+              </div>
+              <div>
+                <button onClick={() => game.buyDev(dev)}>Engager 1 pour {game.devPrice[dev].toFixed(2)}$</button>
+              </div>
+            </div>
           ),
       )}
     </div>

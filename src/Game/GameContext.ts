@@ -5,7 +5,7 @@ import { Dev, DevInitialPrice, DevInitialProductivity } from './Dev.ts';
 import { PO, POInitialPrice, POInitialProductivity } from './POs.ts';
 import { Upgrades } from './Upgrades.ts';
 
-export const PriceIncreaseInPercent = 1.05;
+export const PriceIncreaseInPercent = 1.15;
 
 export type GameContext = {
   codeLines: number;
@@ -36,7 +36,8 @@ export type GameContext = {
   buyDev: (dev: Dev) => void;
   buyPO: (po: PO) => void;
   buyAux: (aux: Aux) => void;
-  sellCode: () => void;
+
+  sellCode: (nbLines: number) => void;
 };
 
 export const gameContextDefaultValues: GameContext = {

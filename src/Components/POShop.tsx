@@ -7,19 +7,25 @@ export const POShop = () => {
   const game = useContext(gameContext);
 
   const shouldShowPOBuyButton = useCallback(
-    (po: PO) => game.totalCodeLinesAccumulated > POInitialProductivity[po] * 5n && game.totalMoneyAccumulated > POInitialPrice[po],
+    (po: PO) => game.totalCodeLinesAccumulated > POInitialProductivity[po] && game.totalMoneyAccumulated > POInitialPrice[po],
     [game.totalCodeLinesAccumulated, game.totalMoneyAccumulated],
   );
 
   return (
     <div>
+      <h2>Recrutement de Product Owners</h2>
       {_.map(
         PO,
         (po) =>
           shouldShowPOBuyButton(po) && (
-            <button onClick={() => game.buyPO(po)}>
-              Engager un {po} pour {game.poPrice[po].toString()}
-            </button>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <div>
+                {po} : {game.poTeam[po as PO]}
+              </div>
+              <div>
+                <button onClick={() => game.buyPO(po)}>Engager 1 pour {game.poPrice[po].toFixed(2)}$</button>
+              </div>
+            </div>
           ),
       )}
     </div>

@@ -5,7 +5,7 @@ export const CodeSeller = () => {
   const game = useContext(gameContext);
 
   const sellCode = useCallback(() => {
-    game.sellCode();
+    game.sellCode(game.manualSellingForce);
   }, [game]);
 
   return (

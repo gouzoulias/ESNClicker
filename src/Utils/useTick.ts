@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 // Code snippet from
 // https://stackoverflow.com/questions/53024496/state-not-updating-when-using-react-state-hook-within-setinterval
-export const useTick = (callback: () => void, deltaTimeMS: number) => {
+export const useTick = (callback: (deltaTimeInSecond: number) => void, deltaTimeMS: number) => {
   const intervalRef = useRef<number>();
   const callbackRef = useRef(callback);
 
@@ -21,7 +21,7 @@ export const useTick = (callback: () => void, deltaTimeMS: number) => {
   // Set up the interval:
 
   useEffect(() => {
-    intervalRef.current = window.setInterval(() => callbackRef.current(), deltaTimeMS);
+    intervalRef.current = window.setInterval(() => callbackRef.current(deltaTimeMS / 1000), deltaTimeMS);
 
     // Clear interval if the components is unmounted or the delay changes:
     return () => window.clearInterval(intervalRef.current);

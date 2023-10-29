@@ -8,10 +8,11 @@
 - [X] Ajouter des totaux
 - [X] Ajouter le recrutement de developpeurs
 - [X] Faire travailler les developpeurs
-- [ ] Ajouter des compteurs de développeurs
+- [X] Ajouter des compteurs de développeurs
+- [X] Ajouter le recrutement de PO
+- [X] Faire travailler les PO
+- [X] Ajouter des compteurs de PO
 - [ ] Ajouter un système de sauvegarde
-- [ ] Ajouter le recrutement de PO
-- [ ] Faire travailler les PO
 - [ ] Faire un peu d'UI
 - [ ] Ajouter des upgrades
 - [ ] Ajouter le jour et la nuit
