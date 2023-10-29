@@ -22,9 +22,11 @@ npm run dev
 - [X] Ajouter des compteurs
 - [X] Ajouter le code
 - [X] Ajouter la vente
-- [ ] Ajouter des milestones
+- [X] Initialiser des coûts et des productions
+- [X] Ajouter des totaux
 - [ ] Ajouter le recrutement de developpeurs
 - [ ] Faire travailler les developpeurs
+- [ ] Ajouter un système de sauvegarde
 - [ ] Ajouter le recrutement de PO
 - [ ] Faire travailler les PO
 - [ ] Faire un peu d'UI

@@ -1,75 +1,33 @@
 import { createContext } from 'react';
-import { initFromEnum } from '../util.ts';
+import { initFromEnum } from '../Utils/util.ts';
+import { Aux } from './Aux.ts';
+import { Dev, DevInitialPrice, DevInitialProductivity } from './Dev.ts';
+import { PO, POInitialPrice, POInitialProductivity } from './POs.ts';
+import { Upgrades } from './Upgrades.ts';
 
-export enum Dev {
-  Stagiaire = 'Stagiaire',
-  Alternant = 'Alternant',
-  Integrateur = 'Integrateur',
-  FullStackJunior = 'FullStackJunior',
-  FullStackSenior = 'FullStackSenior',
-  Lead = 'Lead',
-  Architecte = 'Architecte',
-  CTO = 'CTO',
-}
-
-const DevLvl: Record<Dev, number> = {
-  [Dev.Stagiaire]: 0,
-  [Dev.Alternant]: 1,
-  [Dev.Integrateur]: 2,
-  [Dev.FullStackJunior]: 3,
-  [Dev.FullStackSenior]: 4,
-  [Dev.Lead]: 5,
-  [Dev.Architecte]: 6,
-  [Dev.CTO]: 7,
-};
-
-export enum PO {
-  CustomerSuccessManager = 'CustomerSuccessManager',
-  ProductOwner = 'ProductOwner',
-  ProductManagerOfficer = 'ProductManagerOfficer',
-  ChefDeProjet = 'ChefDeProjet',
-  Commercial = 'Commercial',
-  DirecteurCommercial = 'DirecteurCommercial',
-}
-
-const POLvl: Record<PO, number> = {
-  [PO.CustomerSuccessManager]: 0,
-  [PO.ProductOwner]: 1,
-  [PO.ProductManagerOfficer]: 2,
-  [PO.ChefDeProjet]: 3,
-  [PO.Commercial]: 4,
-  [PO.DirecteurCommercial]: 5,
-};
-
-export enum Aux {
-  ChasseurDeTete = 'ChasseurDeTete',
-  DevOps = 'DevOps',
-  ChiefHappinessOfficer = 'ChiefHappinessOfficer',
-  Designer = 'Designer',
-  Manager = 'Manager',
-}
-
-export const BaseLinePerDev = 1.15;
-export const BaseLinePerPo = 1.5;
-
-export enum Upgrades {}
+export const PriceIncreaseInPercent = 105n;
 
 export type GameContext = {
-  codeLines: number;
-  money: number;
+  codeLines: bigint;
+  totalCodeLinesAccumulated: bigint;
+
+  money: bigint;
+  totalMoneyAccumulated: bigint;
 
   boughtUpgrades: Record<Upgrades, boolean>;
   activatedUpgrades: Record<Upgrades, { devs: Record<Dev, boolean>; pos: Record<PO, boolean> }>;
 
-  manualProductivity: number;
   codePrice: number;
+  manualProductivity: number;
   manualSellingForce: number;
 
   devTeam: Record<Dev, number>;
-  devProductivity: Record<Dev, number>;
+  devPrice: Record<Dev, bigint>;
+  devProductivity: Record<Dev, bigint>;
 
   poTeam: Record<PO, number>;
-  poProductivity: Record<PO, number>;
+  poPrice: Record<PO, bigint>;
+  poProductivity: Record<PO, bigint>;
 
   unlockedAux: Record<Aux, boolean>;
   auxTeam: Record<Aux, number>;
@@ -82,8 +40,11 @@ export type GameContext = {
 };
 
 export const gameContextDefaultValues: GameContext = {
-  codeLines: 0,
-  money: 10,
+  codeLines: 0n,
+  totalCodeLinesAccumulated: 0n,
+
+  money: 0n,
+  totalMoneyAccumulated: 0n,
 
   boughtUpgrades: initFromEnum(Upgrades, false),
   activatedUpgrades: initFromEnum(Upgrades, {
@@ -92,14 +53,16 @@ export const gameContextDefaultValues: GameContext = {
   }),
 
   devTeam: initFromEnum(Dev, 0),
-  devProductivity: initFromEnum(Dev, (dev) => BaseLinePerDev ** DevLvl[dev]),
+  devPrice: DevInitialPrice,
+  devProductivity: DevInitialProductivity,
 
-  manualProductivity: 1,
   codePrice: 1,
+  manualProductivity: 1,
   manualSellingForce: 1,
 
   poTeam: initFromEnum(PO, 0),
-  poProductivity: initFromEnum(PO, (po) => BaseLinePerPo ** POLvl[po]),
+  poPrice: POInitialPrice,
+  poProductivity: POInitialProductivity,
 
   unlockedAux: initFromEnum(Aux, false),
   auxTeam: initFromEnum(Aux, 0),

@@ -1,5 +1,4 @@
 // util.ts
-
 import * as _ from 'lodash';
 
 type Enum = Record<string, number | string>;
@@ -21,9 +20,7 @@ export const initFromEnum = <A extends Enum, B extends object | number | boolean
   return enumObject;
 };
 
-
 // useTick.ts
-
 import { useEffect, useRef } from 'react';
 
 export const useTick = (callback: () => void, deltaTimeMS: number) => {
@@ -44,18 +41,27 @@ export const useTick = (callback: () => void, deltaTimeMS: number) => {
 };
 
 // Game.tsx
-
 import * as _ from 'lodash';
 import React, { useCallback, useState } from 'react';
 import { useTick } from '../useTick.ts';
-import { Aux, Dev, gameContext, gameContextDefaultValues, PO } from './GameContext.ts';
+import { Aux } from './Aux.ts';
+import { Dev } from './Dev.ts';
+import { gameContext, gameContextDefaultValues } from './GameContext.ts';
+import { PO } from './POs.ts';
 
 export const Game = ({ children }: React.PropsWithChildren) => {
   const [codeLines, setCodeLines] = useState(gameContextDefaultValues.codeLines);
+  const [totalCodeLinesAccumulated, setTotalCodeLinesAccumulated] = useState(gameContextDefaultValues.totalCodeLinesAccumulated);
+
   const [money, setMoney] = useState(gameContextDefaultValues.money);
+  const [totalMoneyAccumulated, setTotalMoneyAccumulated] = useState(gameContextDefaultValues.totalMoneyAccumulated);
 
   const [boughtUpgrades, setBoughtUpgrades] = useState(gameContextDefaultValues.boughtUpgrades);
   const [activatedUpgrades, setActivatedUpgrades] = useState(gameContextDefaultValues.activatedUpgrades);
+
+  const [manualProductivity, setManualProductivity] = useState(gameContextDefaultValues.manualProductivity);
+  const [codePrice, setCodePrice] = useState(gameContextDefaultValues.codePrice);
+  const [manualSellingForce, setManualSellingForce] = useState(gameContextDefaultValues.manualSellingForce);
 
   const [devTeam, setDevTeam] = useState(gameContextDefaultValues.devTeam);
   const [devProductivity, setDevProductivity] = useState(gameContextDefaultValues.devProductivity);
@@ -66,21 +72,14 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const [unlockedAux, setUnlockedAux] = useState(gameContextDefaultValues.unlockedAux);
   const [auxTeam, setAuxTeam] = useState(gameContextDefaultValues.auxTeam);
 
-  const gameTick = useCallback(() => {
-    setCodeLines(
-      (prevState) =>
-        prevState +
-        _(devTeam)
-          .map((numberOfDev, devType: Dev) => numberOfDev * devProductivity[devType])
-          .sum(),
-    );
-  }, [devProductivity, devTeam]);
-
-  useTick(gameTick, 1000);
+  const addCodeLines = useCallback((nb: number) => {
+    setCodeLines((prevState) => prevState + nb);
+    setTotalCodeLinesAccumulated((prevState) => prevState + nb);
+  }, []);
 
   const createManualLine = useCallback(() => {
-    setCodeLines((prevState) => prevState + 1);
-  }, []);
+    addCodeLines(manualProductivity);
+  }, [addCodeLines, manualProductivity]);
 
   const buyDev = useCallback((dev: Dev) => {
     setDevTeam((prevState) => ({
@@ -103,11 +102,32 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     }));
   }, []);
 
+  const sellCode = useCallback(() => {
+    if (codeLines >= 0) {
+      const codeLinesToSell = Math.min(codeLines, manualSellingForce);
+      setMoney((prevState) => prevState + codeLinesToSell * codePrice);
+      setCodeLines((prevState) => prevState - codeLinesToSell);
+    }
+  }, [codeLines, codePrice, manualSellingForce]);
+
+  const gameTick = useCallback(() => {
+    addCodeLines(
+      _(devTeam)
+        .map((numberOfDev, devType: Dev) => numberOfDev * devProductivity[devType])
+        .sum(),
+    );
+  }, [addCodeLines, devProductivity, devTeam]);
+
+  useTick(gameTick, 1000);
+
   return (
     <gameContext.Provider
       value={{
         codeLines,
+        totalCodeLinesAccumulated,
+
         money,
+        totalMoneyAccumulated,
 
         boughtUpgrades,
         activatedUpgrades,
@@ -118,13 +138,20 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         poTeam,
         poProductivity,
 
+        manualProductivity,
+        codePrice,
+        manualSellingForce,
+
         unlockedAux,
         auxTeam,
 
         createManualLine,
+
         buyDev,
         buyPO,
         buyAux,
+
+        sellCode,
       }}
     >
       {children}

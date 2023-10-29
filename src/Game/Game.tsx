@@ -1,11 +1,18 @@
 import * as _ from 'lodash';
 import React, { useCallback, useState } from 'react';
-import { useTick } from '../useTick.ts';
-import { Aux, Dev, gameContext, gameContextDefaultValues, PO } from './GameContext.ts';
+import { BigIntMath } from '../Utils/BigInt.ts';
+import { useTick } from '../Utils/useTick.ts';
+import { Aux } from './Aux.ts';
+import { Dev } from './Dev.ts';
+import { gameContext, gameContextDefaultValues, PriceIncreaseInPercent } from './GameContext.ts';
+import { PO } from './POs.ts';
 
 export const Game = ({ children }: React.PropsWithChildren) => {
   const [codeLines, setCodeLines] = useState(gameContextDefaultValues.codeLines);
+  const [totalCodeLinesAccumulated, setTotalCodeLinesAccumulated] = useState(gameContextDefaultValues.totalCodeLinesAccumulated);
+
   const [money, setMoney] = useState(gameContextDefaultValues.money);
+  const [totalMoneyAccumulated, setTotalMoneyAccumulated] = useState(gameContextDefaultValues.totalMoneyAccumulated);
 
   const [boughtUpgrades, setBoughtUpgrades] = useState(gameContextDefaultValues.boughtUpgrades);
   const [activatedUpgrades, setActivatedUpgrades] = useState(gameContextDefaultValues.activatedUpgrades);
@@ -15,36 +22,47 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const [manualSellingForce, setManualSellingForce] = useState(gameContextDefaultValues.manualSellingForce);
 
   const [devTeam, setDevTeam] = useState(gameContextDefaultValues.devTeam);
+  const [devPrice, setDevPrice] = useState(gameContextDefaultValues.devPrice);
   const [devProductivity, setDevProductivity] = useState(gameContextDefaultValues.devProductivity);
 
   const [poTeam, setPoTeam] = useState(gameContextDefaultValues.poTeam);
+  const [poPrice, setPoPrice] = useState(gameContextDefaultValues.poPrice);
   const [poProductivity, setPoProductivity] = useState(gameContextDefaultValues.poProductivity);
 
   const [unlockedAux, setUnlockedAux] = useState(gameContextDefaultValues.unlockedAux);
   const [auxTeam, setAuxTeam] = useState(gameContextDefaultValues.auxTeam);
 
-  const gameTick = useCallback(() => {
-    setCodeLines(
-      (prevState) =>
-        prevState +
-        _(devTeam)
-          .map((numberOfDev, devType: Dev) => numberOfDev * devProductivity[devType])
-          .sum(),
-    );
-  }, [devProductivity, devTeam]);
+  const addCodeLines = useCallback((nb: bigint) => {
+    setCodeLines((prevState) => prevState + nb);
+    setTotalCodeLinesAccumulated((prevState) => prevState + nb);
+  }, []);
 
-  useTick(gameTick, 1000);
+  const addMoney = useCallback((nb: bigint) => {
+    setMoney((prevState) => prevState + nb);
+    setTotalMoneyAccumulated((prevState) => prevState + nb);
+  }, []);
 
   const createManualLine = useCallback(() => {
-    setCodeLines((prevState) => prevState + 1);
-  }, []);
+    addCodeLines(BigInt(manualProductivity));
+  }, [addCodeLines, manualProductivity]);
 
-  const buyDev = useCallback((dev: Dev) => {
-    setDevTeam((prevState) => ({
-      ...prevState,
-      [dev]: prevState[dev] + 1,
-    }));
-  }, []);
+  const buyDev = useCallback(
+    (dev: Dev) => {
+      if (money > devPrice[dev]) {
+        setMoney((prevState) => prevState - devPrice[dev]);
+        setDevTeam((prevState) => ({
+          ...prevState,
+          [dev]: prevState[dev] + 1,
+        }));
+        setDevPrice((prevState) => ({
+          ...prevState,
+          // Will only works with bigDecimal if division is made in last
+          [dev]: (prevState[dev] * PriceIncreaseInPercent) / 100n,
+        }));
+      }
+    },
+    [devPrice, money],
+  );
 
   const buyPO = useCallback((po: PO) => {
     setPoTeam((prevState) => ({
@@ -62,25 +80,41 @@ export const Game = ({ children }: React.PropsWithChildren) => {
 
   const sellCode = useCallback(() => {
     if (codeLines >= 0) {
-      const codeLinesToSell = Math.min(codeLines, manualSellingForce);
-      setMoney((prevState) => prevState + codeLinesToSell * codePrice);
+      const codeLinesToSell = BigIntMath.min(codeLines, BigInt(manualSellingForce));
+      addMoney(codeLinesToSell * BigInt(codePrice));
       setCodeLines((prevState) => prevState - codeLinesToSell);
     }
-  }, [codeLines, codePrice, manualSellingForce]);
+  }, [addMoney, codeLines, codePrice, manualSellingForce]);
+
+  const gameTick = useCallback(() => {
+    addCodeLines(
+      _.chain(devTeam)
+        .map<bigint>((numberOfDev, devType) => BigInt(numberOfDev) * devProductivity[devType as Dev])
+        .reduce((prev, curr) => prev + curr, 0n)
+        .value(),
+    );
+  }, [addCodeLines, devProductivity, devTeam]);
+
+  useTick(gameTick, 1000);
 
   return (
     <gameContext.Provider
       value={{
         codeLines,
+        totalCodeLinesAccumulated,
+
         money,
+        totalMoneyAccumulated,
 
         boughtUpgrades,
         activatedUpgrades,
 
         devTeam,
+        devPrice,
         devProductivity,
 
         poTeam,
+        poPrice,
         poProductivity,
 
         manualProductivity,

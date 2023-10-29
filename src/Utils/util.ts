@@ -6,7 +6,7 @@ export const initFromEnum = <A extends Enum, B extends object | number | boolean
   enumType: A,
   defaultValue: B | ((val: A[keyof A]) => B),
 ): Record<A[keyof A], B> => {
-  const enumObject: Record<A[keyof A], B> = {} as Record<A[keyof A], B>;
+  const enumObject = {} as Record<A[keyof A], B>;
 
   _.forEach(enumType, (value: A[keyof A]) => {
     if (typeof defaultValue === 'function') {

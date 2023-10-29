@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react';
 import './App.css';
 import { CodeMaker } from './Components/CodeMaker.tsx';
 import { CodeSeller } from './Components/CodeSeller.tsx';
+import { DevShop } from './Components/DevShop.tsx';
 import { LinesViewer } from './Components/LinesViewer.tsx';
 import { MoneyViewer } from './Components/MoneyViewer.tsx';
 import { Game } from './Game/Game.tsx';
@@ -25,6 +26,7 @@ function App() {
       <MoneyViewer />
       <CodeSeller />
       <CodeMaker />
+      <DevShop />
     </Game>
   );
 }
