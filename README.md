@@ -24,8 +24,8 @@ npm run dev
 - [X] Ajouter la vente
 - [X] Initialiser des coûts et des productions
 - [X] Ajouter des totaux
-- [ ] Ajouter le recrutement de developpeurs
-- [ ] Faire travailler les developpeurs
+- [X] Ajouter le recrutement de developpeurs
+- [X] Faire travailler les developpeurs
 - [ ] Ajouter un système de sauvegarde
 - [ ] Ajouter le recrutement de PO
 - [ ] Faire travailler les PO

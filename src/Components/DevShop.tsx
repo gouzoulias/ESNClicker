@@ -1,9 +1,17 @@
-import { useContext } from 'react';
-import { Dev } from '../Game/Dev.ts';
+import * as _ from 'lodash';
+import { useCallback, useContext } from 'react';
+import { Dev, DevInitialPrice, DevInitialProductivity } from '../Game/Dev.ts';
 import { gameContext } from '../Game/GameContext.ts';
 
 export const DevShop = () => {
   const game = useContext(gameContext);
+
+  const shouldShowDevBuyButton = useCallback(
+    (dev: Dev) => {
+      return game.totalCodeLinesAccumulated > DevInitialProductivity[dev] * 60n && game.totalMoneyAccumulated > DevInitialPrice[dev];
+    },
+    [game.totalCodeLinesAccumulated, game.totalMoneyAccumulated],
+  );
 
   if (game.totalMoneyAccumulated < 20n) {
     return null;
@@ -11,8 +19,14 @@ export const DevShop = () => {
 
   return (
     <div>
-      {game.totalCodeLinesAccumulated > 20n && (
-        <button onClick={() => game.buyDev(Dev.Stagiaire)}>Engager un stagiaire pour {game.devPrice[Dev.Stagiaire].toString()}</button>
+      {_.map(
+        Dev,
+        (dev) =>
+          shouldShowDevBuyButton(dev) && (
+            <button onClick={() => game.buyDev(dev)}>
+              Engager un {dev} pour {game.devPrice[Dev.Stagiaire].toString()}
+            </button>
+          ),
       )}
     </div>
   );
