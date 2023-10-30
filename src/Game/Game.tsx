@@ -5,6 +5,7 @@ import { Aux } from './Aux.ts';
 import { Dev } from './Dev.ts';
 import { gameContext, gameContextDefaultValues, PriceIncreaseInPercent } from './GameContext.ts';
 import { PO } from './POs.ts';
+import { Upgrade, UpgradeInfos } from './Upgrade.ts';
 
 export const Game = ({ children }: React.PropsWithChildren) => {
   const [codeLines, setCodeLines] = useState(gameContextDefaultValues.codeLines);
@@ -13,7 +14,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const [money, setMoney] = useState(gameContextDefaultValues.money);
   const [totalMoneyAccumulated, setTotalMoneyAccumulated] = useState(gameContextDefaultValues.totalMoneyAccumulated);
 
-  const [boughtUpgrades, setBoughtUpgrades] = useState(gameContextDefaultValues.boughtUpgrades);
+  const [boughtUpgrade, setBoughtUpgrade] = useState(gameContextDefaultValues.boughtUpgrade);
   const [activatedUpgrades, setActivatedUpgrades] = useState(gameContextDefaultValues.activatedUpgrades);
 
   const [manualProductivity, setManualProductivity] = useState(gameContextDefaultValues.manualProductivity);
@@ -41,13 +42,16 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     setTotalMoneyAccumulated((prevState) => prevState + nb);
   }, []);
 
-  const createManualLine = useCallback(() => {
-    addCodeLines(manualProductivity);
-  }, [addCodeLines, manualProductivity]);
+  const createManualLine = useCallback(
+    (nbLines: number) => {
+      addCodeLines(nbLines);
+    },
+    [addCodeLines],
+  );
 
   const buyDev = useCallback(
     (dev: Dev) => {
-      if (money > devPrice[dev]) {
+      if (money >= devPrice[dev]) {
         setMoney((prevState) => prevState - devPrice[dev]);
         setDevTeam((prevState) => ({
           ...prevState,
@@ -64,7 +68,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
 
   const buyPO = useCallback(
     (po: PO) => {
-      if (money > poPrice[po]) {
+      if (money >= poPrice[po]) {
         setMoney((prevState) => prevState - poPrice[po]);
         setPoTeam((prevState) => ({
           ...prevState,
@@ -85,6 +89,25 @@ export const Game = ({ children }: React.PropsWithChildren) => {
       [aux]: prevState[aux] + 1,
     }));
   }, []);
+
+  const buyUpgrade = useCallback(
+    (upgrade: Upgrade) => {
+      if (money >= UpgradeInfos[upgrade].price) {
+        setMoney((prevState) => prevState - UpgradeInfos[upgrade].price);
+        setBoughtUpgrade((prevState) => ({
+          ...prevState,
+          [upgrade]: true,
+        }));
+        switch (upgrade) {
+          case Upgrade.MecanicalKeyboard:
+          case Upgrade.GamingChair:
+            setManualProductivity((prevState) => prevState * 2);
+            break;
+        }
+      }
+    },
+    [money],
+  );
 
   const sellCode = useCallback(
     (nbLines: number) => {
@@ -126,7 +149,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         money,
         totalMoneyAccumulated,
 
-        boughtUpgrades,
+        boughtUpgrade,
         activatedUpgrades,
 
         devTeam,
@@ -149,6 +172,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         buyDev,
         buyPO,
         buyAux,
+        buyUpgrade,
 
         sellCode,
       }}

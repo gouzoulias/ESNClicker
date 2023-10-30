@@ -10,7 +10,7 @@ export const CodeSeller = () => {
 
   return (
     <button type="button" onClick={sellCode}>
-      Vendre du code
+      Vendre {game.manualSellingForce} lignes de code pour {game.manualSellingForce * game.codePrice}$
     </button>
   );
 };

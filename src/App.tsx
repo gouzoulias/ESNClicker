@@ -1,4 +1,3 @@
-import { useContext, useEffect } from 'react';
 import './App.css';
 import { CodeMaker } from './Components/CodeMaker.tsx';
 import { CodeSeller } from './Components/CodeSeller.tsx';
@@ -6,29 +5,28 @@ import { DevShop } from './Components/DevShop.tsx';
 import { LinesViewer } from './Components/LinesViewer.tsx';
 import { MoneyViewer } from './Components/MoneyViewer.tsx';
 import { POShop } from './Components/POShop.tsx';
+import { UpgradeShop } from './Components/UpgradeShop.tsx';
 import { Game } from './Game/Game.tsx';
-import { GameContext, gameContext } from './Game/GameContext.ts';
-
-function GameDebugger() {
-  const game: GameContext = useContext(gameContext);
-  useEffect(() => {
-    // TODO : Delete this log
-    console.log('GameDebugger : game', game);
-  }, [game]);
-  return null;
-}
 
 function App() {
   return (
     <Game>
-      <h2>Welcome to ESN !</h2>
-      <GameDebugger />
-      <LinesViewer />
-      <MoneyViewer />
-      <CodeSeller />
-      <CodeMaker />
-      <DevShop />
-      <POShop />
+      <h1>ESN Clicker</h1>
+      <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '500px' }}>
+          <h2>Artisanat de Code</h2>
+          <LinesViewer />
+          <CodeMaker />
+          <DevShop />
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '500px' }}>
+          <h2>Vente de code</h2>
+          <MoneyViewer />
+          <CodeSeller />
+          <POShop />
+        </div>
+        <UpgradeShop />
+      </div>
     </Game>
   );
 }

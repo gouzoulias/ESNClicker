@@ -3,9 +3,9 @@ import { initFromEnum } from '../Utils/util.ts';
 import { Aux } from './Aux.ts';
 import { Dev, DevInitialPrice, DevInitialProductivity } from './Dev.ts';
 import { PO, POInitialPrice, POInitialProductivity } from './POs.ts';
-import { Upgrades } from './Upgrades.ts';
+import { Upgrade } from './Upgrade.ts';
 
-export const PriceIncreaseInPercent = 1.15;
+export const PriceIncreaseInPercent = 1.25;
 
 export type GameContext = {
   codeLines: number;
@@ -14,8 +14,8 @@ export type GameContext = {
   money: number;
   totalMoneyAccumulated: number;
 
-  boughtUpgrades: Record<Upgrades, boolean>;
-  activatedUpgrades: Record<Upgrades, { devs: Record<Dev, boolean>; pos: Record<PO, boolean> }>;
+  boughtUpgrade: Record<Upgrade, boolean>;
+  activatedUpgrades: Record<Upgrade, { devs: Record<Dev, boolean>; pos: Record<PO, boolean> }>;
 
   codePrice: number;
   manualProductivity: number;
@@ -36,6 +36,7 @@ export type GameContext = {
   buyDev: (dev: Dev) => void;
   buyPO: (po: PO) => void;
   buyAux: (aux: Aux) => void;
+  buyUpgrade: (upgrade: Upgrade) => void;
 
   sellCode: (nbLines: number) => void;
 };
@@ -47,8 +48,8 @@ export const gameContextDefaultValues: GameContext = {
   money: 0,
   totalMoneyAccumulated: 0,
 
-  boughtUpgrades: initFromEnum(Upgrades, false),
-  activatedUpgrades: initFromEnum(Upgrades, {
+  boughtUpgrade: initFromEnum(Upgrade, false),
+  activatedUpgrades: initFromEnum(Upgrade, {
     devs: initFromEnum(Dev, false),
     pos: initFromEnum(PO, false),
   }),
@@ -59,7 +60,7 @@ export const gameContextDefaultValues: GameContext = {
 
   codePrice: 1,
   manualProductivity: 1,
-  manualSellingForce: 1,
+  manualSellingForce: 5,
 
   poTeam: initFromEnum(PO, 0),
   poPrice: POInitialPrice,
@@ -69,12 +70,13 @@ export const gameContextDefaultValues: GameContext = {
   auxTeam: initFromEnum(Aux, 0),
 
   createManualLine: () => {},
+
   buyDev: () => {},
   buyPO: () => {},
   buyAux: () => {},
+  buyUpgrade: () => {},
+
   sellCode: () => {},
 };
-
-console.log(gameContextDefaultValues);
 
 export const gameContext = createContext<GameContext>(gameContextDefaultValues);

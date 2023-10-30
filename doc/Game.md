@@ -53,7 +53,7 @@ Un taux de 50% de démission veut dire que chaque jour, il y a 50% de chances qu
 - Designer (augmente le prix des lignes)
 - Manager : Augmente le temps de travail de 5% mais augmente aussi le taux de démission de 1%
 
-# Upgrades
+# Upgrade
 
 Différentes upgrades sont disponibles pour améliorer la productivité des employés, le taux de vente, le prix des lignes, le temps de travail, le taux de démission, etc...
 En voici la liste :

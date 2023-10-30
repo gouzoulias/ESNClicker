@@ -23,9 +23,10 @@ export const CodeMaker = () => {
     const codeToAdd: string = code.substring(iCode, iCode + game.manualProductivity);
     if (codeToAdd.includes('\n')) {
       game.createManualLine(
-        _(codeToAdd)
-          .filter((codeChar) => codeChar === '\n')
-          .size(),
+        game.manualProductivity *
+          _(codeToAdd)
+            .filter((codeChar) => codeChar === '\n')
+            .size(),
       );
     }
     setTextAreaValue((prevState) => {
@@ -40,8 +41,16 @@ export const CodeMaker = () => {
   }, [code, game, iCode]);
 
   return (
-    <div>
-      <textarea disabled={loading} value={textAreaValue} onKeyDown={onKeyDown} onChange={() => {}} rows={30} cols={150} placeholder={'Codez ici !'}></textarea>
+    <div style={{ display: 'flex' }}>
+      <textarea
+        disabled={loading}
+        value={textAreaValue}
+        onKeyDown={onKeyDown}
+        onChange={() => {}}
+        rows={30}
+        placeholder={'Codez ici !'}
+        style={{ width: '100%' }}
+      ></textarea>
     </div>
   );
 };
