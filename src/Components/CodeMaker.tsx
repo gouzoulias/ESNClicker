@@ -48,7 +48,7 @@ export const CodeMaker = () => {
         autoCorrect={'off'}
         onKeyDownCapture={onKeyDown}
         onChange={() => {}}
-        rows={30}
+        rows={15}
         placeholder={'Codez ici !'}
         style={{ width: '100%' }}
         spellCheck={false}

@@ -3,31 +3,31 @@ import React, { useCallback, useState } from 'react';
 import { useTick } from '../Utils/useTick.ts';
 import { Aux } from './Aux.ts';
 import { Dev } from './Dev.ts';
-import { gameContext, gameContextDefaultValues, PriceIncrease } from './GameContext.ts';
+import { gameContext, gameContextDefaultValues as defaultValues, PriceIncrease } from './GameContext.ts';
 import { ProductionItemInfo } from './ItemInfo.ts';
 import { PO } from './POs.ts';
 import { Upgrade, UpgradeInfos } from './Upgrade.ts';
 
 export const Game = ({ children }: React.PropsWithChildren) => {
-  const [codeLines, setCodeLines] = useState(gameContextDefaultValues.codeLines);
-  const [totalCodeLinesAccumulated, setTotalCodeLinesAccumulated] = useState(gameContextDefaultValues.totalCodeLinesAccumulated);
+  const [codeLines, setCodeLines] = useState(defaultValues.codeLines);
+  const [totalCodeLinesAccumulated, setTotalCodeLinesAccumulated] = useState(defaultValues.totalCodeLinesAccumulated);
 
-  const [money, setMoney] = useState(gameContextDefaultValues.money);
-  const [totalMoneyAccumulated, setTotalMoneyAccumulated] = useState(gameContextDefaultValues.totalMoneyAccumulated);
+  const [money, setMoney] = useState(defaultValues.money);
+  const [totalMoneyAccumulated, setTotalMoneyAccumulated] = useState(defaultValues.totalMoneyAccumulated);
 
-  const [boughtUpgrade, setBoughtUpgrade] = useState(gameContextDefaultValues.boughtUpgrade);
-  const [activatedUpgrades, setActivatedUpgrades] = useState(gameContextDefaultValues.activatedUpgrades);
+  const [boughtUpgrade, setBoughtUpgrade] = useState(defaultValues.boughtUpgrade);
+  const [activatedUpgrades, setActivatedUpgrades] = useState(defaultValues.activatedUpgrades);
 
-  const [manualProductivity, setManualProductivity] = useState(gameContextDefaultValues.manualProductivity);
-  const [codePrice, setCodePrice] = useState(gameContextDefaultValues.codePrice);
-  const [manualSellingForce, setManualSellingForce] = useState(gameContextDefaultValues.manualSellingForce);
+  const [manualProductivity, setManualProductivity] = useState(defaultValues.manualProductivity);
+  const [codePrice, setCodePrice] = useState(defaultValues.codePrice);
+  const [manualSellingForce, setManualSellingForce] = useState(defaultValues.manualSellingForce);
 
-  const [devTeamInfo, setDevTeamInfo] = useState(gameContextDefaultValues.devTeamInfo);
+  const [devTeamInfo, setDevTeamInfo] = useState(defaultValues.devTeamInfo);
 
-  const [poTeamInfo, setPoTeamInfo] = useState(gameContextDefaultValues.poTeamInfo);
+  const [poTeamInfo, setPoTeamInfo] = useState(defaultValues.poTeamInfo);
 
-  const [unlockedAux, setUnlockedAux] = useState(gameContextDefaultValues.unlockedAux);
-  const [auxTeam, setAuxTeam] = useState(gameContextDefaultValues.auxTeam);
+  const [unlockedAux, setUnlockedAux] = useState(defaultValues.unlockedAux);
+  const [auxTeam, setAuxTeam] = useState(defaultValues.auxTeam);
 
   const addCodeLines = useCallback((nb: number) => {
     setCodeLines((prevState) => prevState + nb);
