@@ -1,45 +1,3 @@
-// src/Utils/useTick.ts
-import { useEffect, useRef } from 'react';
-
-export const useTick = (callback: (deltaTimeInSecond: number) => void, deltaTimeMS: number) => {
-  const intervalRef = useRef<number>();
-  const callbackRef = useRef(callback);
-
-  useEffect(() => {
-    callbackRef.current = callback;
-  }, [callback]);
-
-  useEffect(() => {
-    intervalRef.current = window.setInterval(() => callbackRef.current(deltaTimeMS / 1000), deltaTimeMS);
-
-    return () => window.clearInterval(intervalRef.current);
-  }, [deltaTimeMS]);
-
-  return intervalRef;
-};
- 
-// src/Utils/util.ts
-import * as _ from 'lodash';
-
-type Enum = Record<string, number | string>;
-
-export const initFromEnum = <A extends Enum, B extends object | number | boolean | string>(
-  enumType: A,
-  defaultValue: B | ((val: A[keyof A]) => B),
-): Record<A[keyof A], B> => {
-  const enumObject = {} as Record<A[keyof A], B>;
-
-  _.forEach(enumType, (value: A[keyof A]) => {
-    if (typeof defaultValue === 'function') {
-      enumObject[value] = defaultValue(value);
-    } else {
-      enumObject[value] = defaultValue;
-    }
-  });
-
-  return enumObject;
-};
- 
 // src/Game/Game.tsx
 import * as _ from 'lodash';
 import React, { useCallback, useState } from 'react';
@@ -59,17 +17,17 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const [totalMoneyAccumulated, setTotalMoneyAccumulated] = useState(gameContextDefaultValues.totalMoneyAccumulated);
 
   const [boughtUpgrade, setBoughtUpgrade] = useState(gameContextDefaultValues.boughtUpgrade);
-  const [activatedUpgrades] = useState(gameContextDefaultValues.activatedUpgrades);
+  const [activatedUpgrades, setActivatedUpgrades] = useState(gameContextDefaultValues.activatedUpgrades);
 
   const [manualProductivity, setManualProductivity] = useState(gameContextDefaultValues.manualProductivity);
-  const [codePrice] = useState(gameContextDefaultValues.codePrice);
-  const [manualSellingForce] = useState(gameContextDefaultValues.manualSellingForce);
+  const [codePrice, setCodePrice] = useState(gameContextDefaultValues.codePrice);
+  const [manualSellingForce, setManualSellingForce] = useState(gameContextDefaultValues.manualSellingForce);
 
   const [devTeamInfo, setDevTeamInfo] = useState(gameContextDefaultValues.devTeamInfo);
 
   const [poTeamInfo, setPoTeamInfo] = useState(gameContextDefaultValues.poTeamInfo);
 
-  const [unlockedAux] = useState(gameContextDefaultValues.unlockedAux);
+  const [unlockedAux, setUnlockedAux] = useState(gameContextDefaultValues.unlockedAux);
   const [auxTeam, setAuxTeam] = useState(gameContextDefaultValues.auxTeam);
 
   const addCodeLines = useCallback((nb: number) => {
@@ -148,6 +106,13 @@ export const Game = ({ children }: React.PropsWithChildren) => {
           case Upgrade.MecanicalKeyboard:
           case Upgrade.GamingChair:
             setManualProductivity((prevState) => prevState * 2);
+            break;
+          case Upgrade.Smartphone:
+          case Upgrade['5G']:
+            setManualSellingForce((prevState) => prevState * 5);
+            break;
+          case Upgrade.Linter:
+            setCodePrice((prevState) => prevState * 2);
             break;
         }
       }

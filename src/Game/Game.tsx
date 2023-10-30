@@ -16,17 +16,17 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const [totalMoneyAccumulated, setTotalMoneyAccumulated] = useState(gameContextDefaultValues.totalMoneyAccumulated);
 
   const [boughtUpgrade, setBoughtUpgrade] = useState(gameContextDefaultValues.boughtUpgrade);
-  const [activatedUpgrades] = useState(gameContextDefaultValues.activatedUpgrades);
+  const [activatedUpgrades, setActivatedUpgrades] = useState(gameContextDefaultValues.activatedUpgrades);
 
   const [manualProductivity, setManualProductivity] = useState(gameContextDefaultValues.manualProductivity);
-  const [codePrice] = useState(gameContextDefaultValues.codePrice);
-  const [manualSellingForce] = useState(gameContextDefaultValues.manualSellingForce);
+  const [codePrice, setCodePrice] = useState(gameContextDefaultValues.codePrice);
+  const [manualSellingForce, setManualSellingForce] = useState(gameContextDefaultValues.manualSellingForce);
 
   const [devTeamInfo, setDevTeamInfo] = useState(gameContextDefaultValues.devTeamInfo);
 
   const [poTeamInfo, setPoTeamInfo] = useState(gameContextDefaultValues.poTeamInfo);
 
-  const [unlockedAux] = useState(gameContextDefaultValues.unlockedAux);
+  const [unlockedAux, setUnlockedAux] = useState(gameContextDefaultValues.unlockedAux);
   const [auxTeam, setAuxTeam] = useState(gameContextDefaultValues.auxTeam);
 
   const addCodeLines = useCallback((nb: number) => {
@@ -105,6 +105,13 @@ export const Game = ({ children }: React.PropsWithChildren) => {
           case Upgrade.MecanicalKeyboard:
           case Upgrade.GamingChair:
             setManualProductivity((prevState) => prevState * 2);
+            break;
+          case Upgrade.Smartphone:
+          case Upgrade['5G']:
+            setManualSellingForce((prevState) => prevState * 5);
+            break;
+          case Upgrade.Linter:
+            setCodePrice((prevState) => prevState * 2);
             break;
         }
       }

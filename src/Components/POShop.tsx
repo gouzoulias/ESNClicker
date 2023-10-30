@@ -27,7 +27,7 @@ export const POShop = () => {
                   {poInfo.name} : {poInfo.numberOwned}
                 </div>
                 <div>
-                  <button onClick={() => game.buyPO(po)} title={poInfo.description}>
+                  <button onClick={() => game.buyPO(po)} title={poInfo.description.replace('{productivity}', `${poInfo.productivity}`)}>
                     Engager 1 pour {poInfo.price.toFixed(2)}$
                   </button>
                 </div>

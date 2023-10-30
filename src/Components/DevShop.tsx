@@ -27,7 +27,7 @@ export const DevShop = () => {
                   {devInfo.name} : {devInfo.numberOwned}
                 </div>
                 <div>
-                  <button onClick={() => game.buyDev(dev)} title={devInfo.description}>
+                  <button onClick={() => game.buyDev(dev)} title={devInfo.description.replace('{productivity}', `${devInfo.productivity}`)}>
                     Engager 1 pour {devInfo.price.toFixed(2)}$
                   </button>
                 </div>

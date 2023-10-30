@@ -45,11 +45,13 @@ export const CodeMaker = () => {
       <textarea
         disabled={loading}
         value={textAreaValue}
-        onKeyDown={onKeyDown}
+        autoCorrect={'off'}
+        onKeyDownCapture={onKeyDown}
         onChange={() => {}}
         rows={30}
         placeholder={'Codez ici !'}
         style={{ width: '100%' }}
+        spellCheck={false}
       ></textarea>
     </div>
   );
