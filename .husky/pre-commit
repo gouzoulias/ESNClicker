@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+ls
+echo "// src/Utils/useTick.ts" >>src/assets/code.txt
+cat src/Utils/useTick.ts >>src/assets/code.txt
+
+echo "" >>src/assets/code.txt
+echo "// src/Utils/util.ts" >>src/assets/code.txt
+echo src/Utils.util.ts >>src/assets/code.txt
+
+echo "" >>src/assets/code.txt
+echo "// src/Game/Game.tsx" >>src/assets/code.txt
+echo src/Game/Game.tsx >>src/assets/code.txt
+
+git add .

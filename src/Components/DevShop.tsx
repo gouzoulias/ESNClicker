@@ -27,7 +27,9 @@ export const DevShop = () => {
                   {devInfo.name} : {devInfo.numberOwned}
                 </div>
                 <div>
-                  <button onClick={() => game.buyDev(dev)}>Engager 1 pour {devInfo.price.toFixed(2)}$</button>
+                  <button onClick={() => game.buyDev(dev)} title={devInfo.description}>
+                    Engager 1 pour {devInfo.price.toFixed(2)}$
+                  </button>
                 </div>
               </div>
             )

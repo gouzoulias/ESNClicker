@@ -1,223 +1,73 @@
-// util.ts
-import * as _ from 'lodash';
-
-type Enum = Record<string, number | string>;
-
-export const initFromEnum = <A extends Enum, B extends object | number | boolean | string>(
-  enumType: A,
-  defaultValue: B | ((val: A[keyof A]) => B),
-): Record<A[keyof A], B> => {
-  const enumObject = {} as Record<A[keyof A], B>;
-
-  _.forEach(enumType, (value: A[keyof A]) => {
-    if (typeof defaultValue === 'function') {
-      enumObject[value] = defaultValue(value);
-    } else {
-      enumObject[value] = defaultValue;
-    }
-  });
-
-  return enumObject;
-};
-
-// useTick.ts
+//Code Sample
+// src/Utils/useTick.ts
 import { useEffect, useRef } from 'react';
 
-export const useTick = (callback: () => void, deltaTimeMS: number) => {
+// Code snippet from
+// https://stackoverflow.com/questions/53024496/state-not-updating-when-using-react-state-hook-within-setinterval
+export const useTick = (callback: (deltaTimeInSecond: number) => void, deltaTimeMS: number) => {
   const intervalRef = useRef<number>();
   const callbackRef = useRef(callback);
+
+  // Remember the latest callback:
+  //
+  // Without this, if you change the callback, when setInterval ticks again, it
+  // will still call your old callback.
+  //
+  // If you add `callback` to useEffect's deps, it will work fine but the
+  // interval will be reset.
 
   useEffect(() => {
     callbackRef.current = callback;
   }, [callback]);
 
-  useEffect(() => {
-    intervalRef.current = window.setInterval(() => callbackRef.current(), deltaTimeMS);
+  // Set up the interval:
 
+  useEffect(() => {
+    intervalRef.current = window.setInterval(() => callbackRef.current(deltaTimeMS / 1000), deltaTimeMS);
+
+    // Clear interval if the components is unmounted or the delay changes:
     return () => window.clearInterval(intervalRef.current);
   }, [deltaTimeMS]);
 
+  // Returns a ref to the interval ID in case you want to clear it manually:
+  return intervalRef;
+};
+// src/Utils/useTick.ts
+import { useEffect, useRef } from 'react';
+
+// Code snippet from
+// https://stackoverflow.com/questions/53024496/state-not-updating-when-using-react-state-hook-within-setinterval
+export const useTick = (callback: (deltaTimeInSecond: number) => void, deltaTimeMS: number) => {
+  const intervalRef = useRef<number>();
+  const callbackRef = useRef(callback);
+
+  // Remember the latest callback:
+  //
+  // Without this, if you change the callback, when setInterval ticks again, it
+  // will still call your old callback.
+  //
+  // If you add `callback` to useEffect's deps, it will work fine but the
+  // interval will be reset.
+
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
+  // Set up the interval:
+
+  useEffect(() => {
+    intervalRef.current = window.setInterval(() => callbackRef.current(deltaTimeMS / 1000), deltaTimeMS);
+
+    // Clear interval if the components is unmounted or the delay changes:
+    return () => window.clearInterval(intervalRef.current);
+  }, [deltaTimeMS]);
+
+  // Returns a ref to the interval ID in case you want to clear it manually:
   return intervalRef;
 };
 
-// Game.tsx
-import * as _ from 'lodash';
-import React, { useCallback, useState } from 'react';
-import { useTick } from '../Utils/useTick.ts';
-import { Aux } from './Aux.ts';
-import { Dev } from './Dev.ts';
-import { gameContext, gameContextDefaultValues, PriceIncrease } from './GameContext.ts';
-import { PO } from './POs.ts';
-import { Upgrade, UpgradeInfos } from './Upgrade.ts';
+// src/Utils/util.ts
+src/Utils.util.ts
 
-export const Game = ({ children }: React.PropsWithChildren) => {
-  const [codeLines, setCodeLines] = useState(gameContextDefaultValues.codeLines);
-  const [totalCodeLinesAccumulated, setTotalCodeLinesAccumulated] = useState(gameContextDefaultValues.totalCodeLinesAccumulated);
-
-  const [money, setMoney] = useState(gameContextDefaultValues.money);
-  const [totalMoneyAccumulated, setTotalMoneyAccumulated] = useState(gameContextDefaultValues.totalMoneyAccumulated);
-
-  const [boughtUpgrade, setBoughtUpgrade] = useState(gameContextDefaultValues.boughtUpgrade);
-  const [activatedUpgrades, setActivatedUpgrades] = useState(gameContextDefaultValues.activatedUpgrades);
-
-  const [manualProductivity, setManualProductivity] = useState(gameContextDefaultValues.manualProductivity);
-  const [codePrice, setCodePrice] = useState(gameContextDefaultValues.codePrice);
-  const [manualSellingForce, setManualSellingForce] = useState(gameContextDefaultValues.manualSellingForce);
-
-  const [devTeam, setDevTeam] = useState(gameContextDefaultValues.devTeam);
-  const [devPrice, setDevPrice] = useState(gameContextDefaultValues.devPrice);
-  const [devProductivity, setDevProductivity] = useState(gameContextDefaultValues.devProductivity);
-
-  const [poTeam, setPoTeam] = useState(gameContextDefaultValues.poTeam);
-  const [poPrice, setPoPrice] = useState(gameContextDefaultValues.poPrice);
-  const [poProductivity, setPoProductivity] = useState(gameContextDefaultValues.poProductivity);
-
-  const [unlockedAux, setUnlockedAux] = useState(gameContextDefaultValues.unlockedAux);
-  const [auxTeam, setAuxTeam] = useState(gameContextDefaultValues.auxTeam);
-
-  const addCodeLines = useCallback((nb: number) => {
-    setCodeLines((prevState) => prevState + nb);
-    setTotalCodeLinesAccumulated((prevState) => prevState + nb);
-  }, []);
-
-  const addMoney = useCallback((nb: number) => {
-    setMoney((prevState) => prevState + nb);
-    setTotalMoneyAccumulated((prevState) => prevState + nb);
-  }, []);
-
-  const createManualLine = useCallback(() => {
-    addCodeLines(1);
-  }, [addCodeLines]);
-
-  const buyDev = useCallback(
-    (dev: Dev) => {
-      if (money > devPrice[dev]) {
-        setMoney((prevState) => prevState - devPrice[dev]);
-        setDevTeam((prevState) => ({
-          ...prevState,
-          [dev]: prevState[dev] + 1,
-        }));
-        setDevPrice((prevState) => ({
-          ...prevState,
-          [dev]: prevState[dev] * PriceIncrease,
-        }));
-      }
-    },
-    [devPrice, money],
-  );
-
-  const buyPO = useCallback(
-    (po: PO) => {
-      if (money > poPrice[po]) {
-        setMoney((prevState) => prevState - poPrice[po]);
-        setPoTeam((prevState) => ({
-          ...prevState,
-          [po]: prevState[po] + 1,
-        }));
-        setPoPrice((prevState) => ({
-          ...prevState,
-          [po]: prevState[po] * PriceIncrease,
-        }));
-      }
-    },
-    [money, poPrice],
-  );
-
-  const buyAux = useCallback((aux: Aux) => {
-    setAuxTeam((prevState) => ({
-      ...prevState,
-      [aux]: prevState[aux] + 1,
-    }));
-  }, []);
-
-  const buyUpgrade = useCallback(
-    (upgrade: Upgrade) => {
-      if (money > UpgradeInfos[upgrade].price) {
-        setMoney((prevState) => prevState - UpgradeInfos[upgrade].price);
-        setBoughtUpgrade((prevState) => ({
-          ...prevState,
-          [upgrade]: true,
-        }));
-        switch (upgrade) {
-          case Upgrade.MecanicalKeyboard:
-          case Upgrade.GamingChair:
-            setManualProductivity((prevState) => prevState * 2);
-            break;
-        }
-      }
-    },
-    [money],
-  );
-
-  const sellCode = useCallback(
-    (nbLines: number) => {
-      setCodeLines((currentCodeLines) => {
-        const codeLinesToSell = Math.min(currentCodeLines, nbLines);
-        addMoney(codeLinesToSell * codePrice);
-        return currentCodeLines - codeLinesToSell;
-      });
-    },
-    [addMoney, codePrice],
-  );
-
-  const gameTick = useCallback(
-    (deltaTimeInSecond: number) => {
-      addCodeLines(
-        _.chain(devTeam)
-          .map<number>((numberOfDev, dev) => numberOfDev * devProductivity[dev as Dev] * deltaTimeInSecond)
-          .reduce((prev, curr) => prev + curr, 0)
-          .value(),
-      );
-      sellCode(
-        _.chain(poTeam)
-          .map((numberOfPO, po) => numberOfPO * poProductivity[po as PO] * deltaTimeInSecond)
-          .sum()
-          .value(),
-      );
-    },
-    [addCodeLines, devProductivity, devTeam, poProductivity, poTeam, sellCode],
-  );
-
-  useTick(gameTick, 100);
-
-  return (
-    <gameContext.Provider
-      value={{
-        codeLines,
-        totalCodeLinesAccumulated,
-
-        money,
-        totalMoneyAccumulated,
-
-        boughtUpgrade,
-        activatedUpgrades,
-
-        devTeam,
-        devPrice,
-        devProductivity,
-
-        poTeam,
-        poPrice,
-        poProductivity,
-
-        manualProductivity,
-        codePrice,
-        manualSellingForce,
-
-        unlockedAux,
-        auxTeam,
-
-        createManualLine,
-
-        buyDev,
-        buyPO,
-        buyAux,
-        buyUpgrade,
-
-        sellCode,
-      }}
-    >
-      {children}
-    </gameContext.Provider>
-  );
-};
+// src/Game/Game.tsx
+src/Game/Game.tsx
