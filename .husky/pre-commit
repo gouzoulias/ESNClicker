@@ -7,10 +7,10 @@ cat src/Utils/useTick.ts >>src/assets/code.txt
 
 echo " " >>src/assets/code.txt
 echo "// src/Utils/util.ts" >>src/assets/code.txt
-echo src/Utils.util.ts >>src/assets/code.txt
+cat src/Utils/util.ts >>src/assets/code.txt
 
 echo " " >>src/assets/code.txt
 echo "// src/Game/Game.tsx" >>src/assets/code.txt
-echo src/Game/Game.tsx >>src/assets/code.txt
+cat src/Game/Game.tsx >>src/assets/code.txt
 
 git add .
