@@ -46,7 +46,7 @@ import React, { useCallback, useState } from 'react';
 import { useTick } from '../Utils/useTick.ts';
 import { Aux } from './Aux.ts';
 import { Dev } from './Dev.ts';
-import { gameContext, gameContextDefaultValues, PriceIncreaseInPercent } from './GameContext.ts';
+import { gameContext, gameContextDefaultValues, PriceIncrease } from './GameContext.ts';
 import { PO } from './POs.ts';
 import { Upgrade, UpgradeInfos } from './Upgrade.ts';
 
@@ -99,7 +99,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         }));
         setDevPrice((prevState) => ({
           ...prevState,
-          [dev]: prevState[dev] * PriceIncreaseInPercent,
+          [dev]: prevState[dev] * PriceIncrease,
         }));
       }
     },
@@ -116,7 +116,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         }));
         setPoPrice((prevState) => ({
           ...prevState,
-          [po]: prevState[po] * PriceIncreaseInPercent,
+          [po]: prevState[po] * PriceIncrease,
         }));
       }
     },

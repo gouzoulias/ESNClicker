@@ -1,13 +1,14 @@
 import * as _ from 'lodash';
 import { useCallback, useContext } from 'react';
 import { gameContext } from '../Game/GameContext.ts';
-import { PO, POInitialPrice, POInitialProductivity, POList } from '../Game/POs.ts';
+import { ProductionItemInfo } from '../Game/ItemInfo.ts';
+import { PO, POInitialInfos, POList } from '../Game/POs.ts';
 
 export const POShop = () => {
   const game = useContext(gameContext);
 
   const shouldShowPOBuyButton = useCallback(
-    (po: PO) => game.totalCodeLinesAccumulated > POInitialProductivity[po] * 0.5 && game.totalMoneyAccumulated > POInitialPrice[po] * 0.5,
+    (po: PO) => game.totalCodeLinesAccumulated > POInitialInfos[po].productivity * 0.5 && game.totalMoneyAccumulated > POInitialInfos[po].price * 0.5,
     [game.totalCodeLinesAccumulated, game.totalMoneyAccumulated],
   );
 
@@ -17,20 +18,21 @@ export const POShop = () => {
     shouldShowShop && (
       <div>
         <h2>Recrutement de Product Owners</h2>
-        {_.map(
-          POList,
-          (po) =>
+        {_.map(POList, (po) => {
+          const poInfo: ProductionItemInfo = game.poTeamInfo[po as PO];
+          return (
             shouldShowPOBuyButton(po) && (
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                 <div>
-                  {po} : {game.poTeam[po as PO]}
+                  {poInfo.name} : {poInfo.numberOwned}
                 </div>
                 <div>
-                  <button onClick={() => game.buyPO(po)}>Engager 1 pour {game.poPrice[po].toFixed(2)}$</button>
+                  <button onClick={() => game.buyPO(po)}>Engager 1 pour {poInfo.price.toFixed(2)}$</button>
                 </div>
               </div>
-            ),
-        )}
+            )
+          );
+        })}
       </div>
     )
   );

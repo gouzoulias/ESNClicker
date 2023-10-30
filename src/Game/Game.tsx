@@ -3,7 +3,8 @@ import React, { useCallback, useState } from 'react';
 import { useTick } from '../Utils/useTick.ts';
 import { Aux } from './Aux.ts';
 import { Dev } from './Dev.ts';
-import { gameContext, gameContextDefaultValues, PriceIncreaseInPercent } from './GameContext.ts';
+import { gameContext, gameContextDefaultValues, PriceIncrease } from './GameContext.ts';
+import { ProductionItemInfo } from './ItemInfo.ts';
 import { PO } from './POs.ts';
 import { Upgrade, UpgradeInfos } from './Upgrade.ts';
 
@@ -15,21 +16,17 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const [totalMoneyAccumulated, setTotalMoneyAccumulated] = useState(gameContextDefaultValues.totalMoneyAccumulated);
 
   const [boughtUpgrade, setBoughtUpgrade] = useState(gameContextDefaultValues.boughtUpgrade);
-  const [activatedUpgrades, setActivatedUpgrades] = useState(gameContextDefaultValues.activatedUpgrades);
+  const [activatedUpgrades] = useState(gameContextDefaultValues.activatedUpgrades);
 
   const [manualProductivity, setManualProductivity] = useState(gameContextDefaultValues.manualProductivity);
-  const [codePrice, setCodePrice] = useState(gameContextDefaultValues.codePrice);
-  const [manualSellingForce, setManualSellingForce] = useState(gameContextDefaultValues.manualSellingForce);
+  const [codePrice] = useState(gameContextDefaultValues.codePrice);
+  const [manualSellingForce] = useState(gameContextDefaultValues.manualSellingForce);
 
-  const [devTeam, setDevTeam] = useState(gameContextDefaultValues.devTeam);
-  const [devPrice, setDevPrice] = useState(gameContextDefaultValues.devPrice);
-  const [devProductivity, setDevProductivity] = useState(gameContextDefaultValues.devProductivity);
+  const [devTeamInfo, setDevTeamInfo] = useState(gameContextDefaultValues.devTeamInfo);
 
-  const [poTeam, setPoTeam] = useState(gameContextDefaultValues.poTeam);
-  const [poPrice, setPoPrice] = useState(gameContextDefaultValues.poPrice);
-  const [poProductivity, setPoProductivity] = useState(gameContextDefaultValues.poProductivity);
+  const [poTeamInfo, setPoTeamInfo] = useState(gameContextDefaultValues.poTeamInfo);
 
-  const [unlockedAux, setUnlockedAux] = useState(gameContextDefaultValues.unlockedAux);
+  const [unlockedAux] = useState(gameContextDefaultValues.unlockedAux);
   const [auxTeam, setAuxTeam] = useState(gameContextDefaultValues.auxTeam);
 
   const addCodeLines = useCallback((nb: number) => {
@@ -51,36 +48,42 @@ export const Game = ({ children }: React.PropsWithChildren) => {
 
   const buyDev = useCallback(
     (dev: Dev) => {
-      if (money >= devPrice[dev]) {
-        setMoney((prevState) => prevState - devPrice[dev]);
-        setDevTeam((prevState) => ({
-          ...prevState,
-          [dev]: prevState[dev] + 1,
-        }));
-        setDevPrice((prevState) => ({
-          ...prevState,
-          [dev]: prevState[dev] * PriceIncreaseInPercent,
-        }));
+      const devPrice: number = devTeamInfo[dev].price;
+      if (money >= devPrice) {
+        setMoney((prevState) => prevState - devPrice);
+        setDevTeamInfo((prevState) => {
+          return {
+            ...prevState,
+            [dev]: {
+              ...prevState[dev],
+              numberOwned: prevState[dev].numberOwned + 1,
+              price: prevState[dev].price * PriceIncrease,
+            } as ProductionItemInfo,
+          } as Record<Dev, ProductionItemInfo>;
+        });
       }
     },
-    [devPrice, money],
+    [devTeamInfo, money],
   );
 
   const buyPO = useCallback(
     (po: PO) => {
-      if (money >= poPrice[po]) {
-        setMoney((prevState) => prevState - poPrice[po]);
-        setPoTeam((prevState) => ({
-          ...prevState,
-          [po]: prevState[po] + 1,
-        }));
-        setPoPrice((prevState) => ({
-          ...prevState,
-          [po]: prevState[po] * PriceIncreaseInPercent,
-        }));
+      const poPrice: number = poTeamInfo[po].price;
+      if (money >= poPrice) {
+        setMoney((prevState) => prevState - poPrice);
+        setPoTeamInfo((prevState) => {
+          return {
+            ...prevState,
+            [po]: {
+              ...prevState[po],
+              numberOwned: prevState[po].numberOwned + 1,
+              price: prevState[po].price * PriceIncrease,
+            } as ProductionItemInfo,
+          } as Record<PO, ProductionItemInfo>;
+        });
       }
     },
-    [money, poPrice],
+    [money, poTeamInfo],
   );
 
   const buyAux = useCallback((aux: Aux) => {
@@ -123,19 +126,19 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const gameTick = useCallback(
     (deltaTimeInSecond: number) => {
       addCodeLines(
-        _.chain(devTeam)
-          .map<number>((numberOfDev, dev) => numberOfDev * devProductivity[dev as Dev] * deltaTimeInSecond)
+        _.chain(devTeamInfo)
+          .map(({ numberOwned, productivity }) => numberOwned * productivity * deltaTimeInSecond)
           .reduce((prev, curr) => prev + curr, 0)
           .value(),
       );
       sellCode(
-        _.chain(poTeam)
-          .map((numberOfPO, po) => numberOfPO * poProductivity[po as PO] * deltaTimeInSecond)
+        _.chain(poTeamInfo)
+          .map(({ numberOwned, productivity }) => numberOwned * productivity * deltaTimeInSecond)
           .sum()
           .value(),
       );
     },
-    [addCodeLines, devProductivity, devTeam, poProductivity, poTeam, sellCode],
+    [addCodeLines, devTeamInfo, poTeamInfo, sellCode],
   );
 
   useTick(gameTick, 100);
@@ -152,13 +155,9 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         boughtUpgrade,
         activatedUpgrades,
 
-        devTeam,
-        devPrice,
-        devProductivity,
+        devTeamInfo,
 
-        poTeam,
-        poPrice,
-        poProductivity,
+        poTeamInfo,
 
         manualProductivity,
         codePrice,

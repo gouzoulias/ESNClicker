@@ -1,11 +1,12 @@
 import { createContext } from 'react';
 import { initFromEnum } from '../Utils/util.ts';
 import { Aux } from './Aux.ts';
-import { Dev, DevInitialPrice, DevInitialProductivity } from './Dev.ts';
-import { PO, POInitialPrice, POInitialProductivity } from './POs.ts';
+import { Dev, DevInitialInfos } from './Dev.ts';
+import { ProductionItemInfo } from './ItemInfo.ts';
+import { PO, POInitialInfos } from './POs.ts';
 import { Upgrade } from './Upgrade.ts';
 
-export const PriceIncreaseInPercent = 1.25;
+export const PriceIncrease = 1.25;
 
 export type GameContext = {
   codeLines: number;
@@ -21,13 +22,9 @@ export type GameContext = {
   manualProductivity: number;
   manualSellingForce: number;
 
-  devTeam: Record<Dev, number>;
-  devPrice: Record<Dev, number>;
-  devProductivity: Record<Dev, number>;
+  devTeamInfo: Record<Dev, ProductionItemInfo>;
 
-  poTeam: Record<PO, number>;
-  poPrice: Record<PO, number>;
-  poProductivity: Record<PO, number>;
+  poTeamInfo: Record<PO, ProductionItemInfo>;
 
   unlockedAux: Record<Aux, boolean>;
   auxTeam: Record<Aux, number>;
@@ -54,17 +51,13 @@ export const gameContextDefaultValues: GameContext = {
     pos: initFromEnum(PO, false),
   }),
 
-  devTeam: initFromEnum(Dev, 0),
-  devPrice: DevInitialPrice,
-  devProductivity: DevInitialProductivity,
+  devTeamInfo: DevInitialInfos,
+
+  poTeamInfo: POInitialInfos,
 
   codePrice: 1,
   manualProductivity: 1,
   manualSellingForce: 5,
-
-  poTeam: initFromEnum(PO, 0),
-  poPrice: POInitialPrice,
-  poProductivity: POInitialProductivity,
 
   unlockedAux: initFromEnum(Aux, false),
   auxTeam: initFromEnum(Aux, 0),

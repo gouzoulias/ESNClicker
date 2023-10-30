@@ -1,13 +1,14 @@
 import * as _ from 'lodash';
 import { useCallback, useContext } from 'react';
-import { Dev, DevInitialPrice, DevInitialProductivity, DevList } from '../Game/Dev.ts';
+import { Dev, DevInitialInfos, DevList } from '../Game/Dev.ts';
 import { gameContext } from '../Game/GameContext.ts';
+import { ProductionItemInfo } from '../Game/ItemInfo.ts';
 
 export const DevShop = () => {
   const game = useContext(gameContext);
 
   const shouldShowDevBuyButton = useCallback(
-    (dev: Dev) => game.totalCodeLinesAccumulated > DevInitialProductivity[dev] * 0.5 && game.totalMoneyAccumulated > DevInitialPrice[dev] * 0.5,
+    (dev: Dev) => game.totalCodeLinesAccumulated > DevInitialInfos[dev].productivity * 0.5 && game.totalMoneyAccumulated > DevInitialInfos[dev].price * 0.5,
     [game.totalCodeLinesAccumulated, game.totalMoneyAccumulated],
   );
 
@@ -17,20 +18,21 @@ export const DevShop = () => {
     shouldShowShop && (
       <div>
         <h2>Recrutement de Developpeurs</h2>
-        {_.map(
-          DevList,
-          (dev) =>
+        {_.map(DevList, (dev) => {
+          const devInfo: ProductionItemInfo = game.devTeamInfo[dev as Dev];
+          return (
             shouldShowDevBuyButton(dev) && (
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                 <div>
-                  {dev} : {game.devTeam[dev as Dev]}
+                  {devInfo.name} : {devInfo.numberOwned}
                 </div>
                 <div>
-                  <button onClick={() => game.buyDev(dev)}>Engager 1 pour {game.devPrice[dev].toFixed(2)}$</button>
+                  <button onClick={() => game.buyDev(dev)}>Engager 1 pour {devInfo.price.toFixed(2)}$</button>
                 </div>
               </div>
-            ),
-        )}
+            )
+          );
+        })}
       </div>
     )
   );
