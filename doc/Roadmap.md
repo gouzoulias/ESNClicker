@@ -13,8 +13,8 @@
 - [X] Faire travailler les PO
 - [X] Ajouter des compteurs de PO
 - [ ] Ajouter un système de sauvegarde
-- [ ] Faire un peu d'UI
-- [ ] Ajouter des upgrades
+- [X] Faire un peu d'UI
+- [X] Ajouter des upgrades
 - [ ] Ajouter le jour et la nuit
 - [ ] Ajouter le recrutement d'auxiliaires
 - [ ] Faire travailler les auxiliaires
