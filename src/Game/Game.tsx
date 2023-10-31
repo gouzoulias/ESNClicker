@@ -128,6 +128,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         switch (upgrade) {
           case Upgrade.MecanicalKeyboard:
           case Upgrade.GamingChair:
+          case Upgrade.SecondMonitor:
             setManualProductivity((prevState) => prevState * 2);
             break;
           case Upgrade.Smartphone:
@@ -138,11 +139,25 @@ export const Game = ({ children }: React.PropsWithChildren) => {
             setCodePrice((prevState) => prevState * 2);
             break;
           case Upgrade.CofeeMachine:
+            updateDevTeam((_dev, devInfo) => ({
+              ...devInfo,
+              productivity: devInfo.productivity * 2,
+            }));
+            break;
+          case Upgrade.OpenSpace:
+            updateDevTeam((_dev, devInfo) => ({
+              ...devInfo,
+              productivity: devInfo.productivity * 2,
+            }));
+            updatePOTeam((_po, poInfo) => ({
+              ...poInfo,
+              productivity: poInfo.productivity * 2,
+            }));
             break;
         }
       }
     },
-    [money],
+    [money, updateDevTeam, updatePOTeam],
   );
 
   const sellCode = useCallback(

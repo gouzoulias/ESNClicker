@@ -17,15 +17,15 @@ export const DevInitialInfos: Record<Dev, ProductionItemInfo> = {
   [Dev.Stagiaire]: {
     description: 'Un stagiaire qui fait du code au rythme de {productivity} lignes par seconde.',
     name: 'Stagiaire',
-    productivity: 1,
-    price: 5e2,
     numberOwned: 0,
+    price: 5e2,
+    productivity: 1,
   },
   [Dev.Alternant]: {
     description: 'Un alternant qui fait du code au rythme de {productivity} lignes par seconde.',
     name: 'Alternant',
     numberOwned: 0,
-    price: 1.5e3,
+    price: 1.5e5,
     productivity: 5e2,
   },
   [Dev.Integrateur]: {
@@ -40,7 +40,7 @@ export const DevInitialInfos: Record<Dev, ProductionItemInfo> = {
     name: 'FullStack Junior',
     numberOwned: 0,
     price: 2.5e9,
-    productivity: 15.5e7,
+    productivity: 1.5e7,
   },
   [Dev.FullStackSenior]: {
     description: 'Un fullstack senior qui fait du code au rythme de {productivity} lignes par seconde.',
