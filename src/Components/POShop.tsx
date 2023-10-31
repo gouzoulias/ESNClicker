@@ -3,6 +3,7 @@ import { useCallback, useContext } from 'react';
 import { gameContext } from '../Game/GameContext.ts';
 import { ProductionItemInfo } from '../Game/ItemInfo.ts';
 import { PO, POInitialInfos, POList } from '../Game/POs.ts';
+import { formatNumber } from '../Utils/util.ts';
 import { Button } from './Button.tsx';
 
 export const POShop = () => {
@@ -29,7 +30,7 @@ export const POShop = () => {
                 </div>
                 <div>
                   <Button onClick={() => game.buyPO(po)} title={poInfo.description.replace('{productivity}', `${poInfo.productivity}`)}>
-                    Engager 1 pour <b>{poInfo.price.toFixed(2)}€</b>
+                    Engager 1 pour <b>{formatNumber(poInfo.price)} €</b>
                   </Button>
                 </div>
               </div>

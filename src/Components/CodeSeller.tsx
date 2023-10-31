@@ -1,5 +1,6 @@
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import { gameContext } from '../Game/GameContext.ts';
+import { formatNumber } from '../Utils/util.ts';
 import { Button } from './Button.tsx';
 
 export const CodeSeller = () => {
@@ -9,10 +10,21 @@ export const CodeSeller = () => {
     game.sellCode(game.manualSellingForce);
   }, [game]);
 
+  useEffect(() => {
+    // TODO : Delete this log
+    console.log('CodeSeller : game.manualSellingForce', game.manualSellingForce);
+  }, [game.manualSellingForce]);
+
+  useEffect(() => {
+    // TODO : Delete this log
+    console.log('CodeSeller : game.codePrice', game.codePrice);
+  }, [game.codePrice]);
+
   return (
     <div style={{ padding: 16 }}>
       <Button onClick={sellCode}>
-        Vendre <b>{game.manualSellingForce}</b> lignes de code pour <b>{game.manualSellingForce * game.codePrice}€</b>
+        Vendre <b>{formatNumber(game.manualSellingForce, false)}</b> lignes de code pour{' '}
+        <b>{formatNumber(game.manualSellingForce * game.codePrice, false)} €</b>
       </Button>
     </div>
   );

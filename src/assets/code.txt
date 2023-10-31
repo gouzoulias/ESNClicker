@@ -58,12 +58,16 @@ export const Game = ({ children }: React.PropsWithChildren) => {
 
   const addCodeLines = useCallback((nb: number) => {
     setCodeLines((prevState) => prevState + nb);
-    setTotalCodeLinesAccumulated((prevState) => prevState + nb);
+    if (nb > 0) {
+      setTotalCodeLinesAccumulated((prevState) => prevState + nb);
+    }
   }, []);
 
   const addMoney = useCallback((nb: number) => {
     setMoney((prevState) => prevState + nb);
-    setTotalMoneyAccumulated((prevState) => prevState + nb);
+    if (nb > 0) {
+      setTotalMoneyAccumulated((prevState) => prevState + nb);
+    }
   }, []);
 
   const createManualLine = useCallback(
@@ -77,7 +81,8 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     (dev: Dev) => {
       const devPrice: number = devTeamInfo[dev].price;
       if (money >= devPrice) {
-        setMoney((prevState) => prevState - devPrice);
+        console.log('addMoney : ', -devPrice);
+        addMoney(-devPrice);
         updateDevTeam((prevDev, devInfo) =>
           prevDev === dev
             ? ({
@@ -89,14 +94,14 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         );
       }
     },
-    [devTeamInfo, money, updateDevTeam],
+    [addMoney, devTeamInfo, money, updateDevTeam],
   );
 
   const buyPO = useCallback(
     (po: PO) => {
       const poPrice: number = poTeamInfo[po].price;
       if (money >= poPrice) {
-        setMoney((prevState) => prevState - poPrice);
+        addMoney(-poPrice);
         updatePOTeam((prevPO, poInfo) =>
           prevPO === po
             ? ({
@@ -108,7 +113,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         );
       }
     },
-    [money, poTeamInfo, updatePOTeam],
+    [addMoney, money, poTeamInfo, updatePOTeam],
   );
 
   const buyAux = useCallback((aux: Aux) => {
@@ -163,31 +168,36 @@ export const Game = ({ children }: React.PropsWithChildren) => {
 
   const sellCode = useCallback(
     (nbLines: number) => {
-      setCodeLines((currentCodeLines) => {
-        const codeLinesToSell = Math.min(currentCodeLines, nbLines);
+      if (nbLines !== 0) {
+        const codeLinesToSell = Math.min(codeLines, nbLines);
         addMoney(codeLinesToSell * codePrice);
-        return currentCodeLines - codeLinesToSell;
-      });
+        addCodeLines(-codeLinesToSell);
+      }
     },
-    [addMoney, codePrice],
+    [addCodeLines, addMoney, codeLines, codePrice],
   );
 
   const gameTick = useCallback(
     (deltaTimeInSecond: number) => {
-      addCodeLines(
-        _.chain(devTeamInfo)
-          .map(({ numberOwned, productivity }) => numberOwned * productivity * deltaTimeInSecond)
-          .reduce((prev, curr) => prev + curr, 0)
-          .value(),
-      );
-      sellCode(
-        _.chain(poTeamInfo)
-          .map(({ numberOwned, productivity }) => numberOwned * productivity * deltaTimeInSecond)
-          .sum()
-          .value(),
-      );
+      const codeProduction: number = _.chain(devTeamInfo)
+        .map(({ numberOwned, productivity }) => numberOwned * productivity * deltaTimeInSecond)
+        .reduce((prev, curr) => prev + curr, 0)
+        .value();
+
+      const sellingForce: number = _.chain(poTeamInfo)
+        .map(({ numberOwned, productivity }) => numberOwned * productivity * deltaTimeInSecond)
+        .sum()
+        .value();
+
+      if (codeLines + codeProduction < sellingForce) {
+        addMoney((codeLines + codeProduction) * codePrice);
+        addCodeLines(-codeLines);
+      } else {
+        sellCode(sellingForce);
+        addCodeLines(codeProduction);
+      }
     },
-    [addCodeLines, devTeamInfo, poTeamInfo, sellCode],
+    [addCodeLines, addMoney, codeLines, codePrice, devTeamInfo, poTeamInfo, sellCode],
   );
 
   useTick(gameTick, 100);

@@ -18,3 +18,15 @@ export const initFromEnum = <A extends Enum, B extends object | number | boolean
 
   return enumObject;
 };
+
+export const formatNumber = (number: number, showSmallDigitNumber?: boolean): string => {
+  if (number < 1e3) {
+    return number.toFixed(showSmallDigitNumber ? 2 : 0);
+  }
+
+  if (number < 1e6) {
+    return (number / 1e3).toFixed(2) + 'K';
+  }
+
+  return number.toExponential(3);
+};

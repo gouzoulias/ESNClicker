@@ -51,5 +51,5 @@ Un taux de 50% de démission veut dire que chaque jour, il y a 50% de chances qu
 - Dev Ops (augmente la productivité des devs mais a une chance de bloquer la production pendant 1 jour)
 - Chief Happiness Officer (augmente le taux de vente des ProductOwner et le taux de dev mais réduit le temps de travail)
 - Designer (augmente le prix des lignes)
-- Manager : Augmente le temps de travail de 5% mais augmente aussi le taux de démission de 1%
-
+- Manager : Augmente le temps de travail de 25% mais augmente aussi le taux de démission de 1%
+- Psychologue : Diminue le taux de démission

@@ -63,14 +63,14 @@ export const UpgradeInfos: Record<Upgrade, ItemInfo> = {
 
   // Dev Productivity
   [Upgrade.CofeeMachine]: {
-    price: 500,
+    price: 1500,
     name: 'Machine à café',
     description: 'Vous avez une machine à café, ce qui permet à vos développeurs de travailler plus vite !',
   },
 
   // General Productivity
   [Upgrade.OpenSpace]: {
-    price: 1000,
+    price: 8e4,
     name: 'Open Space',
     description: 'Vous avez un open space, ce qui permet à tous vos employés de travailler plus vite !',
   },

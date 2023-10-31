@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import { useContext, useMemo } from 'react';
 import { gameContext } from '../Game/GameContext.ts';
 import { Upgrade, UpgradeInfos } from '../Game/Upgrade.ts';
+import { formatNumber } from '../Utils/util.ts';
 import { Button } from './Button.tsx';
 
 export const UpgradeShop = () => {
@@ -28,7 +29,7 @@ export const UpgradeShop = () => {
             </p>
             <p>{UpgradeInfos[upgrade as Upgrade].description}</p>
             <p>
-              Acheter pour <b>{UpgradeInfos[upgrade as Upgrade].price}€</b>
+              Acheter pour <b>{formatNumber(UpgradeInfos[upgrade as Upgrade].price, false)} €</b>
             </p>
           </Button>
         ))}
