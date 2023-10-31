@@ -19,3 +19,5 @@ npm run dev
 # [Roadmap](doc/Roadmap.md)
 
 # [Rules](doc/Game.md)
+
+# [Ideas for the future](doc/Ideas.md)

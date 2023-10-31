@@ -1,5 +1,6 @@
 import { useCallback, useContext } from 'react';
 import { gameContext } from '../Game/GameContext.ts';
+import { Button } from './Button.tsx';
 
 export const CodeSeller = () => {
   const game = useContext(gameContext);
@@ -9,8 +10,10 @@ export const CodeSeller = () => {
   }, [game]);
 
   return (
-    <button type="button" onClick={sellCode}>
-      Vendre {game.manualSellingForce} lignes de code pour {game.manualSellingForce * game.codePrice}$
-    </button>
+    <div style={{ padding: 16 }}>
+      <Button onClick={sellCode}>
+        Vendre <b>{game.manualSellingForce}</b> lignes de code pour <b>{game.manualSellingForce * game.codePrice}€</b>
+      </Button>
+    </div>
   );
 };

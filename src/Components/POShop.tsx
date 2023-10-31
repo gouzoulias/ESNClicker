@@ -3,6 +3,7 @@ import { useCallback, useContext } from 'react';
 import { gameContext } from '../Game/GameContext.ts';
 import { ProductionItemInfo } from '../Game/ItemInfo.ts';
 import { PO, POInitialInfos, POList } from '../Game/POs.ts';
+import { Button } from './Button.tsx';
 
 export const POShop = () => {
   const game = useContext(gameContext);
@@ -27,9 +28,9 @@ export const POShop = () => {
                   {poInfo.name} : {poInfo.numberOwned}
                 </div>
                 <div>
-                  <button onClick={() => game.buyPO(po)} title={poInfo.description.replace('{productivity}', `${poInfo.productivity}`)}>
-                    Engager 1 pour {poInfo.price.toFixed(2)}$
-                  </button>
+                  <Button onClick={() => game.buyPO(po)} title={poInfo.description.replace('{productivity}', `${poInfo.productivity}`)}>
+                    Engager 1 pour <b>{poInfo.price.toFixed(2)}€</b>
+                  </Button>
                 </div>
               </div>
             )

@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import { useContext, useMemo } from 'react';
 import { gameContext } from '../Game/GameContext.ts';
 import { Upgrade, UpgradeInfos } from '../Game/Upgrade.ts';
+import { Button } from './Button.tsx';
 
 export const UpgradeShop = () => {
   const game = useContext(gameContext);
@@ -19,16 +20,19 @@ export const UpgradeShop = () => {
   return (
     <div>
       <h2>Améliorations</h2>
-      {_.map(availableUpgrades, (upgrade) => (
-        <div key={upgrade} style={{ display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'space-between' }}>
-          <div>
-            {UpgradeInfos[upgrade as Upgrade].title} : {UpgradeInfos[upgrade as Upgrade].description}
-          </div>
-          <div>
-            <button onClick={() => game.buyUpgrade(upgrade as Upgrade)}>Acheter pour {UpgradeInfos[upgrade as Upgrade].price}$</button>
-          </div>
-        </div>
-      ))}
+      <div style={{ display: 'flex', gap: 8, padding: 16 }}>
+        {_.map(availableUpgrades, (upgrade) => (
+          <Button key={upgrade} onClick={() => game.buyUpgrade(upgrade as Upgrade)}>
+            <p>
+              <b>{UpgradeInfos[upgrade as Upgrade].name}</b>
+            </p>
+            <p>{UpgradeInfos[upgrade as Upgrade].description}</p>
+            <p>
+              Acheter pour <b>{UpgradeInfos[upgrade as Upgrade].price}€</b>
+            </p>
+          </Button>
+        ))}
+      </div>
     </div>
   );
 };

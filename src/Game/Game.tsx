@@ -29,6 +29,32 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const [unlockedAux, setUnlockedAux] = useState(defaultValues.unlockedAux);
   const [auxTeam, setAuxTeam] = useState(defaultValues.auxTeam);
 
+  const updateDevTeam = useCallback((editDev: (dev: Dev, devInfo: ProductionItemInfo) => ProductionItemInfo) => {
+    setDevTeamInfo((prevState) =>
+      _.reduce(
+        prevState,
+        (acc, devInfo, dev) => ({
+          ...acc,
+          [dev]: editDev(dev as Dev, devInfo),
+        }),
+        {} as Record<Dev, ProductionItemInfo>,
+      ),
+    );
+  }, []);
+
+  const updatePOTeam = useCallback((editDev: (po: PO, poInfo: ProductionItemInfo) => ProductionItemInfo) => {
+    setPoTeamInfo((prevState) =>
+      _.reduce(
+        prevState,
+        (acc, poInfo, po) => ({
+          ...acc,
+          [po]: editDev(po as PO, poInfo),
+        }),
+        {} as Record<PO, ProductionItemInfo>,
+      ),
+    );
+  }, []);
+
   const addCodeLines = useCallback((nb: number) => {
     setCodeLines((prevState) => prevState + nb);
     setTotalCodeLinesAccumulated((prevState) => prevState + nb);
@@ -51,19 +77,18 @@ export const Game = ({ children }: React.PropsWithChildren) => {
       const devPrice: number = devTeamInfo[dev].price;
       if (money >= devPrice) {
         setMoney((prevState) => prevState - devPrice);
-        setDevTeamInfo((prevState) => {
-          return {
-            ...prevState,
-            [dev]: {
-              ...prevState[dev],
-              numberOwned: prevState[dev].numberOwned + 1,
-              price: prevState[dev].price * PriceIncrease,
-            } as ProductionItemInfo,
-          } as Record<Dev, ProductionItemInfo>;
-        });
+        updateDevTeam((prevDev, devInfo) =>
+          prevDev === dev
+            ? ({
+                ...devInfo,
+                numberOwned: devInfo.numberOwned + 1,
+                price: devInfo.price * PriceIncrease,
+              } as ProductionItemInfo)
+            : devInfo,
+        );
       }
     },
-    [devTeamInfo, money],
+    [devTeamInfo, money, updateDevTeam],
   );
 
   const buyPO = useCallback(
@@ -71,19 +96,18 @@ export const Game = ({ children }: React.PropsWithChildren) => {
       const poPrice: number = poTeamInfo[po].price;
       if (money >= poPrice) {
         setMoney((prevState) => prevState - poPrice);
-        setPoTeamInfo((prevState) => {
-          return {
-            ...prevState,
-            [po]: {
-              ...prevState[po],
-              numberOwned: prevState[po].numberOwned + 1,
-              price: prevState[po].price * PriceIncrease,
-            } as ProductionItemInfo,
-          } as Record<PO, ProductionItemInfo>;
-        });
+        updatePOTeam((prevPO, poInfo) =>
+          prevPO === po
+            ? ({
+                ...poInfo,
+                numberOwned: poInfo.numberOwned + 1,
+                price: poInfo.price * PriceIncrease,
+              } as ProductionItemInfo)
+            : poInfo,
+        );
       }
     },
-    [money, poTeamInfo],
+    [money, poTeamInfo, updatePOTeam],
   );
 
   const buyAux = useCallback((aux: Aux) => {
@@ -112,6 +136,8 @@ export const Game = ({ children }: React.PropsWithChildren) => {
             break;
           case Upgrade.Linter:
             setCodePrice((prevState) => prevState * 2);
+            break;
+          case Upgrade.CofeeMachine:
             break;
         }
       }

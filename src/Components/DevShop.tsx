@@ -1,8 +1,9 @@
 import * as _ from 'lodash';
-import { useCallback, useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { Dev, DevInitialInfos, DevList } from '../Game/Dev.ts';
 import { gameContext } from '../Game/GameContext.ts';
 import { ProductionItemInfo } from '../Game/ItemInfo.ts';
+import { Button } from './Button.tsx';
 
 export const DevShop = () => {
   const game = useContext(gameContext);
@@ -27,9 +28,9 @@ export const DevShop = () => {
                   {devInfo.name} : {devInfo.numberOwned}
                 </div>
                 <div>
-                  <button onClick={() => game.buyDev(dev)} title={devInfo.description.replace('{productivity}', `${devInfo.productivity}`)}>
-                    Engager 1 pour {devInfo.price.toFixed(2)}$
-                  </button>
+                  <Button onClick={() => game.buyDev(dev)} title={devInfo.description.replace('{productivity}', `${devInfo.productivity}`)}>
+                    Engager 1 pour {devInfo.price.toFixed(2)}€
+                  </Button>
                 </div>
               </div>
             )

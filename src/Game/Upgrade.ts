@@ -1,7 +1,10 @@
+import { ItemInfo } from './ItemInfo.ts';
+
 export enum Upgrade {
   // Dev manuel
   MecanicalKeyboard = 'MecanicalKeyboard',
   GamingChair = 'GamingChair',
+  SecondMonitor = 'SecondMonitor',
 
   // Vente manuelle plus rapide
   Smartphone = 'Smartphone',
@@ -11,45 +14,55 @@ export enum Upgrade {
   Linter = 'Linter',
 
   // Devs
+  CofeeMachine = 'CofeeMachine',
 
   // POS
 
   // Generic
+  OpenSpace = 'OpenSpace',
 
   // Aux
 }
 
-export const UpgradeInfos: Record<
-  Upgrade,
-  {
-    price: number;
-    title: string;
-    description: string;
-  }
-> = {
+export const UpgradeInfos: Record<Upgrade, ItemInfo> = {
   [Upgrade.MecanicalKeyboard]: {
     price: 25,
-    title: 'Clavier mécanique',
+    name: 'Clavier mécanique',
     description: 'Vous développez plus vite',
   },
   [Upgrade.GamingChair]: {
     price: 150,
-    title: 'Chaise gaming',
+    name: 'Chaise gaming',
     description: 'Vous développez encore plus vite grâce à votre super chaise gaming !',
   },
   [Upgrade.Smartphone]: {
-    price: 10,
-    title: 'Smartphone',
+    price: 600,
+    name: 'Smartphone',
     description: 'Vous vendez plus vite grâce à votre smartphone !',
   },
   [Upgrade['5G']]: {
-    price: 50,
-    title: '5G',
+    price: 1200,
+    name: '5G',
     description: 'Votre téléphone est maintenant compatible avec la 5G et ça vous permet de vendre encore plus vite !',
   },
   [Upgrade.Linter]: {
     price: 100,
-    title: 'Linter',
+    name: 'Linter',
     description: 'Vous utilisez un linter, rendant votre code plus beau et permettant de le vendre à un meilleur prix !',
+  },
+  [Upgrade.SecondMonitor]: {
+    price: 200,
+    name: 'Second écran',
+    description: 'Vous développez plus vite grâce à votre second écran !',
+  },
+  [Upgrade.CofeeMachine]: {
+    price: 500,
+    name: 'Machine à café',
+    description: 'Vous avez une machine à café, ce qui permet à vos développeurs de travailler plus vite !',
+  },
+  [Upgrade.OpenSpace]: {
+    price: 1000,
+    name: 'Open Space',
+    description: 'Vous avez un open space, ce qui permet à tous vos employés de travailler plus vite !',
   },
 };
