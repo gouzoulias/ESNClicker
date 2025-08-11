@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { initFromEnum } from '../Utils/util.ts';
-import { Aux } from './Aux.ts';
+import { Aux } from './Auxiliary.ts';
 import { Dev, DevInitialInfos } from './Dev.ts';
 import { ProductionItemInfo } from './ItemInfo.ts';
 import { PO, POInitialInfos } from './POs.ts';

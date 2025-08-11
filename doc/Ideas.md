@@ -51,4 +51,4 @@ En voici la liste :
 
 # MiniJeu
 
-Paris sur les leaderboard 
+Paris sur les leaderboard
