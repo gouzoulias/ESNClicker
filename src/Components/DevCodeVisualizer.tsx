@@ -7,7 +7,7 @@ import { useTick } from '../Utils/useTick.ts';
 export const DevCodeVisualizer = () => {
   const game = useContext(gameContext);
 
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState(' ');
   const [iLine, setILine] = useState(0);
   const [textAreaValue, setTextAreaValue] = useState('');
 
@@ -32,12 +32,12 @@ export const DevCodeVisualizer = () => {
     setTextAreaValue(
       code
         .split('\n')
-        .slice(iLine - 15, iLine)
+        .slice(Math.max(0, iLine - 15), iLine)
         .join('\n'),
     );
   }, [code, iLine]);
 
-  useTick(onTick, 100);
+  useTick(onTick, 1000);
 
   return (
     <div style={{ display: 'flex' }}>

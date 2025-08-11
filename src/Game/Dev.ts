@@ -18,7 +18,7 @@ export const DevInitialInfos: Record<Dev, ProductionItemInfo> = {
     description: 'Un stagiaire qui fait du code au rythme de {productivity} lignes par seconde.',
     name: 'Stagiaire',
     numberOwned: 0,
-    price: 5e2,
+    price: 100,
     productivity: 1,
   },
   [Dev.Alternant]: {

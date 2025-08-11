@@ -42,7 +42,7 @@ export const gameContextDefaultValues: GameContext = {
   codeLines: 0,
   totalCodeLinesAccumulated: 0,
 
-  money: 0,
+  money: 10,
   totalMoneyAccumulated: 0,
 
   boughtUpgrade: initFromEnum(Upgrade, false),
@@ -56,7 +56,7 @@ export const gameContextDefaultValues: GameContext = {
   poTeamInfo: POInitialInfos,
 
   codePrice: 1,
-  manualProductivity: 1,
+  manualProductivity: 3,
   manualSellingForce: 5,
 
   unlockedAux: initFromEnum(Aux, false),
