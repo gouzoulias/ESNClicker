@@ -79,6 +79,10 @@ Les upgrades actuels affectent la productivité manuelle, la force de vente, ou 
 
 Pour chaque demande de fonctionnalité ou évolution, créer une branche git dédiée avec un nom descriptif lié à la tâche. Cela permet des commits incrémentaux et une revue de code plus facile.
 
+**Messages de commit** : Toujours écrire les messages de commit en français pour rester cohérent avec le projet.
+
+**Co-author** : Ne pas ajouter Claude en co-author dans les commits.
+
 ## Fonctionnalités prévues
 
 Voir `doc/Roadmap.md` pour la roadmap de développement actuelle. Les fonctionnalités manquantes clés incluent :
