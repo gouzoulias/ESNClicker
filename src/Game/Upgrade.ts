@@ -12,6 +12,9 @@ export enum Upgrade {
 
   // Vente plus chère
   Linter = 'Linter',
+  
+  // Analytics
+  SpeedCounter = 'SpeedCounter',
 
   // Devs
   CofeeMachine = 'CofeeMachine',
@@ -59,6 +62,13 @@ export const UpgradeInfos: Record<Upgrade, ItemInfo> = {
     price: 100,
     name: 'Linter',
     description: 'Vous utilisez un linter, rendant votre code plus beau et permettant de le vendre à un meilleur prix !',
+  },
+
+  // Analytics
+  [Upgrade.SpeedCounter]: {
+    price: 50,
+    name: 'Compteur de vitesse',
+    description: 'Affiche votre vitesse de frappe en temps réel pour optimiser votre productivité !',
   },
 
   // Dev Productivity

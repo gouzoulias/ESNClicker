@@ -141,7 +141,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
             setManualSellingForce((prevState) => prevState * 5);
             break;
           case Upgrade.Linter:
-            setCodePrice((prevState) => prevState * 2);
+            setCodePrice((prevState) => prevState * 1.25);
             break;
           case Upgrade.CofeeMachine:
             updateDevTeam((_dev, devInfo) => ({

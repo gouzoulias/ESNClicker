@@ -11,17 +11,29 @@ import { Game } from './Game/Game.tsx';
 function App() {
   return (
     <Game>
-      <h1>ESN Clicker</h1>
+      {/* Header with title */}
+      <div style={{ 
+        marginBottom: '20px',
+        paddingBottom: '10px',
+        borderBottom: '2px solid #ccc'
+      }}>
+        <h1 style={{ margin: '0 0 10px 0' }}>ESN Clicker</h1>
+        {/* Counters below title, left aligned */}
+        <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+          <LinesViewer />
+          <MoneyViewer />
+        </div>
+      </div>
+
+      {/* Main game area */}
       <div style={{ display: 'flex' }}>
         <div style={{ display: 'flex', flexDirection: 'column', width: '500px' }}>
           <h2>Artisanat de Code</h2>
-          <LinesViewer />
           <CodeMaker />
           <DevShop />
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', width: '500px' }}>
           <h2>Vente de code</h2>
-          <MoneyViewer />
           <CodeSeller />
           <POShop />
         </div>
