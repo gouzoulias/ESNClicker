@@ -89,25 +89,30 @@ Pour chaque demande de fonctionnalité ou évolution, créer une branche git dé
 
 ### Fichiers à modifier lors d'ajouts de fonctionnalités :
 
-1. **`src/Utils/SaveGame.ts`** :
-   - Mettre à jour le type `SaveGame` avec les nouveaux champs
-   - Modifier la fonction `createSaveGame()` pour inclure les nouvelles données
-   - Incrémenter `SAVE_VERSION` si changement incompatible
+⚠️ **PROCÉDURE OBLIGATOIRE** : Toute évolution du jeu DOIT inclure la mise à jour du système de sauvegarde !
+
+1. **`src/Game/GameContext.ts`** :
+   - Ajouter les nouveaux champs au type `GameState` (les données)
+   - Le type `SaveGame` s'adapte automatiquement (hérite de `GameState`)
+   - Mettre à jour `gameStateDefaultValues` avec les nouvelles valeurs par défaut
 
 2. **`src/Game/Game.tsx`** :
    - Adapter la fonction `loadSaveGame()` pour charger les nouvelles données
    - Mettre à jour la fonction `resetGame()` si nécessaire
+   - Inclure les nouveaux champs dans `currentGameState`
 
-3. **`src/Game/GameContext.ts`** :
-   - Ajouter les nouveaux champs au type `GameContext`
-   - Mettre à jour `gameContextDefaultValues` avec les nouvelles valeurs par défaut
+3. **`src/Utils/SaveGame.ts`** :
+   - Incrémenter `SAVE_VERSION` si changement incompatible
+   - Ajouter logique de migration si nécessaire
 
 ### Système actuel
 
+- **Architecture** : Séparation `GameState` (données) / `GameContext` (données + méthodes)
 - **Sauvegarde automatique** : toutes les 10 secondes dans localStorage
 - **Export/Import** : via Base64 avec validation de version
 - **Réinitialisation** : remise aux valeurs par défaut + nettoyage localStorage
-- **Interface** : composant `SaveManager` intégré dans l'application
+- **Interface** : mode paramètres accessible via bouton en en-tête
+- **UX** : Le jeu continue de tourner pendant la gestion des sauvegardes
 
 Voir `doc/Sauvegarde.md` pour la documentation complète du système.
 

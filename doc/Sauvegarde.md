@@ -16,25 +16,39 @@ Le système de sauvegarde d'ESN Clicker permet aux joueurs de :
 - `src/Components/SaveManager.tsx` : Interface utilisateur de gestion des sauvegardes
 - `src/Game/Game.tsx` : Intégration de la sauvegarde automatique et des fonctions de chargement
 
-### Type SaveGame
+### Types GameState et SaveGame
+
+L'architecture repose sur la séparation claire entre l'état du jeu et le contexte :
 
 ```typescript
-export type SaveGame = {
-  version: number;                    // Version du format de sauvegarde
-  timestamp: number;                  // Timestamp de création
-  codeLines: number;                 // Lignes de code actuelles
-  totalCodeLinesAccumulated: number; // Total de lignes créées
-  money: number;                     // Argent actuel
-  totalMoneyAccumulated: number;     // Total d'argent gagné
-  boughtUpgrade: Record<Upgrade, boolean>;           // Upgrades achetés
+// État pur du jeu (sans méthodes)
+export type GameState = {
+  codeLines: number;
+  totalCodeLinesAccumulated: number;
+  money: number;
+  totalMoneyAccumulated: number;
+  boughtUpgrade: Record<Upgrade, boolean>;
   activatedUpgrades: Record<Upgrade, { devs: Record<Dev, boolean>; pos: Record<PO, boolean> }>;
-  codePrice: number;                 // Prix de vente du code
-  manualProductivity: number;        // Productivité manuelle
-  manualSellingForce: number;        // Force de vente manuelle
-  devTeamInfo: Record<Dev, ProductionItemInfo>;     // Info équipe dev
-  poTeamInfo: Record<PO, ProductionItemInfo>;       // Info équipe PO
-  unlockedAux: Record<Aux, boolean>; // Auxiliaires débloqués
-  auxTeam: Record<Aux, number>;      // Nombre d'auxiliaires
+  codePrice: number;
+  manualProductivity: number;
+  manualSellingForce: number;
+  devTeamInfo: Record<Dev, ProductionItemInfo>;
+  poTeamInfo: Record<PO, ProductionItemInfo>;
+  unlockedAux: Record<Aux, boolean>;
+  auxTeam: Record<Aux, number>;
+};
+
+// Contexte = État + méthodes
+export type GameContext = GameState & {
+  createManualLine: (numberOfLinesToCreate: number) => void;
+  buyDev: (dev: Dev) => void;
+  // ... autres méthodes
+};
+
+// Sauvegarde = État + métadonnées
+export type SaveGame = GameState & {
+  version: number;
+  timestamp: number;
 };
 ```
 
@@ -82,6 +96,13 @@ export type SaveGame = {
 ## Interface utilisateur
 
 ### Composant SaveManager
+
+Interface accessible via le bouton "Paramètres" dans l'en-tête du jeu.
+
+**Mode paramètres** :
+- Masque l'interface de jeu principale
+- Affiche un avertissement que le jeu continue en arrière-plan
+- Bouton "Retour au jeu" pour revenir à l'interface normale
 
 Organisé en 3 sections :
 
@@ -132,21 +153,24 @@ Nouvelles fonctions ajoutées :
 
 ### Pour les joueurs
 
-1. **Sauvegarde** : Automatique, rien à faire
-2. **Export** : Cliquer sur "Générer l'export" puis copier ou télécharger
-3. **Import** : Coller les données ou uploader un fichier, puis cliquer "Importer"
-4. **Reset** : Cliquer "Réinitialiser" et confirmer
+1. **Accès** : Cliquer sur "Paramètres" dans l'en-tête
+2. **Sauvegarde** : Automatique, rien à faire
+3. **Export** : Cliquer sur "Générer l'export" puis copier ou télécharger
+4. **Import** : Coller les données ou uploader un fichier, puis cliquer "Importer"
+5. **Reset** : Cliquer "Réinitialiser" et confirmer
+6. **Retour** : Cliquer "Retour au jeu" pour revenir à l'interface normale
 
 ### Pour les développeurs
 
-Lors de l'ajout de nouvelles fonctionnalités :
+⚠️ **IMPORTANT** : Lors de l'ajout de nouvelles fonctionnalités, il faut TOUJOURS mettre à jour le système de sauvegarde !
 
-1. **Mettre à jour le type SaveGame** dans `SaveGame.ts`
-2. **Modifier createSaveGame()** pour inclure les nouvelles données
-3. **Adapter loadSaveGame()** dans Game.tsx
-4. **Incrémenter SAVE_VERSION** si nécessaire
-5. **Ajouter logique de migration** si nécessaire
-6. **Mettre à jour les valeurs par défaut** dans GameContext.ts
+1. **Mettre à jour le type GameState** dans `GameContext.ts`
+2. **Le type SaveGame s'adapte automatiquement** (hérite de GameState)
+3. **Adapter loadSaveGame()** dans Game.tsx pour les nouveaux champs
+4. **Mettre à jour resetGame()** dans Game.tsx si nécessaire
+5. **Mettre à jour gameStateDefaultValues** dans GameContext.ts
+6. **Incrémenter SAVE_VERSION** si changement incompatible
+7. **Ajouter logique de migration** si nécessaire
 
 ## Sécurité
 
