@@ -83,11 +83,39 @@ Pour chaque demande de fonctionnalité ou évolution, créer une branche git dé
 
 **Co-author** : Ne pas ajouter Claude en co-author dans les commits.
 
+## Système de sauvegarde
+
+⚠️ **IMPORTANT** : Lors de l'ajout de nouvelles fonctionnalités, il faut TOUJOURS mettre à jour le système de sauvegarde !
+
+### Fichiers à modifier lors d'ajouts de fonctionnalités :
+
+1. **`src/Utils/SaveGame.ts`** :
+   - Mettre à jour le type `SaveGame` avec les nouveaux champs
+   - Modifier la fonction `createSaveGame()` pour inclure les nouvelles données
+   - Incrémenter `SAVE_VERSION` si changement incompatible
+
+2. **`src/Game/Game.tsx`** :
+   - Adapter la fonction `loadSaveGame()` pour charger les nouvelles données
+   - Mettre à jour la fonction `resetGame()` si nécessaire
+
+3. **`src/Game/GameContext.ts`** :
+   - Ajouter les nouveaux champs au type `GameContext`
+   - Mettre à jour `gameContextDefaultValues` avec les nouvelles valeurs par défaut
+
+### Système actuel
+
+- **Sauvegarde automatique** : toutes les 10 secondes dans localStorage
+- **Export/Import** : via Base64 avec validation de version
+- **Réinitialisation** : remise aux valeurs par défaut + nettoyage localStorage
+- **Interface** : composant `SaveManager` intégré dans l'application
+
+Voir `doc/Sauvegarde.md` pour la documentation complète du système.
+
 ## Fonctionnalités prévues
 
 Voir `doc/Roadmap.md` pour la roadmap de développement actuelle. Les fonctionnalités manquantes clés incluent :
 
-- Système de sauvegarde/chargement
+- ✅ Système de sauvegarde/chargement (implémenté)
 - Cycles jour/nuit avec horaires de travail des employés
 - Rôles auxiliaires (DevOps, CHO, Designer, etc.)
 - Mécaniques de démission des employés
