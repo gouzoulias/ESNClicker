@@ -21,6 +21,7 @@ export type GameState = {
 
   codePrice: number;
   manualProductivity: number;
+  autocodeSpeed: number;
   manualSellingForce: number;
 
   devTeamInfo: Record<Dev, ProductionItemInfo>;
@@ -62,6 +63,7 @@ export const gameStateDefaultValues: GameState = {
 
   codePrice: 1,
   manualProductivity: 3,
+  autocodeSpeed: 50, // caractères par seconde en mode autocode
   manualSellingForce: 5,
 
   unlockedAux: initFromEnum(Aux, false),

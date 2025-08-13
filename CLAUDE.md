@@ -92,11 +92,13 @@ Pour chaque demande de fonctionnalité ou évolution, créer une branche git dé
 ⚠️ **PROCÉDURE OBLIGATOIRE** : Toute évolution du jeu DOIT inclure la mise à jour du système de sauvegarde !
 
 1. **`src/Game/GameContext.ts`** :
+
    - Ajouter les nouveaux champs au type `GameState` (les données)
    - Le type `SaveGame` s'adapte automatiquement (hérite de `GameState`)
    - Mettre à jour `gameStateDefaultValues` avec les nouvelles valeurs par défaut
 
 2. **`src/Game/Game.tsx`** :
+
    - Adapter la fonction `loadSaveGame()` pour charger les nouvelles données
    - Mettre à jour la fonction `resetGame()` si nécessaire
    - Inclure les nouveaux champs dans `currentGameState`
@@ -124,3 +126,5 @@ Voir `doc/Roadmap.md` pour la roadmap de développement actuelle. Les fonctionna
 - Cycles jour/nuit avec horaires de travail des employés
 - Rôles auxiliaires (DevOps, CHO, Designer, etc.)
 - Mécaniques de démission des employés
+
+- n'essaie pas de lancer le serveur avec npm run dev, je m'occupe de lancer et tester le jeu
