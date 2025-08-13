@@ -20,8 +20,6 @@ export const CodeMaker = () => {
 
   // Autocode throttling - utilise la vitesse d'autocode du jeu
   const lastAutocodeTime = useRef<number>(0);
-  const keyPressHistory = useRef<Array<number>>([]);
-  const AUTOCODE_DETECTION_THRESHOLD = 8; // Si plus de 8 frappes par seconde, c'est de l'autocode
 
   useEffect(() => {
     fetch(sourceCode)
@@ -66,16 +64,11 @@ export const CodeMaker = () => {
     [game.boughtUpgrade],
   );
 
-  const onKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = useCallback(() => {
+  const onKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = useCallback((event) => {
     const now = Date.now();
-
-    // Historique des frappes pour détecter l'autocode
-    keyPressHistory.current.push(now);
-    const oneSecondAgo = now - 1000;
-    keyPressHistory.current = keyPressHistory.current.filter((time) => time >= oneSecondAgo);
-
-    // Détection de l'autocode : si plus de X frappes par seconde de manière régulière
-    const isAutocode = keyPressHistory.current.length > AUTOCODE_DETECTION_THRESHOLD;
+    
+    // Détection de l'autocode : utilise event.repeat (plus fiable)
+    const isAutocode = event.repeat;
 
     if (isAutocode) {
       // Mode autocode détecté - appliquer la limitation selon la vitesse d'autocode
