@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { initFromEnum } from '../Utils/util.ts';
+import { SaveGame } from '../Utils/SaveGame.ts';
 import { Aux } from './Auxiliary.ts';
 import { Dev, DevInitialInfos } from './Dev.ts';
 import { ProductionItemInfo } from './ItemInfo.ts';
@@ -8,7 +9,7 @@ import { Upgrade } from './Upgrade.ts';
 
 export const PriceIncrease = 1.25;
 
-export type GameContext = {
+export type GameState = {
   codeLines: number;
   totalCodeLinesAccumulated: number;
 
@@ -28,7 +29,9 @@ export type GameContext = {
 
   unlockedAux: Record<Aux, boolean>;
   auxTeam: Record<Aux, number>;
+};
 
+export type GameContext = GameState & {
   createManualLine: (numberOfLinesToCreate: number) => void;
   buyDev: (dev: Dev) => void;
   buyPO: (po: PO) => void;
@@ -36,9 +39,11 @@ export type GameContext = {
   buyUpgrade: (upgrade: Upgrade) => void;
 
   sellCode: (nbLines: number) => void;
+  loadSaveGame: (saveGame: SaveGame) => void;
+  resetGame: () => void;
 };
 
-export const gameContextDefaultValues: GameContext = {
+export const gameStateDefaultValues: GameState = {
   codeLines: 0,
   totalCodeLinesAccumulated: 0,
 
@@ -61,6 +66,10 @@ export const gameContextDefaultValues: GameContext = {
 
   unlockedAux: initFromEnum(Aux, false),
   auxTeam: initFromEnum(Aux, 0),
+};
+
+export const gameContextDefaultValues: GameContext = {
+  ...gameStateDefaultValues,
 
   createManualLine: () => {},
 
@@ -70,6 +79,8 @@ export const gameContextDefaultValues: GameContext = {
   buyUpgrade: () => {},
 
   sellCode: () => {},
+  loadSaveGame: () => {},
+  resetGame: () => {},
 };
 
 export const gameContext = createContext<GameContext>(gameContextDefaultValues);

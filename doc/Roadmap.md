@@ -12,7 +12,7 @@
 - [x] Ajouter le recrutement de PO
 - [x] Faire travailler les PO
 - [x] Ajouter des compteurs de PO
-- [ ] Ajouter un système de sauvegarde
+- [x] Ajouter un système de sauvegarde
 - [x] Faire un peu d'UI
 - [x] Ajouter des upgrades
 - [ ] Ajouter le jour et la nuit

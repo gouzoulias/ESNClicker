@@ -1,9 +1,10 @@
 import * as _ from 'lodash';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTick } from '../Utils/useTick.ts';
+import { createSaveGame, loadGameFromLocalStorage, SaveGame, saveGameToLocalStorage } from '../Utils/SaveGame.ts';
 import { Aux } from './Auxiliary.ts';
 import { Dev } from './Dev.ts';
-import { gameContext, gameContextDefaultValues as defaultValues, PriceIncrease } from './GameContext.ts';
+import { gameContext, gameStateDefaultValues as defaultValues, GameState, PriceIncrease } from './GameContext.ts';
 import { ProductionItemInfo } from './ItemInfo.ts';
 import { PO } from './POs.ts';
 import { Upgrade, UpgradeInfos } from './Upgrade.ts';
@@ -28,6 +29,52 @@ export const Game = ({ children }: React.PropsWithChildren) => {
 
   const [unlockedAux, setUnlockedAux] = useState(defaultValues.unlockedAux);
   const [auxTeam, setAuxTeam] = useState(defaultValues.auxTeam);
+
+  // Chargement de la sauvegarde au démarrage
+  useEffect(() => {
+    const savedGame = loadGameFromLocalStorage();
+    if (savedGame) {
+      setCodeLines(savedGame.codeLines);
+      setTotalCodeLinesAccumulated(savedGame.totalCodeLinesAccumulated);
+      setMoney(savedGame.money);
+      setTotalMoneyAccumulated(savedGame.totalMoneyAccumulated);
+      setBoughtUpgrade(savedGame.boughtUpgrade);
+      setActivatedUpgrades(savedGame.activatedUpgrades);
+      setCodePrice(savedGame.codePrice);
+      setManualProductivity(savedGame.manualProductivity);
+      setManualSellingForce(savedGame.manualSellingForce);
+      setDevTeamInfo(savedGame.devTeamInfo);
+      setPoTeamInfo(savedGame.poTeamInfo);
+      setUnlockedAux(savedGame.unlockedAux);
+      setAuxTeam(savedGame.auxTeam);
+    }
+  }, []);
+
+  // État du jeu actuel (sans les méthodes)
+  const currentGameState: GameState = {
+    codeLines,
+    totalCodeLinesAccumulated,
+    money,
+    totalMoneyAccumulated,
+    boughtUpgrade,
+    activatedUpgrades,
+    codePrice,
+    manualProductivity,
+    manualSellingForce,
+    devTeamInfo,
+    poTeamInfo,
+    unlockedAux,
+    auxTeam,
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const saveGame = createSaveGame(currentGameState);
+      saveGameToLocalStorage(saveGame);
+    }, 10000); // Sauvegarde toutes les 10 secondes
+
+    return () => clearInterval(interval);
+  }, [currentGameState]);
 
   const updateDevTeam = useCallback((editDev: (dev: Dev, devInfo: ProductionItemInfo) => ProductionItemInfo) => {
     setDevTeamInfo((prevState) =>
@@ -132,11 +179,17 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         }));
         switch (upgrade) {
           case Upgrade.MecanicalKeyboard:
+            setManualProductivity((prevState) => prevState * 1.25);
+            break;
           case Upgrade.GamingChair:
+            setManualProductivity((prevState) => prevState * 1.5);
+            break;
           case Upgrade.SecondMonitor:
             setManualProductivity((prevState) => prevState * 2);
             break;
           case Upgrade.Smartphone:
+            setManualSellingForce((prevState) => prevState * 2);
+            break;
           case Upgrade['5G']:
             setManualSellingForce((prevState) => prevState * 5);
             break;
@@ -175,6 +228,38 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     },
     [addCodeLines, addMoney, codeLines, codePrice],
   );
+
+  const loadSaveGame = useCallback((saveGame: SaveGame) => {
+    setCodeLines(saveGame.codeLines);
+    setTotalCodeLinesAccumulated(saveGame.totalCodeLinesAccumulated);
+    setMoney(saveGame.money);
+    setTotalMoneyAccumulated(saveGame.totalMoneyAccumulated);
+    setBoughtUpgrade(saveGame.boughtUpgrade);
+    setActivatedUpgrades(saveGame.activatedUpgrades);
+    setCodePrice(saveGame.codePrice);
+    setManualProductivity(saveGame.manualProductivity);
+    setManualSellingForce(saveGame.manualSellingForce);
+    setDevTeamInfo(saveGame.devTeamInfo);
+    setPoTeamInfo(saveGame.poTeamInfo);
+    setUnlockedAux(saveGame.unlockedAux);
+    setAuxTeam(saveGame.auxTeam);
+  }, []);
+
+  const resetGame = useCallback(() => {
+    setCodeLines(defaultValues.codeLines);
+    setTotalCodeLinesAccumulated(defaultValues.totalCodeLinesAccumulated);
+    setMoney(defaultValues.money);
+    setTotalMoneyAccumulated(defaultValues.totalMoneyAccumulated);
+    setBoughtUpgrade(defaultValues.boughtUpgrade);
+    setActivatedUpgrades(defaultValues.activatedUpgrades);
+    setCodePrice(defaultValues.codePrice);
+    setManualProductivity(defaultValues.manualProductivity);
+    setManualSellingForce(defaultValues.manualSellingForce);
+    setDevTeamInfo(defaultValues.devTeamInfo);
+    setPoTeamInfo(defaultValues.poTeamInfo);
+    setUnlockedAux(defaultValues.unlockedAux);
+    setAuxTeam(defaultValues.auxTeam);
+  }, []);
 
   const gameTick = useCallback(
     (deltaTimeInSecond: number) => {
@@ -232,6 +317,8 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         buyUpgrade,
 
         sellCode,
+        loadSaveGame,
+        resetGame,
       }}
     >
       {children}

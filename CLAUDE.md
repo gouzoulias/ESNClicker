@@ -83,11 +83,44 @@ Pour chaque demande de fonctionnalité ou évolution, créer une branche git dé
 
 **Co-author** : Ne pas ajouter Claude en co-author dans les commits.
 
+## Système de sauvegarde
+
+⚠️ **IMPORTANT** : Lors de l'ajout de nouvelles fonctionnalités, il faut TOUJOURS mettre à jour le système de sauvegarde !
+
+### Fichiers à modifier lors d'ajouts de fonctionnalités :
+
+⚠️ **PROCÉDURE OBLIGATOIRE** : Toute évolution du jeu DOIT inclure la mise à jour du système de sauvegarde !
+
+1. **`src/Game/GameContext.ts`** :
+   - Ajouter les nouveaux champs au type `GameState` (les données)
+   - Le type `SaveGame` s'adapte automatiquement (hérite de `GameState`)
+   - Mettre à jour `gameStateDefaultValues` avec les nouvelles valeurs par défaut
+
+2. **`src/Game/Game.tsx`** :
+   - Adapter la fonction `loadSaveGame()` pour charger les nouvelles données
+   - Mettre à jour la fonction `resetGame()` si nécessaire
+   - Inclure les nouveaux champs dans `currentGameState`
+
+3. **`src/Utils/SaveGame.ts`** :
+   - Incrémenter `SAVE_VERSION` si changement incompatible
+   - Ajouter logique de migration si nécessaire
+
+### Système actuel
+
+- **Architecture** : Séparation `GameState` (données) / `GameContext` (données + méthodes)
+- **Sauvegarde automatique** : toutes les 10 secondes dans localStorage
+- **Export/Import** : via Base64 avec validation de version
+- **Réinitialisation** : remise aux valeurs par défaut + nettoyage localStorage
+- **Interface** : mode paramètres accessible via bouton en en-tête
+- **UX** : Le jeu continue de tourner pendant la gestion des sauvegardes
+
+Voir `doc/Sauvegarde.md` pour la documentation complète du système.
+
 ## Fonctionnalités prévues
 
 Voir `doc/Roadmap.md` pour la roadmap de développement actuelle. Les fonctionnalités manquantes clés incluent :
 
-- Système de sauvegarde/chargement
+- ✅ Système de sauvegarde/chargement (implémenté)
 - Cycles jour/nuit avec horaires de travail des employés
 - Rôles auxiliaires (DevOps, CHO, Designer, etc.)
 - Mécaniques de démission des employés
