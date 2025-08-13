@@ -20,6 +20,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const [activatedUpgrades, setActivatedUpgrades] = useState(defaultValues.activatedUpgrades);
 
   const [manualProductivity, setManualProductivity] = useState(defaultValues.manualProductivity);
+  const [autocodeSpeed, setAutocodeSpeed] = useState(defaultValues.autocodeSpeed);
   const [codePrice, setCodePrice] = useState(defaultValues.codePrice);
   const [manualSellingForce, setManualSellingForce] = useState(defaultValues.manualSellingForce);
 
@@ -42,6 +43,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
       setActivatedUpgrades(savedGame.activatedUpgrades);
       setCodePrice(savedGame.codePrice);
       setManualProductivity(savedGame.manualProductivity);
+      setAutocodeSpeed(savedGame.autocodeSpeed);
       setManualSellingForce(savedGame.manualSellingForce);
       setDevTeamInfo(savedGame.devTeamInfo);
       setPoTeamInfo(savedGame.poTeamInfo);
@@ -60,6 +62,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     activatedUpgrades,
     codePrice,
     manualProductivity,
+    autocodeSpeed,
     manualSellingForce,
     devTeamInfo,
     poTeamInfo,
@@ -187,6 +190,15 @@ export const Game = ({ children }: React.PropsWithChildren) => {
           case Upgrade.SecondMonitor:
             setManualProductivity((prevState) => prevState * 2);
             break;
+          case Upgrade.AutoMacro:
+            setAutocodeSpeed((prevState) => prevState * 1.25);
+            break;
+          case Upgrade.TurboMode:
+            setAutocodeSpeed((prevState) => prevState * 1.5);
+            break;
+          case Upgrade.OverclockCPU:
+            setAutocodeSpeed((prevState) => prevState * 2);
+            break;
           case Upgrade.Smartphone:
             setManualSellingForce((prevState) => prevState * 2);
             break;
@@ -238,6 +250,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     setActivatedUpgrades(saveGame.activatedUpgrades);
     setCodePrice(saveGame.codePrice);
     setManualProductivity(saveGame.manualProductivity);
+    setAutocodeSpeed(saveGame.autocodeSpeed);
     setManualSellingForce(saveGame.manualSellingForce);
     setDevTeamInfo(saveGame.devTeamInfo);
     setPoTeamInfo(saveGame.poTeamInfo);
@@ -254,6 +267,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     setActivatedUpgrades(defaultValues.activatedUpgrades);
     setCodePrice(defaultValues.codePrice);
     setManualProductivity(defaultValues.manualProductivity);
+    setAutocodeSpeed(defaultValues.autocodeSpeed);
     setManualSellingForce(defaultValues.manualSellingForce);
     setDevTeamInfo(defaultValues.devTeamInfo);
     setPoTeamInfo(defaultValues.poTeamInfo);
@@ -303,6 +317,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         poTeamInfo,
 
         manualProductivity,
+        autocodeSpeed,
         codePrice,
         manualSellingForce,
 

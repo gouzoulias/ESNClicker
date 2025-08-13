@@ -6,13 +6,18 @@ export enum Upgrade {
   GamingChair = 'GamingChair',
   SecondMonitor = 'SecondMonitor',
 
+  // Autocode (maintenir touche enfoncée)
+  AutoMacro = 'AutoMacro',
+  TurboMode = 'TurboMode',
+  OverclockCPU = 'OverclockCPU',
+
   // Vente manuelle plus rapide
   Smartphone = 'Smartphone',
   '5G' = '5G',
 
   // Vente plus chère
   Linter = 'Linter',
-  
+
   // Analytics
   SpeedCounter = 'SpeedCounter',
 
@@ -43,6 +48,23 @@ export const UpgradeInfos: Record<Upgrade, ItemInfo> = {
     price: 2000,
     name: 'Second écran',
     description: 'Vous développez plus vite grâce à votre second écran !',
+  },
+
+  // Autocode upgrades
+  [Upgrade.AutoMacro]: {
+    price: 25,
+    name: 'Macro automatique',
+    description: 'Votre autocode génère plus de caractères par seconde !',
+  },
+  [Upgrade.TurboMode]: {
+    price: 150,
+    name: 'Mode turbo',
+    description: "Votre processeur booste l'autocode encore plus rapidement !",
+  },
+  [Upgrade.OverclockCPU]: {
+    price: 2000,
+    name: 'Overclock CPU',
+    description: 'Vous overclocke votre processeur pour un autocode ultra-rapide !',
   },
 
   // Manual Selling

@@ -16,11 +16,13 @@ function App() {
   return (
     <Game>
       {/* Header with title */}
-      <div style={{ 
-        marginBottom: '20px',
-        paddingBottom: '10px',
-        borderBottom: '2px solid #ccc'
-      }}>
+      <div
+        style={{
+          marginBottom: '20px',
+          paddingBottom: '10px',
+          borderBottom: '2px solid #ccc',
+        }}
+      >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
             <h1 style={{ margin: '0 0 10px 0' }}>ESN Clicker</h1>
@@ -30,9 +32,9 @@ function App() {
               <MoneyViewer />
             </div>
           </div>
-          
+
           {/* Settings button */}
-          <button 
+          <button
             onClick={() => setShowSettings(!showSettings)}
             style={{
               padding: '8px 16px',
@@ -41,7 +43,7 @@ function App() {
               border: '1px solid #ccc',
               borderRadius: '4px',
               cursor: 'pointer',
-              fontSize: '14px'
+              fontSize: '14px',
             }}
           >
             {showSettings ? 'Retour au jeu' : 'Paramètres'}
@@ -52,14 +54,16 @@ function App() {
       {showSettings ? (
         /* Settings mode */
         <div>
-          <div style={{
-            backgroundColor: '#fff3cd',
-            border: '1px solid #ffeaa7',
-            borderRadius: '4px',
-            padding: '10px',
-            marginBottom: '20px',
-            color: '#856404'
-          }}>
+          <div
+            style={{
+              backgroundColor: '#fff3cd',
+              border: '1px solid #ffeaa7',
+              borderRadius: '4px',
+              padding: '10px',
+              marginBottom: '20px',
+              color: '#856404',
+            }}
+          >
             ⚠️ <strong>Mode paramètres :</strong> Le jeu continue de tourner en arrière-plan pendant que vous gérez vos sauvegardes.
           </div>
           <SaveManager />
