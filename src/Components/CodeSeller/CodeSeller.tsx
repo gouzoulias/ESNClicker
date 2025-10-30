@@ -11,7 +11,7 @@ export const CodeSeller = () => {
     game.sellCode(game.manualSellingForce);
   }, [game]);
 
-  const canSell = game.linesOfCode >= 5;
+  const canSell = game.codeLines >= 5;
 
   return (
     <div className={styles.container}>
