@@ -61,7 +61,7 @@ export const gameStateDefaultValues: GameState = {
 
   poTeamInfo: POInitialInfos,
 
-  codePrice: 1,
+  codePrice: 0.2,
   manualProductivity: 3,
   autocodeSpeed: 50, // caractères par seconde en mode autocode
   manualSellingForce: 5,

@@ -88,7 +88,7 @@ export const UpgradeInfos: Record<Upgrade, ItemInfo> = {
 
   // Analytics
   [Upgrade.SpeedCounter]: {
-    price: 50,
+    price: 60,
     name: 'Compteur de vitesse',
     description: 'Affiche votre vitesse de frappe en temps réel pour optimiser votre productivité !',
   },
