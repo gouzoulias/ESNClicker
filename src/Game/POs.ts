@@ -1,4 +1,4 @@
-import { ProductionItemInfo } from './ItemInfo.ts';
+import { ProductionItemInfo } from './ItemInfo';
 
 export enum PO {
   CustomerSuccessManager = 'CustomerSuccessManager',

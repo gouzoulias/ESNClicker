@@ -1,9 +1,9 @@
 import * as _ from 'lodash';
 import { useContext, useMemo } from 'react';
-import { gameContext } from '../Game/GameContext.ts';
-import { Upgrade, UpgradeInfos } from '../Game/Upgrade.ts';
-import { formatNumber } from '../Utils/util.ts';
-import { Button } from './Button.tsx';
+import { gameContext } from '../Game/GameContext';
+import { Upgrade, UpgradeInfos } from '../Game/Upgrade';
+import { formatNumber } from '../Utils/util';
+import { Button } from './Button';
 
 export const UpgradeShop = () => {
   const game = useContext(gameContext);

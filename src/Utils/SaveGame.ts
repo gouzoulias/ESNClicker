@@ -1,4 +1,4 @@
-import { GameState } from '../Game/GameContext.ts';
+import { GameState } from '../Game/GameContext';
 
 export type SaveGame = GameState & {
   version: number;
