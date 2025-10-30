@@ -8,16 +8,23 @@ import { LinesViewer } from '@components/LinesViewer/LinesViewer';
 import { MoneyViewer } from '@components/MoneyViewer/MoneyViewer';
 import { POShop } from '@components/POShop/POShop';
 import { SaveManager } from '@components/SaveManager/SaveManager';
+import { ThemeApplier } from '@components/ThemeApplier/ThemeApplier';
+import { ThemeSelector } from '@components/ThemeSelector/ThemeSelector';
 import { UpgradeShop } from '@components/UpgradeShop/UpgradeShop';
 import { Game } from '@game/Game';
 import { gameContext } from '@game/GameContext';
 
-function App() {
+/**
+ * Contenu de l'application - doit être à l'intérieur du GameContext.Provider
+ */
+function AppContent() {
   const [showSettings, setShowSettings] = useState(false);
   const game = useContext(gameContext);
 
   return (
-    <Game>
+    <>
+      {/* Applique le thème au body */}
+      <ThemeApplier />
       {/* Header with title */}
       <div className={styles.header}>
         <div className={styles.headerContent}>
@@ -30,10 +37,15 @@ function App() {
             </div>
           </div>
 
-          {/* Settings button */}
-          <button onClick={() => setShowSettings(!showSettings)} className={`${styles.settingsButton} ${showSettings ? styles.active : styles.inactive}`}>
-            {showSettings ? 'Retour au jeu' : 'Paramètres'}
-          </button>
+          <div className={styles.headerActions}>
+            {/* Theme selector */}
+            <ThemeSelector />
+
+            {/* Settings button */}
+            <button onClick={() => setShowSettings(!showSettings)} className={`${styles.settingsButton} ${showSettings ? styles.active : styles.inactive}`}>
+              {showSettings ? 'Retour au jeu' : 'Paramètres'}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -65,6 +77,14 @@ function App() {
           )}
         </div>
       )}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Game>
+      <AppContent />
     </Game>
   );
 }

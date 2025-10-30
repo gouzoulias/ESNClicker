@@ -1,0 +1,64 @@
+@use '../../styles/variables' as *;
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.label {
+  font-size: $font-size-base;
+  font-weight: 500;
+  color: $text-color;
+}
+
+.themeButtons {
+  display: flex;
+  gap: $spacing-xs;
+}
+
+.themeButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: $border-width $border-style $border-color;
+  border-radius: $border-radius;
+  background-color: $secondary-color;
+  color: $text-color;
+  cursor: pointer;
+  font-size: $font-size-base;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $button-hover;
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  &.active {
+    background-color: $primary-color;
+    color: white;
+    border-color: $primary-color;
+    font-weight: 600;
+  }
+}
+
+.icon {
+  font-size: 16px;
+}
+
+.name {
+  font-size: $font-size-base;
+}
+
+// Responsive : masquer les labels sur petits écrans
+@media (max-width: 768px) {
+  .name {
+    display: none;
+  }
+
+  .themeButton {
+    padding: 6px 10px;
+  }
+}

@@ -30,6 +30,8 @@ export type GameState = {
 
   unlockedAux: Record<Aux, boolean>;
   auxTeam: Record<Aux, number>;
+
+  theme: string;
 };
 
 export type GameContext = GameState & {
@@ -40,6 +42,7 @@ export type GameContext = GameState & {
   buyUpgrade: (upgrade: Upgrade) => void;
 
   sellCode: (nbLines: number) => void;
+  setTheme: (theme: string) => void;
   loadSaveGame: (saveGame: SaveGame) => void;
   resetGame: () => void;
 };
@@ -68,6 +71,8 @@ export const gameStateDefaultValues: GameState = {
 
   unlockedAux: initFromEnum(Aux, false),
   auxTeam: initFromEnum(Aux, 0),
+
+  theme: 'light',
 };
 
 export const gameContextDefaultValues: GameContext = {
@@ -81,6 +86,7 @@ export const gameContextDefaultValues: GameContext = {
   buyUpgrade: () => {},
 
   sellCode: () => {},
+  setTheme: () => {},
   loadSaveGame: () => {},
   resetGame: () => {},
 };

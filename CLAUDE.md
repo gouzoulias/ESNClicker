@@ -55,6 +55,37 @@ src/
 
 **Important** : Utiliser `@use '../../styles/variables' as *;` pour importer les variables dans les modules SCSS.
 
+#### Système de thèmes
+
+Le jeu supporte **5 thèmes de couleur** :
+- **Clair** (défaut) : Thème classique avec fond blanc
+- **Sombre** : Dark mode pour réduire la fatigue visuelle
+- **Matrix** : Esthétique vert phosphorescent sur fond noir
+- **Cyberpunk** : Néons violet/cyan sur fond sombre
+- **Corporate** : Style professionnel bleu/gris
+
+Les thèmes sont implémentés via **CSS Custom Properties** dans `variables.scss` :
+- Définitions des couleurs dans `:root` (thème clair)
+- Surcharge via classes `body.theme-{nom}` pour les autres thèmes
+- Variables SCSS pointent vers les custom properties avec `var(--color-name)`
+- Changement de thème instantané sans recompilation
+
+**Couleurs disponibles** :
+- `$primary-color`, `$secondary-color`, `$background-color`
+- `$border-color`, `$text-color`, `$text-secondary`
+- `$button-hover`, `$success-*`, `$error-*`, `$warning-*`
+- `$disabled-bg`, `$disabled-text`
+
+**Sélecteur de thème** :
+- Composant `ThemeSelector` dans le header
+- Sauvegarde automatique du thème choisi
+- Application du thème via classe sur `<body>`
+
+**Pour ajouter un nouveau thème** :
+1. Dans `src/styles/variables.scss` : ajouter une section `body.theme-{nom}` avec toutes les custom properties
+2. Dans `src/Components/ThemeSelector/ThemeSelector.tsx` : ajouter le thème dans le tableau `THEMES`
+3. Dans `src/App.tsx` : ajouter la classe du nouveau thème dans `document.body.classList.remove()` (ligne 23)
+
 ### Alias de chemins
 
 Le projet utilise des alias de chemins pour simplifier les imports :
