@@ -15,6 +15,10 @@
 - [x] Ajouter un système de sauvegarde
 - [x] Faire un peu d'UI
 - [x] Ajouter des upgrades
+- [x] Améliorer l'équilibrage du début de jeu
+- [x] Ajouter un compteur de vitesse de frappe
+- [x] Implémenter le système d'autocode (maintenir touche enfoncée)
+- [x] Ajouter des upgrades dédiés à l'autocode
 - [ ] Ajouter le jour et la nuit
 - [ ] Ajouter le recrutement d'auxiliaires
 - [ ] Faire travailler les auxiliaires

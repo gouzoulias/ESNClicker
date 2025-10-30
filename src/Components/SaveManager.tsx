@@ -35,7 +35,7 @@ export const SaveManager = () => {
 
   const handleDownload = useCallback(() => {
     if (!exportData) return;
-    
+
     const blob = new Blob([exportData], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -80,23 +80,27 @@ export const SaveManager = () => {
   }, [exportData]);
 
   return (
-    <div style={{ 
-      border: '1px solid #ccc', 
-      padding: '15px', 
-      margin: '10px', 
-      borderRadius: '5px',
-      backgroundColor: '#f9f9f9'
-    }}>
+    <div
+      style={{
+        border: '1px solid #ccc',
+        padding: '15px',
+        margin: '10px',
+        borderRadius: '5px',
+        backgroundColor: '#f9f9f9',
+      }}
+    >
       <h3>Gestion des sauvegardes</h3>
-      
+
       {message && (
-        <div style={{ 
-          padding: '8px', 
-          marginBottom: '10px', 
-          backgroundColor: message.includes('Erreur') ? '#ffebee' : '#e8f5e8',
-          color: message.includes('Erreur') ? '#c62828' : '#2e7d32',
-          borderRadius: '3px'
-        }}>
+        <div
+          style={{
+            padding: '8px',
+            marginBottom: '10px',
+            backgroundColor: message.includes('Erreur') ? '#ffebee' : '#e8f5e8',
+            color: message.includes('Erreur') ? '#c62828' : '#2e7d32',
+            borderRadius: '3px',
+          }}
+        >
           {message}
         </div>
       )}
@@ -111,9 +115,7 @@ export const SaveManager = () => {
             <button onClick={handleDownload} style={{ marginRight: '10px' }}>
               Télécharger le fichier
             </button>
-            <button onClick={copyToClipboard}>
-              Copier
-            </button>
+            <button onClick={copyToClipboard}>Copier</button>
             <div style={{ marginTop: '10px' }}>
               <textarea
                 value={exportData}
@@ -129,16 +131,8 @@ export const SaveManager = () => {
       <div style={{ marginBottom: '15px' }}>
         <h4>Importer une sauvegarde</h4>
         <div style={{ marginBottom: '10px' }}>
-          <input
-            type="file"
-            accept=".txt"
-            onChange={handleFileUpload}
-            ref={fileInputRef}
-            style={{ marginRight: '10px' }}
-          />
-          <button onClick={() => fileInputRef.current?.click()}>
-            Choisir un fichier
-          </button>
+          <input type="file" accept=".txt" onChange={handleFileUpload} ref={fileInputRef} style={{ marginRight: '10px' }} />
+          <button onClick={() => fileInputRef.current?.click()}>Choisir un fichier</button>
         </div>
         <textarea
           value={importData}
@@ -153,15 +147,15 @@ export const SaveManager = () => {
 
       <div style={{ borderTop: '1px solid #ddd', paddingTop: '15px' }}>
         <h4 style={{ color: '#d32f2f' }}>Zone dangereuse</h4>
-        <button 
+        <button
           onClick={handleReset}
-          style={{ 
-            backgroundColor: '#d32f2f', 
-            color: 'white', 
-            border: 'none', 
-            padding: '8px 16px', 
+          style={{
+            backgroundColor: '#d32f2f',
+            color: 'white',
+            border: 'none',
+            padding: '8px 16px',
             borderRadius: '3px',
-            cursor: 'pointer'
+            cursor: 'pointer',
           }}
         >
           Réinitialiser le jeu

@@ -3,6 +3,7 @@
 ## Vue d'ensemble
 
 Le système de sauvegarde d'ESN Clicker permet aux joueurs de :
+
 - Sauvegarder automatiquement leur progression dans le navigateur
 - Exporter leur sauvegarde vers un fichier ou du texte
 - Importer une sauvegarde depuis un fichier ou du texte
@@ -100,6 +101,7 @@ export type SaveGame = GameState & {
 Interface accessible via le bouton "Paramètres" dans l'en-tête du jeu.
 
 **Mode paramètres** :
+
 - Masque l'interface de jeu principale
 - Affiche un avertissement que le jeu continue en arrière-plan
 - Bouton "Retour au jeu" pour revenir à l'interface normale
@@ -107,11 +109,13 @@ Interface accessible via le bouton "Paramètres" dans l'en-tête du jeu.
 Organisé en 3 sections :
 
 1. **Export** :
+
    - Bouton "Générer l'export"
    - Textarea avec données exportées
    - Boutons "Télécharger" et "Copier"
 
 2. **Import** :
+
    - Upload de fichier
    - Textarea pour saisie manuelle
    - Bouton "Importer"
@@ -140,6 +144,7 @@ Organisé en 3 sections :
 ### Dans GameContext
 
 Nouvelles fonctions ajoutées :
+
 - `loadSaveGame(saveGame: SaveGame) => void`
 - `resetGame() => void`
 
