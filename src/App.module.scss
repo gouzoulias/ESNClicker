@@ -12,6 +12,12 @@
   align-items: flex-start;
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
 .title {
   margin: 0 0 $spacing-sm 0;
 }

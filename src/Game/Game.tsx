@@ -31,6 +31,8 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   const [unlockedAux, setUnlockedAux] = useState(defaultValues.unlockedAux);
   const [auxTeam, setAuxTeam] = useState(defaultValues.auxTeam);
 
+  const [theme, setTheme] = useState(defaultValues.theme);
+
   // Chargement de la sauvegarde au démarrage
   useEffect(() => {
     const savedGame = loadGameFromLocalStorage();
@@ -49,6 +51,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
       setPoTeamInfo(savedGame.poTeamInfo);
       setUnlockedAux(savedGame.unlockedAux);
       setAuxTeam(savedGame.auxTeam);
+      setTheme(savedGame.theme || defaultValues.theme);
     }
   }, []);
 
@@ -69,6 +72,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
       poTeamInfo,
       unlockedAux,
       auxTeam,
+      theme,
     };
     const saveGame = createSaveGame(currentState);
     saveGameToLocalStorage(saveGame);
@@ -87,6 +91,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     poTeamInfo,
     unlockedAux,
     auxTeam,
+    theme,
   ]);
 
   useTick(saveGameTick, 10000);
@@ -268,6 +273,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     setPoTeamInfo(saveGame.poTeamInfo);
     setUnlockedAux(saveGame.unlockedAux);
     setAuxTeam(saveGame.auxTeam);
+    setTheme(saveGame.theme || defaultValues.theme);
   }, []);
 
   const resetGame = useCallback(() => {
@@ -285,6 +291,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     setPoTeamInfo(defaultValues.poTeamInfo);
     setUnlockedAux(defaultValues.unlockedAux);
     setAuxTeam(defaultValues.auxTeam);
+    setTheme(defaultValues.theme);
   }, []);
 
   const gameTick = useCallback(
@@ -336,6 +343,8 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         unlockedAux,
         auxTeam,
 
+        theme,
+
         createManualLine,
 
         buyDev,
@@ -344,6 +353,7 @@ export const Game = ({ children }: React.PropsWithChildren) => {
         buyUpgrade,
 
         sellCode,
+        setTheme,
         loadSaveGame,
         resetGame,
       }}
