@@ -1,0 +1,7 @@
+@import '../styles/variables';
+
+.button {
+  width: 100%;
+  padding: $spacing-xs;
+  cursor: pointer;
+}

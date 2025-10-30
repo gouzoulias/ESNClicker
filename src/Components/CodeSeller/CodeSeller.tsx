@@ -1,7 +1,8 @@
 import { useCallback, useContext, useEffect } from 'react';
+import styles from './CodeSeller.module.scss';
 import { gameContext } from '../Game/GameContext';
 import { formatNumber } from '../Utils/util';
-import { Button } from './Button';
+import { Button } from '../Button/Button';
 
 export const CodeSeller = () => {
   const game = useContext(gameContext);
@@ -21,7 +22,7 @@ export const CodeSeller = () => {
   }, [game.codePrice]);
 
   return (
-    <div style={{ padding: 16 }}>
+    <div className={styles.container}>
       <Button onClick={sellCode}>
         Vendre <b>{formatNumber(game.manualSellingForce, false)}</b> lignes de code pour{' '}
         <b>{formatNumber(game.manualSellingForce * game.codePrice, false)} €</b>

@@ -17,6 +17,27 @@ ESN Clicker est un idle/clicker game basé sur React qui simule la gestion d'une
 
 ## Architecture
 
+### Styles et CSS
+
+Le projet utilise **SCSS (Sass)** pour la gestion des styles :
+
+- **CSS Modules** : Chaque composant a son fichier `.module.scss` dédié
+- **Variables globales** : `src/styles/variables.scss` contient les couleurs, espacements, et autres constantes
+- **Styles globaux** : `src/styles/global.scss` pour les styles de base de l'application
+- **Pas de styles inline** : Tous les styles inline ont été migrés vers SCSS pour une meilleure maintenabilité
+
+Structure des fichiers de styles :
+```
+src/
+  styles/
+    variables.scss  # Variables (couleurs, espacements, etc.)
+    global.scss     # Styles globaux
+  Components/
+    App.module.scss          # Styles du composant App
+    Button.module.scss       # Styles des boutons
+    SaveManager.module.scss  # etc.
+```
+
 ### Boucle de jeu principale
 
 Le jeu fonctionne sur un cycle de tick de 100ms (`useTick` hook dans `src/Utils/useTick.ts`) qui gère :

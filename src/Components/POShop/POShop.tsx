@@ -1,10 +1,11 @@
 import * as _ from 'lodash';
 import { useCallback, useContext } from 'react';
+import styles from './POShop.module.scss';
 import { gameContext } from '../Game/GameContext';
 import { ProductionItemInfo } from '../Game/ItemInfo';
 import { PO, POInitialInfos, POList } from '../Game/POs';
 import { formatNumber } from '../Utils/util';
-import { Button } from './Button';
+import { Button } from '../Button/Button';
 
 export const POShop = () => {
   const game = useContext(gameContext);
@@ -24,7 +25,7 @@ export const POShop = () => {
           const poInfo: ProductionItemInfo = game.poTeamInfo[po as PO];
           return (
             shouldShowPOBuyButton(po) && (
-              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <div className={styles.poList}>
                 <div>
                   {poInfo.name} : {poInfo.numberOwned}
                 </div>

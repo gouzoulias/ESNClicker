@@ -1,11 +1,12 @@
 import * as _ from 'lodash';
 import { useCallback, useContext } from 'react';
+import styles from './DevShop.module.scss';
 import { Dev, DevInitialInfos, DevList } from '../Game/Dev';
 import { gameContext } from '../Game/GameContext';
 import { ProductionItemInfo } from '../Game/ItemInfo';
 import { formatNumber } from '../Utils/util';
-import { Button } from './Button';
-import { DevCodeVisualizer } from './DevCodeVisualizer';
+import { Button } from '../Button/Button';
+import { DevCodeVisualizer } from '../DevCodeVisualizer/DevCodeVisualizer';
 
 export const DevShop = () => {
   const game = useContext(gameContext);
@@ -25,7 +26,7 @@ export const DevShop = () => {
           const devInfo: ProductionItemInfo = game.devTeamInfo[dev as Dev];
           return (
             shouldShowDevBuyButton(dev) && (
-              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <div className={styles.devList}>
                 <div>
                   {devInfo.name} : {devInfo.numberOwned}
                 </div>

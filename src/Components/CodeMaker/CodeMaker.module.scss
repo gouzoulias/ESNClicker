@@ -1,0 +1,19 @@
+@import '../styles/variables';
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.speedDisplay {
+  margin-bottom: $spacing-sm;
+  padding: $spacing-xs 12px;
+  background-color: $secondary-color;
+  border-radius: $border-radius;
+  font-size: $font-size-base;
+  font-family: monospace;
+}
+
+.textarea {
+  width: 100%;
+}

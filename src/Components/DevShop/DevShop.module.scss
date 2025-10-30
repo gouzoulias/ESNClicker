@@ -1,0 +1,7 @@
+@import '../styles/variables';
+
+.devList {
+  display: flex;
+  gap: $spacing-xs;
+  align-items: center;
+}

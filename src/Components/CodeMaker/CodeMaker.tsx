@@ -1,5 +1,6 @@
 // import * as _ from 'lodash';
 import { KeyboardEventHandler, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import styles from './CodeMaker.module.scss';
 import sourceCode from '../assets/code.txt';
 import { GameContext, gameContext } from '../Game/GameContext';
 import { Upgrade } from '../Game/Upgrade';
@@ -102,19 +103,10 @@ export const CodeMaker = () => {
   }, [code, game, iCode, recordTypingActivity]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div className={styles.container}>
       {/* Speed display - only show if upgrade is bought */}
       {game.boughtUpgrade[Upgrade.SpeedCounter] && (
-        <div
-          style={{
-            marginBottom: '10px',
-            padding: '8px 12px',
-            backgroundColor: '#f0f0f0',
-            borderRadius: '4px',
-            fontSize: '14px',
-            fontFamily: 'monospace',
-          }}
-        >
+        <div className={styles.speedDisplay}>
           <strong>Vitesse:</strong> {currentSpeed.charsPerSec.toFixed(1)} chars/sec | {currentSpeed.linesPerMin.toFixed(1)} lignes/min
         </div>
       )}
@@ -127,7 +119,7 @@ export const CodeMaker = () => {
         onChange={() => {}}
         rows={15}
         placeholder={'Codez ici !'}
-        style={{ width: '100%' }}
+        className={styles.textarea}
         spellCheck={false}
       ></textarea>
     </div>

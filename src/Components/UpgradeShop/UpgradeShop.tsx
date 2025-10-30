@@ -1,9 +1,10 @@
 import * as _ from 'lodash';
 import { useContext, useMemo } from 'react';
+import styles from './UpgradeShop.module.scss';
 import { gameContext } from '../Game/GameContext';
 import { Upgrade, UpgradeInfos } from '../Game/Upgrade';
 import { formatNumber } from '../Utils/util';
-import { Button } from './Button';
+import { Button } from '../Button/Button';
 
 export const UpgradeShop = () => {
   const game = useContext(gameContext);
@@ -21,7 +22,7 @@ export const UpgradeShop = () => {
   return (
     <div>
       <h2>Améliorations</h2>
-      <div style={{ display: 'flex', gap: 8, padding: 16 }}>
+      <div className={styles.upgradeList}>
         {_.map(availableUpgrades, (upgrade) => (
           <Button key={upgrade} onClick={() => game.buyUpgrade(upgrade as Upgrade)}>
             <p>
