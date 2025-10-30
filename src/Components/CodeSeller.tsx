@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react';
-import { gameContext } from '../Game/GameContext.ts';
-import { formatNumber } from '../Utils/util.ts';
-import { Button } from './Button.tsx';
+import { gameContext } from '../Game/GameContext';
+import { formatNumber } from '../Utils/util';
+import { Button } from './Button';
 
 export const CodeSeller = () => {
   const game = useContext(gameContext);

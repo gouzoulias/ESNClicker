@@ -1,11 +1,11 @@
 import { createContext } from 'react';
-import { initFromEnum } from '../Utils/util.ts';
-import { SaveGame } from '../Utils/SaveGame.ts';
-import { Aux } from './Auxiliary.ts';
-import { Dev, DevInitialInfos } from './Dev.ts';
-import { ProductionItemInfo } from './ItemInfo.ts';
-import { PO, POInitialInfos } from './POs.ts';
-import { Upgrade } from './Upgrade.ts';
+import { initFromEnum } from '../Utils/util';
+import { SaveGame } from '../Utils/SaveGame';
+import { Aux } from './Auxiliary';
+import { Dev, DevInitialInfos } from './Dev';
+import { ProductionItemInfo } from './ItemInfo';
+import { PO, POInitialInfos } from './POs';
+import { Upgrade } from './Upgrade';
 
 export const PriceIncrease = 1.25;
 

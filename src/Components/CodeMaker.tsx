@@ -1,8 +1,8 @@
 // import * as _ from 'lodash';
 import { KeyboardEventHandler, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import sourceCode from '../assets/code.txt';
-import { GameContext, gameContext } from '../Game/GameContext.ts';
-import { Upgrade } from '../Game/Upgrade.ts';
+import { GameContext, gameContext } from '../Game/GameContext';
+import { Upgrade } from '../Game/Upgrade';
 
 export const CodeMaker = () => {
   const game: GameContext = useContext(gameContext);

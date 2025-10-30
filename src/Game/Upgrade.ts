@@ -1,4 +1,4 @@
-import { ItemInfo } from './ItemInfo.ts';
+import { ItemInfo } from './ItemInfo';
 
 export enum Upgrade {
   // Dev manuel

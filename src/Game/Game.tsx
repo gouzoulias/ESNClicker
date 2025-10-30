@@ -1,13 +1,13 @@
 import * as _ from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useTick } from '../Utils/useTick.ts';
-import { createSaveGame, loadGameFromLocalStorage, SaveGame, saveGameToLocalStorage } from '../Utils/SaveGame.ts';
-import { Aux } from './Auxiliary.ts';
-import { Dev } from './Dev.ts';
-import { gameContext, gameStateDefaultValues as defaultValues, GameState, PriceIncrease } from './GameContext.ts';
-import { ProductionItemInfo } from './ItemInfo.ts';
-import { PO } from './POs.ts';
-import { Upgrade, UpgradeInfos } from './Upgrade.ts';
+import { useTick } from '../Utils/useTick';
+import { createSaveGame, loadGameFromLocalStorage, SaveGame, saveGameToLocalStorage } from '../Utils/SaveGame';
+import { Aux } from './Auxiliary';
+import { Dev } from './Dev';
+import { gameContext, gameStateDefaultValues as defaultValues, GameState, PriceIncrease } from './GameContext';
+import { ProductionItemInfo } from './ItemInfo';
+import { PO } from './POs';
+import { Upgrade, UpgradeInfos } from './Upgrade';
 
 export const Game = ({ children }: React.PropsWithChildren) => {
   const [codeLines, setCodeLines] = useState(defaultValues.codeLines);

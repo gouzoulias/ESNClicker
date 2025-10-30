@@ -1,11 +1,11 @@
 import * as _ from 'lodash';
 import { useCallback, useContext } from 'react';
-import { Dev, DevInitialInfos, DevList } from '../Game/Dev.ts';
-import { gameContext } from '../Game/GameContext.ts';
-import { ProductionItemInfo } from '../Game/ItemInfo.ts';
-import { formatNumber } from '../Utils/util.ts';
-import { Button } from './Button.tsx';
-import { DevCodeVisualizer } from './DevCodeVisualizer.tsx';
+import { Dev, DevInitialInfos, DevList } from '../Game/Dev';
+import { gameContext } from '../Game/GameContext';
+import { ProductionItemInfo } from '../Game/ItemInfo';
+import { formatNumber } from '../Utils/util';
+import { Button } from './Button';
+import { DevCodeVisualizer } from './DevCodeVisualizer';
 
 export const DevShop = () => {
   const game = useContext(gameContext);

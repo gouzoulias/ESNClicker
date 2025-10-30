@@ -1,10 +1,10 @@
 import * as _ from 'lodash';
 import { useCallback, useContext } from 'react';
-import { gameContext } from '../Game/GameContext.ts';
-import { ProductionItemInfo } from '../Game/ItemInfo.ts';
-import { PO, POInitialInfos, POList } from '../Game/POs.ts';
-import { formatNumber } from '../Utils/util.ts';
-import { Button } from './Button.tsx';
+import { gameContext } from '../Game/GameContext';
+import { ProductionItemInfo } from '../Game/ItemInfo';
+import { PO, POInitialInfos, POList } from '../Game/POs';
+import { formatNumber } from '../Utils/util';
+import { Button } from './Button';
 
 export const POShop = () => {
   const game = useContext(gameContext);

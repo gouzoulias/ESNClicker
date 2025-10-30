@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useRef, useState } from 'react';
-import { gameContext } from '../Game/GameContext.ts';
-import { clearSaveGame, createSaveGame, exportSaveGame, importSaveGame, saveGameToLocalStorage } from '../Utils/SaveGame.ts';
+import { gameContext } from '../Game/GameContext';
+import { clearSaveGame, createSaveGame, exportSaveGame, importSaveGame, saveGameToLocalStorage } from '../Utils/SaveGame';
 
 export const SaveManager = () => {
   const game = useContext(gameContext);

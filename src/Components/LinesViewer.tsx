@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { GameContext, gameContext } from '../Game/GameContext.ts';
-import { formatNumber } from '../Utils/util.ts';
+import { GameContext, gameContext } from '../Game/GameContext';
+import { formatNumber } from '../Utils/util';
 
 export const LinesViewer = () => {
   const game: GameContext = useContext(gameContext);

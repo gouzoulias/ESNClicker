@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import './App.css';
-import { CodeMaker } from './Components/CodeMaker.tsx';
-import { CodeSeller } from './Components/CodeSeller.tsx';
-import { DevShop } from './Components/DevShop.tsx';
-import { LinesViewer } from './Components/LinesViewer.tsx';
-import { MoneyViewer } from './Components/MoneyViewer.tsx';
-import { POShop } from './Components/POShop.tsx';
-import { SaveManager } from './Components/SaveManager.tsx';
-import { UpgradeShop } from './Components/UpgradeShop.tsx';
-import { Game } from './Game/Game.tsx';
+import { CodeMaker } from './Components/CodeMaker';
+import { CodeSeller } from './Components/CodeSeller';
+import { DevShop } from './Components/DevShop';
+import { LinesViewer } from './Components/LinesViewer';
+import { MoneyViewer } from './Components/MoneyViewer';
+import { POShop } from './Components/POShop';
+import { SaveManager } from './Components/SaveManager';
+import { UpgradeShop } from './Components/UpgradeShop';
+import { Game } from './Game/Game';
 
 function App() {
   const [showSettings, setShowSettings] = useState(false);
