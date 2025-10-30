@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { CodeMaker } from './Components/CodeMaker.tsx';
 import { CodeSeller } from './Components/CodeSeller.tsx';
@@ -9,11 +9,9 @@ import { POShop } from './Components/POShop.tsx';
 import { SaveManager } from './Components/SaveManager.tsx';
 import { UpgradeShop } from './Components/UpgradeShop.tsx';
 import { Game } from './Game/Game.tsx';
-import { gameContext } from './Game/GameContext.tsx';
 
 function App() {
   const [showSettings, setShowSettings] = useState(false);
-  const game = useContext(gameContext);
 
   return (
     <Game>
@@ -83,11 +81,9 @@ function App() {
             <CodeSeller />
             <POShop />
           </div>
-          {game.totalMoneyAccumulated >= 25 && (
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <UpgradeShop />
-            </div>
-          )}
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <UpgradeShop />
+          </div>
         </div>
       )}
     </Game>
