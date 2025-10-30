@@ -1,8 +1,8 @@
 import { useCallback, useContext } from 'react';
 import styles from './CodeSeller.module.scss';
-import { gameContext } from '../Game/GameContext';
-import { formatNumber } from '../Utils/util';
-import { Button } from '../Button/Button';
+import { gameContext } from '@game/GameContext';
+import { formatNumber } from '@utils/util';
+import { Button } from '@components/Button/Button';
 
 export const CodeSeller = () => {
   const game = useContext(gameContext);

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { GameContext, gameContext } from '../Game/GameContext';
-import { formatNumber } from '../Utils/util';
+import { GameContext, gameContext } from '@game/GameContext';
+import { formatNumber } from '@utils/util';
 
 export const MoneyViewer = () => {
   const game: GameContext = useContext(gameContext);

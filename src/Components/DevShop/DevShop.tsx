@@ -1,12 +1,12 @@
 import * as _ from 'lodash';
 import { useCallback, useContext } from 'react';
 import styles from './DevShop.module.scss';
-import { Dev, DevInitialInfos, DevList } from '../Game/Dev';
-import { gameContext } from '../Game/GameContext';
-import { ProductionItemInfo } from '../Game/ItemInfo';
-import { formatNumber } from '../Utils/util';
-import { Button } from '../Button/Button';
-import { DevCodeVisualizer } from '../DevCodeVisualizer/DevCodeVisualizer';
+import { Dev, DevInitialInfos, DevList } from '@game/Dev';
+import { gameContext } from '@game/GameContext';
+import { ProductionItemInfo } from '@game/ItemInfo';
+import { formatNumber } from '@utils/util';
+import { Button } from '@components/Button/Button';
+import { DevCodeVisualizer } from '@components/DevCodeVisualizer/DevCodeVisualizer';
 
 export const DevShop = () => {
   const game = useContext(gameContext);

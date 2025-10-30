@@ -1,9 +1,9 @@
 // import * as _ from 'lodash';
 import { KeyboardEventHandler, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styles from './CodeMaker.module.scss';
-import sourceCode from '../assets/code.txt';
-import { GameContext, gameContext } from '../Game/GameContext';
-import { Upgrade } from '../Game/Upgrade';
+import sourceCode from '@assets/code.txt';
+import { GameContext, gameContext } from '@game/GameContext';
+import { Upgrade } from '@game/Upgrade';
 
 export const CodeMaker = () => {
   const game: GameContext = useContext(gameContext);

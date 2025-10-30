@@ -1,9 +1,9 @@
 import * as _ from 'lodash';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import styles from './DevCodeVisualizer.module.scss';
-import sourceCode from '../assets/code.txt';
-import { gameContext } from '../Game/GameContext';
-import { useTick } from '../Utils/useTick';
+import sourceCode from '@assets/code.txt';
+import { gameContext } from '@game/GameContext';
+import { useTick } from '@utils/useTick';
 
 export const DevCodeVisualizer = () => {
   const game = useContext(gameContext);

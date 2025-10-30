@@ -1,16 +1,16 @@
 import { useContext, useState } from 'react';
 import './styles/global.scss';
 import styles from './App.module.scss';
-import { CodeMaker } from './Components/CodeMaker/CodeMaker';
-import { CodeSeller } from './Components/CodeSeller/CodeSeller';
-import { DevShop } from './Components/DevShop/DevShop';
-import { LinesViewer } from './Components/LinesViewer/LinesViewer';
-import { MoneyViewer } from './Components/MoneyViewer/MoneyViewer';
-import { POShop } from './Components/POShop/POShop';
-import { SaveManager } from './Components/SaveManager/SaveManager';
-import { UpgradeShop } from './Components/UpgradeShop/UpgradeShop';
-import { Game } from './Game/Game';
-import { gameContext } from './Game/GameContext';
+import { CodeMaker } from '@components/CodeMaker/CodeMaker';
+import { CodeSeller } from '@components/CodeSeller/CodeSeller';
+import { DevShop } from '@components/DevShop/DevShop';
+import { LinesViewer } from '@components/LinesViewer/LinesViewer';
+import { MoneyViewer } from '@components/MoneyViewer/MoneyViewer';
+import { POShop } from '@components/POShop/POShop';
+import { SaveManager } from '@components/SaveManager/SaveManager';
+import { UpgradeShop } from '@components/UpgradeShop/UpgradeShop';
+import { Game } from '@game/Game';
+import { gameContext } from '@game/GameContext';
 
 function App() {
   const [showSettings, setShowSettings] = useState(false);
