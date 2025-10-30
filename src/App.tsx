@@ -31,10 +31,7 @@ function App() {
           </div>
 
           {/* Settings button */}
-          <button
-            onClick={() => setShowSettings(!showSettings)}
-            className={`${styles.settingsButton} ${showSettings ? styles.active : styles.inactive}`}
-          >
+          <button onClick={() => setShowSettings(!showSettings)} className={`${styles.settingsButton} ${showSettings ? styles.active : styles.inactive}`}>
             {showSettings ? 'Retour au jeu' : 'Paramètres'}
           </button>
         </div>

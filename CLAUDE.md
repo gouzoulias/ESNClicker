@@ -27,6 +27,7 @@ Le projet utilise **SCSS (Sass)** pour la gestion des styles :
 - **Pas de styles inline** : Tous les styles inline ont été migrés vers SCSS pour une meilleure maintenabilité
 
 Structure des fichiers de styles :
+
 ```
 src/
   styles/

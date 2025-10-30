@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTick } from '../Utils/useTick';
 import { createSaveGame, loadGameFromLocalStorage, SaveGame, saveGameToLocalStorage } from '../Utils/SaveGame';
 import { Aux } from './Auxiliary';
@@ -53,22 +53,40 @@ export const Game = ({ children }: React.PropsWithChildren) => {
   }, []);
 
   // État du jeu actuel (sans les méthodes)
-  const currentGameState: GameState = {
-    codeLines,
-    totalCodeLinesAccumulated,
-    money,
-    totalMoneyAccumulated,
-    boughtUpgrade,
-    activatedUpgrades,
-    codePrice,
-    manualProductivity,
-    autocodeSpeed,
-    manualSellingForce,
-    devTeamInfo,
-    poTeamInfo,
-    unlockedAux,
-    auxTeam,
-  };
+  const currentGameState: GameState = useMemo(
+    () => ({
+      codeLines,
+      totalCodeLinesAccumulated,
+      money,
+      totalMoneyAccumulated,
+      boughtUpgrade,
+      activatedUpgrades,
+      codePrice,
+      manualProductivity,
+      autocodeSpeed,
+      manualSellingForce,
+      devTeamInfo,
+      poTeamInfo,
+      unlockedAux,
+      auxTeam,
+    }),
+    [
+      codeLines,
+      totalCodeLinesAccumulated,
+      money,
+      totalMoneyAccumulated,
+      boughtUpgrade,
+      activatedUpgrades,
+      codePrice,
+      manualProductivity,
+      autocodeSpeed,
+      manualSellingForce,
+      devTeamInfo,
+      poTeamInfo,
+      unlockedAux,
+      auxTeam,
+    ],
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
