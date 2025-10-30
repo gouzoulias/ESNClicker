@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import './styles/global.scss';
 import styles from './App.module.scss';
 import { CodeMaker } from '@components/CodeMaker/CodeMaker';
@@ -8,28 +8,23 @@ import { LinesViewer } from '@components/LinesViewer/LinesViewer';
 import { MoneyViewer } from '@components/MoneyViewer/MoneyViewer';
 import { POShop } from '@components/POShop/POShop';
 import { SaveManager } from '@components/SaveManager/SaveManager';
+import { ThemeApplier } from '@components/ThemeApplier/ThemeApplier';
 import { ThemeSelector } from '@components/ThemeSelector/ThemeSelector';
 import { UpgradeShop } from '@components/UpgradeShop/UpgradeShop';
 import { Game } from '@game/Game';
 import { gameContext } from '@game/GameContext';
 
-function App() {
+/**
+ * Contenu de l'application - doit être à l'intérieur du GameContext.Provider
+ */
+function AppContent() {
   const [showSettings, setShowSettings] = useState(false);
   const game = useContext(gameContext);
 
-  // Appliquer le thème au body
-  useEffect(() => {
-    // Retirer toutes les classes de thème
-    document.body.classList.remove('theme-dark', 'theme-matrix', 'theme-cyberpunk', 'theme-corporate');
-
-    // Appliquer la classe du thème actuel (sauf pour light qui est le défaut)
-    if (game.theme !== 'light') {
-      document.body.classList.add(`theme-${game.theme}`);
-    }
-  }, [game.theme]);
-
   return (
-    <Game>
+    <>
+      {/* Applique le thème au body */}
+      <ThemeApplier />
       {/* Header with title */}
       <div className={styles.header}>
         <div className={styles.headerContent}>
@@ -82,6 +77,14 @@ function App() {
           )}
         </div>
       )}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Game>
+      <AppContent />
     </Game>
   );
 }
