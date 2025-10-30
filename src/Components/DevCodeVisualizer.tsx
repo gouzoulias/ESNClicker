@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import { useCallback, useContext, useEffect, useState } from 'react';
+import styles from './DevCodeVisualizer.module.scss';
 import sourceCode from '../assets/code.txt';
 import { gameContext } from '../Game/GameContext';
 import { useTick } from '../Utils/useTick';
@@ -40,14 +41,14 @@ export const DevCodeVisualizer = () => {
   useTick(onTick, 1000);
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className={styles.container}>
       <textarea
         value={textAreaValue}
         autoCorrect={'off'}
         disabled={true}
         onChange={() => {}}
         rows={15}
-        style={{ width: '100%', resize: 'none' }}
+        className={styles.textarea}
         spellCheck={false}
       ></textarea>
     </div>

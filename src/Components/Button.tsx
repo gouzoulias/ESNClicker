@@ -1,4 +1,5 @@
 import { MouseEventHandler, PropsWithChildren } from 'react';
+import styles from './Button.module.scss';
 
 type ButtonProps = {
   onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -7,7 +8,7 @@ type ButtonProps = {
 
 export const Button = ({ onClick, title, children }: PropsWithChildren<ButtonProps>) => {
   return (
-    <button type="button" onClick={onClick} title={title} style={{ width: '100%', padding: 8 }}>
+    <button type="button" onClick={onClick} title={title} className={styles.button}>
       {children}
     </button>
   );

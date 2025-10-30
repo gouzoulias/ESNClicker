@@ -1,0 +1,7 @@
+@import '../styles/variables';
+
+.upgradeList {
+  display: flex;
+  gap: $spacing-xs;
+  padding: $spacing-md;
+}
