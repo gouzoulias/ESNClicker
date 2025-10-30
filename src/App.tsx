@@ -1,14 +1,14 @@
 import { useContext, useState } from 'react';
 import './styles/global.scss';
 import styles from './App.module.scss';
-import { CodeMaker } from './Components/CodeMaker';
-import { CodeSeller } from './Components/CodeSeller';
-import { DevShop } from './Components/DevShop';
-import { LinesViewer } from './Components/LinesViewer';
-import { MoneyViewer } from './Components/MoneyViewer';
-import { POShop } from './Components/POShop';
-import { SaveManager } from './Components/SaveManager';
-import { UpgradeShop } from './Components/UpgradeShop';
+import { CodeMaker } from './Components/CodeMaker/CodeMaker';
+import { CodeSeller } from './Components/CodeSeller/CodeSeller';
+import { DevShop } from './Components/DevShop/DevShop';
+import { LinesViewer } from './Components/LinesViewer/LinesViewer';
+import { MoneyViewer } from './Components/MoneyViewer/MoneyViewer';
+import { POShop } from './Components/POShop/POShop';
+import { SaveManager } from './Components/SaveManager/SaveManager';
+import { UpgradeShop } from './Components/UpgradeShop/UpgradeShop';
 import { Game } from './Game/Game';
 import { gameContext } from './Game/GameContext';
 

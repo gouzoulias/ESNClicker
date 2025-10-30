@@ -5,7 +5,7 @@ import { gameContext } from '../Game/GameContext';
 import { ProductionItemInfo } from '../Game/ItemInfo';
 import { PO, POInitialInfos, POList } from '../Game/POs';
 import { formatNumber } from '../Utils/util';
-import { Button } from './Button';
+import { Button } from '../Button/Button';
 
 export const POShop = () => {
   const game = useContext(gameContext);

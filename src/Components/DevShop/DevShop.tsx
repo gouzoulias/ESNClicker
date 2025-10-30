@@ -5,8 +5,8 @@ import { Dev, DevInitialInfos, DevList } from '../Game/Dev';
 import { gameContext } from '../Game/GameContext';
 import { ProductionItemInfo } from '../Game/ItemInfo';
 import { formatNumber } from '../Utils/util';
-import { Button } from './Button';
-import { DevCodeVisualizer } from './DevCodeVisualizer';
+import { Button } from '../Button/Button';
+import { DevCodeVisualizer } from '../DevCodeVisualizer/DevCodeVisualizer';
 
 export const DevShop = () => {
   const game = useContext(gameContext);
