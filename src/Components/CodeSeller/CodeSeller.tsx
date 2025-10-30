@@ -1,8 +1,8 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext } from 'react';
 import styles from './CodeSeller.module.scss';
-import { gameContext } from '../Game/GameContext';
-import { formatNumber } from '../Utils/util';
-import { Button } from '../Button/Button';
+import { gameContext } from '@game/GameContext';
+import { formatNumber } from '@utils/util';
+import { Button } from '@components/Button/Button';
 
 export const CodeSeller = () => {
   const game = useContext(gameContext);
@@ -10,16 +10,6 @@ export const CodeSeller = () => {
   const sellCode = useCallback(() => {
     game.sellCode(game.manualSellingForce);
   }, [game]);
-
-  useEffect(() => {
-    // TODO : Delete this log
-    console.log('CodeSeller : game.manualSellingForce', game.manualSellingForce);
-  }, [game.manualSellingForce]);
-
-  useEffect(() => {
-    // TODO : Delete this log
-    console.log('CodeSeller : game.codePrice', game.codePrice);
-  }, [game.codePrice]);
 
   return (
     <div className={styles.container}>

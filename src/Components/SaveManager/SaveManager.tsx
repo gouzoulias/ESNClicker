@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useRef, useState } from 'react';
 import styles from './SaveManager.module.scss';
-import { gameContext } from '../Game/GameContext';
-import { clearSaveGame, createSaveGame, exportSaveGame, importSaveGame, saveGameToLocalStorage } from '../Utils/SaveGame';
+import { gameContext } from '@game/GameContext';
+import { clearSaveGame, createSaveGame, exportSaveGame, importSaveGame, saveGameToLocalStorage } from '@utils/SaveGame';
 
 export const SaveManager = () => {
   const game = useContext(gameContext);
@@ -84,11 +84,7 @@ export const SaveManager = () => {
     <div className={styles.container}>
       <h3>Gestion des sauvegardes</h3>
 
-      {message && (
-        <div className={`${styles.message} ${message.includes('Erreur') ? styles.error : styles.success}`}>
-          {message}
-        </div>
-      )}
+      {message && <div className={`${styles.message} ${message.includes('Erreur') ? styles.error : styles.success}`}>{message}</div>}
 
       <div className={styles.section}>
         <h4>Exporter la sauvegarde</h4>
@@ -101,12 +97,7 @@ export const SaveManager = () => {
               Télécharger le fichier
             </button>
             <button onClick={copyToClipboard}>Copier</button>
-            <textarea
-              value={exportData}
-              readOnly
-              className={styles.textarea}
-              placeholder="Les données d'export apparaîtront ici..."
-            />
+            <textarea value={exportData} readOnly className={styles.textarea} placeholder="Les données d'export apparaîtront ici..." />
           </>
         )}
       </div>

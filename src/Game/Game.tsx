@@ -52,8 +52,27 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     }
   }, []);
 
-  // État du jeu actuel (sans les méthodes)
-  const currentGameState: GameState = {
+  // Sauvegarde automatique toutes les 10 secondes
+  const saveGameTick = useCallback(() => {
+    const currentState: GameState = {
+      codeLines,
+      totalCodeLinesAccumulated,
+      money,
+      totalMoneyAccumulated,
+      boughtUpgrade,
+      activatedUpgrades,
+      codePrice,
+      manualProductivity,
+      autocodeSpeed,
+      manualSellingForce,
+      devTeamInfo,
+      poTeamInfo,
+      unlockedAux,
+      auxTeam,
+    };
+    const saveGame = createSaveGame(currentState);
+    saveGameToLocalStorage(saveGame);
+  }, [
     codeLines,
     totalCodeLinesAccumulated,
     money,
@@ -68,16 +87,9 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     poTeamInfo,
     unlockedAux,
     auxTeam,
-  };
+  ]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const saveGame = createSaveGame(currentGameState);
-      saveGameToLocalStorage(saveGame);
-    }, 10000); // Sauvegarde toutes les 10 secondes
-
-    return () => clearInterval(interval);
-  }, [currentGameState]);
+  useTick(saveGameTick, 10000);
 
   const updateDevTeam = useCallback((editDev: (dev: Dev, devInfo: ProductionItemInfo) => ProductionItemInfo) => {
     setDevTeamInfo((prevState) =>

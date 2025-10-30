@@ -1,9 +1,9 @@
 // import * as _ from 'lodash';
 import { KeyboardEventHandler, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styles from './CodeMaker.module.scss';
-import sourceCode from '../assets/code.txt';
-import { GameContext, gameContext } from '../Game/GameContext';
-import { Upgrade } from '../Game/Upgrade';
+import sourceCode from '@assets/code.txt';
+import { GameContext, gameContext } from '@game/GameContext';
+import { Upgrade } from '@game/Upgrade';
 
 export const CodeMaker = () => {
   const game: GameContext = useContext(gameContext);
@@ -65,42 +65,45 @@ export const CodeMaker = () => {
     [game.boughtUpgrade],
   );
 
-  const onKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = useCallback((event) => {
-    const now = Date.now();
-    
-    // Détection de l'autocode : utilise event.repeat (plus fiable)
-    const isAutocode = event.repeat;
+  const onKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = useCallback(
+    (event) => {
+      const now = Date.now();
 
-    if (isAutocode) {
-      // Mode autocode détecté - appliquer la limitation selon la vitesse d'autocode
-      const timeSinceLastAutocode = now - lastAutocodeTime.current;
-      const minTimeBetweenChars = 1000 / game.autocodeSpeed; // Utilise la vitesse d'autocode du jeu
+      // Détection de l'autocode : utilise event.repeat (plus fiable)
+      const isAutocode = event.repeat;
 
-      if (timeSinceLastAutocode < minTimeBetweenChars) {
-        return; // Ignorer si trop rapide pour l'autocode
+      if (isAutocode) {
+        // Mode autocode détecté - appliquer la limitation selon la vitesse d'autocode
+        const timeSinceLastAutocode = now - lastAutocodeTime.current;
+        const minTimeBetweenChars = 1000 / game.autocodeSpeed; // Utilise la vitesse d'autocode du jeu
+
+        if (timeSinceLastAutocode < minTimeBetweenChars) {
+          return; // Ignorer si trop rapide pour l'autocode
+        }
+        lastAutocodeTime.current = now;
       }
-      lastAutocodeTime.current = now;
-    }
 
-    const codeToAdd: string = code.substring(iCode, iCode + game.manualProductivity);
-    const linesAdded = (codeToAdd.match(/\n/g) || []).length;
+      const codeToAdd: string = code.substring(iCode, iCode + game.manualProductivity);
+      const linesAdded = (codeToAdd.match(/\n/g) || []).length;
 
-    // Record typing activity for speed tracking
-    recordTypingActivity(game.manualProductivity, linesAdded);
+      // Record typing activity for speed tracking
+      recordTypingActivity(game.manualProductivity, linesAdded);
 
-    if (linesAdded > 0) {
-      game.createManualLine(linesAdded);
-    }
-    setTextAreaValue((prevState) => {
-      if (iCode === 0) return '' + codeToAdd;
-      return prevState + codeToAdd;
-    });
-    setICode((prevState) => {
-      let newState: number = prevState + game.manualProductivity;
-      if (newState > code.length) newState = 0;
-      return newState;
-    });
-  }, [code, game, iCode, recordTypingActivity]);
+      if (linesAdded > 0) {
+        game.createManualLine(linesAdded);
+      }
+      setTextAreaValue((prevState) => {
+        if (iCode === 0) return '' + codeToAdd;
+        return prevState + codeToAdd;
+      });
+      setICode((prevState) => {
+        let newState: number = prevState + game.manualProductivity;
+        if (newState > code.length) newState = 0;
+        return newState;
+      });
+    },
+    [code, game, iCode, recordTypingActivity],
+  );
 
   return (
     <div className={styles.container}>

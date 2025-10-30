@@ -2,6 +2,18 @@
 
 Ce fichier fournit des orientations à Claude Code (claude.ai/code) lors du travail sur ce repository.
 
+## Environnement technique
+
+**Versions** :
+- Node.js : 22.12.0 (géré par Volta)
+- npm : 10.9.2
+- Vite : 7.1.12
+- React : 18.2.0
+- TypeScript : 5.0.2
+- Sass : 1.93.2
+
+**Volta** : Le projet utilise Volta pour gérer les versions de Node.js et npm. Les versions sont définies dans `package.json` sous la clé `volta`.
+
 ## Commandes de développement
 
 - `npm i` - Installer les dépendances
@@ -19,24 +31,50 @@ ESN Clicker est un idle/clicker game basé sur React qui simule la gestion d'une
 
 ### Styles et CSS
 
-Le projet utilise **SCSS (Sass)** pour la gestion des styles :
+Le projet utilise **SCSS (Sass)** moderne pour la gestion des styles :
 
 - **CSS Modules** : Chaque composant a son fichier `.module.scss` dédié
 - **Variables globales** : `src/styles/variables.scss` contient les couleurs, espacements, et autres constantes
 - **Styles globaux** : `src/styles/global.scss` pour les styles de base de l'application
+- **Syntaxe moderne** : Utilise `@use` au lieu de l'ancien `@import` (dépréciés dans Sass 3.0)
 - **Pas de styles inline** : Tous les styles inline ont été migrés vers SCSS pour une meilleure maintenabilité
 
 Structure des fichiers de styles :
+
 ```
 src/
   styles/
     variables.scss  # Variables (couleurs, espacements, etc.)
     global.scss     # Styles globaux
   Components/
-    App.module.scss          # Styles du composant App
-    Button.module.scss       # Styles des boutons
-    SaveManager.module.scss  # etc.
+    ComponentName/
+      ComponentName.tsx          # Composant React
+      ComponentName.module.scss  # Styles du composant
+  App.module.scss  # Styles du composant App à la racine
 ```
+
+**Important** : Utiliser `@use '../../styles/variables' as *;` pour importer les variables dans les modules SCSS.
+
+### Alias de chemins
+
+Le projet utilise des alias de chemins pour simplifier les imports :
+
+- `@components/*` → `src/Components/*`
+- `@game/*` → `src/Game/*`
+- `@utils/*` → `src/Utils/*`
+- `@assets/*` → `src/assets/*`
+- `@/*` → `src/*`
+
+Exemple d'import :
+```typescript
+// ❌ Ancien style (éviter)
+import { gameContext } from '../../Game/GameContext';
+
+// ✅ Nouveau style (préféré)
+import { gameContext } from '@game/GameContext';
+```
+
+Ces alias sont configurés dans `vite.config.ts` et `tsconfig.json`.
 
 ### Boucle de jeu principale
 
@@ -76,10 +114,31 @@ Les upgrades actuels affectent la productivité manuelle, la force de vente, ou 
 
 ### Structure des composants
 
-- `src/App.tsx` - Layout UI principal avec deux colonnes (Production de Code | Vente de Code) + Upgrades
-- `src/Game/Game.tsx` - Gestion d'état centralisée et logique de jeu
-- `src/Components/` - Composants UI pour les différentes sections du jeu
-- `src/Game/` - Entités de jeu, types, et logique métier
+Le projet utilise une architecture modulaire avec des composants organisés par dossier :
+
+```
+src/
+  Components/
+    ComponentName/
+      ComponentName.tsx          # Code React
+      ComponentName.module.scss  # Styles CSS Modules
+  App.tsx                  # Layout UI principal
+  App.module.scss          # Styles de App
+  Game/
+    Game.tsx               # Gestion d'état centralisée
+    GameContext.ts         # Définitions de types et contexte
+    Dev.ts, POs.ts         # Entités de jeu
+    Upgrade.ts             # Système d'upgrades
+  Utils/
+    useTick.ts             # Hook pour la boucle de jeu
+    SaveGame.ts            # Système de sauvegarde
+    util.ts                # Utilitaires divers
+```
+
+**Conventions** :
+- Chaque composant a son propre dossier (sauf `App.tsx` à la racine)
+- Utiliser CSS Modules pour le styling (`.module.scss`)
+- Utiliser les alias de chemins (`@components`, `@game`, etc.)
 
 ### Fichiers importants
 
@@ -131,7 +190,7 @@ Pour chaque demande de fonctionnalité ou évolution, créer une branche git dé
 ### Système actuel
 
 - **Architecture** : Séparation `GameState` (données) / `GameContext` (données + méthodes)
-- **Sauvegarde automatique** : toutes les 10 secondes dans localStorage
+- **Sauvegarde automatique** : toutes les 10 secondes via `useTick` hook (pas via useEffect pour éviter les sauvegardes trop fréquentes)
 - **Export/Import** : via Base64 avec validation de version
 - **Réinitialisation** : remise aux valeurs par défaut + nettoyage localStorage
 - **Interface** : mode paramètres accessible via bouton en en-tête
