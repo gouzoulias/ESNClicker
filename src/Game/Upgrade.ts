@@ -52,17 +52,17 @@ export const UpgradeInfos: Record<Upgrade, ItemInfo> = {
 
   // Autocode upgrades
   [Upgrade.AutoMacro]: {
-    price: 100,
+    price: 125,
     name: 'Macro automatique',
     description: 'Votre autocode génère plus de caractères par seconde !',
   },
   [Upgrade.TurboMode]: {
-    price: 600,
+    price: 750,
     name: 'Mode turbo',
     description: "Votre processeur booste l'autocode encore plus rapidement !",
   },
   [Upgrade.OverclockCPU]: {
-    price: 8000,
+    price: 10000,
     name: 'Overclock CPU',
     description: 'Vous overclocke votre processeur pour un autocode ultra-rapide !',
   },
