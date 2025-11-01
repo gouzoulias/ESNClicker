@@ -21,6 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Récupère tout l'historique pour semantic-release
+          token: ${{ secrets.SEMANTIC_RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
 
       # 2. Setup Node.js avec la version du projet
       - name: Setup Node.js
@@ -36,5 +37,5 @@ jobs:
       # 4. Exécution de semantic-release
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
         run: npx semantic-release
