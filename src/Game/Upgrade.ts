@@ -16,10 +16,14 @@ export enum Upgrade {
   '5G' = '5G',
 
   // Vente plus chère
+  Prettier = 'Prettier',
   Linter = 'Linter',
 
   // Analytics
   SpeedCounter = 'SpeedCounter',
+
+  // Productivity
+  KeyboardShortcuts = 'KeyboardShortcuts',
 
   // Devs
   CofeeMachine = 'CofeeMachine',
@@ -35,7 +39,7 @@ export enum Upgrade {
 export const UpgradeInfos: Record<Upgrade, ItemInfo> = {
   // Manual Code
   [Upgrade.MecanicalKeyboard]: {
-    price: 100,
+    price: 50,
     name: 'Clavier mécanique',
     description: 'Vous développez plus vite',
   },
@@ -80,17 +84,30 @@ export const UpgradeInfos: Record<Upgrade, ItemInfo> = {
   },
 
   // Selling Price
+  [Upgrade.Prettier]: {
+    price: 25,
+    name: 'Prettier',
+    description: 'Formattez automatiquement votre code pour le vendre 50% plus cher !',
+  },
   [Upgrade.Linter]: {
-    price: 400,
+    price: 100,
     name: 'Linter',
-    description: 'Vous utilisez un linter, rendant votre code plus beau et permettant de le vendre à un meilleur prix !',
+    description: 'Vous utilisez un linter, rendant votre code plus beau et permettant de le vendre deux fois plus cher !',
+    minCodeLines: 500,
   },
 
   // Analytics
   [Upgrade.SpeedCounter]: {
-    price: 60,
+    price: 30,
     name: 'Compteur de vitesse',
     description: 'Affiche votre vitesse de frappe en temps réel pour optimiser votre productivité !',
+  },
+
+  // Productivity
+  [Upgrade.KeyboardShortcuts]: {
+    priceInCodeLines: 100,
+    name: 'Raccourcis clavier',
+    description: 'Apprenez les raccourcis clavier pour coder plus efficacement !',
   },
 
   // Dev Productivity

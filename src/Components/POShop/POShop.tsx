@@ -11,7 +11,11 @@ export const POShop = () => {
   const game = useContext(gameContext);
 
   const shouldShowPOBuyButton = useCallback(
-    (po: PO) => game.totalCodeLinesAccumulated > POInitialInfos[po].productivity * 0.5 && game.totalMoneyAccumulated > POInitialInfos[po].price * 0.5,
+    (po: PO) => {
+      const poInfo = POInitialInfos[po];
+      const moneyThreshold = poInfo.price ? poInfo.price * 0.5 : 0;
+      return game.totalCodeLinesAccumulated > poInfo.productivity * 0.5 && game.totalMoneyAccumulated > moneyThreshold;
+    },
     [game.totalCodeLinesAccumulated, game.totalMoneyAccumulated],
   );
 
@@ -23,6 +27,9 @@ export const POShop = () => {
         <h2>Recrutement de Product Owners</h2>
         {_.map(POList, (po) => {
           const poInfo: ProductionItemInfo = game.poTeamInfo[po as PO];
+          const hasMoneyPrice = poInfo.price !== undefined && poInfo.price > 0;
+          const hasCodeLinePrice = poInfo.priceInCodeLines !== undefined;
+
           return (
             shouldShowPOBuyButton(po) && (
               <div className={styles.poList}>
@@ -31,7 +38,9 @@ export const POShop = () => {
                 </div>
                 <div>
                   <Button onClick={() => game.buyPO(po)} title={poInfo.description.replace('{productivity}', `${poInfo.productivity}`)}>
-                    Engager 1 pour <b>{formatNumber(poInfo.price)} €</b>
+                    Engager 1 pour {hasMoneyPrice && <b>{formatNumber(poInfo.price!)} €</b>}
+                    {hasMoneyPrice && hasCodeLinePrice && ' + '}
+                    {hasCodeLinePrice && <b>{formatNumber(poInfo.priceInCodeLines!)} lignes</b>}
                   </Button>
                 </div>
               </div>

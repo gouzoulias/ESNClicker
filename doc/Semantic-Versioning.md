@@ -5,6 +5,7 @@ Ce document explique le système de versioning automatique et génération de ch
 ## Vue d'ensemble
 
 Le projet utilise **semantic-release** pour automatiser :
+
 - Le versioning sémantique basé sur les commits
 - La génération du CHANGELOG.md
 - La création des tags Git
@@ -47,30 +48,32 @@ Commit Conventional → Push sur main → semantic-release → Tag créé → De
 
 ### Types et leur effet sur la version
 
-| Type | Description | Impact version | Exemple |
-|------|-------------|----------------|---------|
-| `feat:` | Nouvelle fonctionnalité | MINOR (1.0.0 → 1.1.0) | `feat: ajouter thème dark mode` |
-| `fix:` | Correction de bug | PATCH (1.0.0 → 1.0.1) | `fix: corriger le calcul du prix` |
-| `perf:` | Amélioration de performance | PATCH (1.0.0 → 1.0.1) | `perf: optimiser le rendu` |
-| `revert:` | Annulation d'un commit | PATCH (1.0.0 → 1.0.1) | `revert: annuler feat: xyz` |
-| `docs:` | Documentation | Aucun | `docs: mettre à jour README` |
-| `style:` | Formatage, style | Aucun | `style: formater avec Prettier` |
-| `refactor:` | Refactoring | Aucun | `refactor: simplifier la logique` |
-| `test:` | Tests | Aucun | `test: ajouter tests unitaires` |
-| `build:` | Build système | Aucun | `build: mettre à jour Vite` |
-| `ci:` | CI/CD | Aucun | `ci: ajouter workflow GitHub` |
-| `chore:` | Maintenance | Aucun | `chore: nettoyer le code` |
+| Type        | Description                 | Impact version        | Exemple                           |
+| ----------- | --------------------------- | --------------------- | --------------------------------- |
+| `feat:`     | Nouvelle fonctionnalité     | MINOR (1.0.0 → 1.1.0) | `feat: ajouter thème dark mode`   |
+| `fix:`      | Correction de bug           | PATCH (1.0.0 → 1.0.1) | `fix: corriger le calcul du prix` |
+| `perf:`     | Amélioration de performance | PATCH (1.0.0 → 1.0.1) | `perf: optimiser le rendu`        |
+| `revert:`   | Annulation d'un commit      | PATCH (1.0.0 → 1.0.1) | `revert: annuler feat: xyz`       |
+| `docs:`     | Documentation               | Aucun                 | `docs: mettre à jour README`      |
+| `style:`    | Formatage, style            | Aucun                 | `style: formater avec Prettier`   |
+| `refactor:` | Refactoring                 | Aucun                 | `refactor: simplifier la logique` |
+| `test:`     | Tests                       | Aucun                 | `test: ajouter tests unitaires`   |
+| `build:`    | Build système               | Aucun                 | `build: mettre à jour Vite`       |
+| `ci:`       | CI/CD                       | Aucun                 | `ci: ajouter workflow GitHub`     |
+| `chore:`    | Maintenance                 | Aucun                 | `chore: nettoyer le code`         |
 
 ### Breaking Changes (MAJOR)
 
 Pour indiquer un changement incompatible (bump MAJOR : 1.0.0 → 2.0.0) :
 
 **Option 1 : Ajouter `!` après le type**
+
 ```
 feat!: refonte complète du système de sauvegarde
 ```
 
 **Option 2 : Footer `BREAKING CHANGE:`**
+
 ```
 feat: migration vers nouveau format de sauvegarde
 
@@ -126,6 +129,7 @@ fix: corriger le bug d'import
 ### Permissions GitHub Actions
 
 Le workflow `release.yml` nécessite ces permissions (déjà configurées) :
+
 - `contents: write` - Pour créer releases et pusher commits
 - `issues: write` - Pour commenter sur issues fermées
 - `pull-requests: write` - Pour commenter sur PRs
@@ -135,17 +139,20 @@ Le workflow `release.yml` nécessite ces permissions (déjà configurées) :
 ### Faire une nouvelle release
 
 1. **Créer une branche** pour ta feature :
+
    ```bash
    git checkout -b feature/ma-feature
    ```
 
 2. **Faire des commits** avec Conventional Commits :
+
    ```bash
    git commit -m "feat: ajouter nouvelle mécanique de jeu"
    git commit -m "fix: corriger bug de sauvegarde"
    ```
 
 3. **Push et créer une PR** :
+
    ```bash
    git push -u origin feature/ma-feature
    # Créer PR sur GitHub
@@ -170,6 +177,7 @@ Le workflow `release.yml` nécessite ces permissions (déjà configurées) :
 ### Si aucune release n'est créée
 
 semantic-release ne créera PAS de release si :
+
 - Tous les commits sont de type `docs`, `style`, `refactor`, `test`, `chore`, `build`
 - Aucun commit depuis la dernière release
 - Les commits ne suivent pas le format Conventional Commits
@@ -185,16 +193,16 @@ Le CHANGELOG.md est généré automatiquement avec cette structure :
 
 ### 🎉 Nouvelles fonctionnalités
 
-* ajouter système de thèmes avec 5 thèmes ([abc1234](commit-link))
-* ajouter sélecteur de thème dans header ([def5678](commit-link))
+- ajouter système de thèmes avec 5 thèmes ([abc1234](commit-link))
+- ajouter sélecteur de thème dans header ([def5678](commit-link))
 
 ### 🐛 Corrections de bugs
 
-* corriger application des thèmes ([ghi9012](commit-link))
+- corriger application des thèmes ([ghi9012](commit-link))
 
 ### ⚡ Améliorations de performance
 
-* optimiser rendu avec React.memo ([jkl3456](commit-link))
+- optimiser rendu avec React.memo ([jkl3456](commit-link))
 ```
 
 ## Troubleshooting
@@ -202,6 +210,7 @@ Le CHANGELOG.md est généré automatiquement avec cette structure :
 ### Le workflow release échoue
 
 **Vérifier** :
+
 1. Que le commit suit bien le format Conventional Commits
 2. Que les permissions GitHub Actions sont correctes
 3. Les logs dans l'onglet Actions pour voir l'erreur exacte
@@ -209,11 +218,13 @@ Le CHANGELOG.md est généré automatiquement avec cette structure :
 ### semantic-release ne crée pas de version
 
 **Causes possibles** :
+
 1. Pas de commits `feat`/`fix`/`perf` depuis la dernière release
 2. Commits mal formatés (ne suivent pas Conventional Commits)
 3. Tous les commits sont de type `docs`/`chore`/etc.
 
 **Solution** : Vérifier le format des commits avec :
+
 ```bash
 npx commitlint --from=HEAD~1
 ```
@@ -221,6 +232,7 @@ npx commitlint --from=HEAD~1
 ### Itch.io ne se met pas à jour
 
 **Vérifier** :
+
 1. Que le workflow `Deploy to Itch.io` s'est bien déclenché après le tag
 2. Que les secrets `BUTLER_API_KEY`, `ITCH_USER`, `ITCH_GAME` sont bien configurés
 3. Les logs du workflow de déploiement
@@ -228,6 +240,7 @@ npx commitlint --from=HEAD~1
 ### commitlint bloque mes commits
 
 Si commitlint refuse ton commit :
+
 ```
 ⧗   input: mon commit sans format
 ✖   subject may not be empty [subject-empty]
@@ -235,6 +248,7 @@ Si commitlint refuse ton commit :
 ```
 
 **Solution** : Reformater le commit avec un type valide :
+
 ```bash
 git commit --amend -m "feat: mon commit avec format"
 ```

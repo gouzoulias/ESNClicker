@@ -70,11 +70,7 @@ function AppContent() {
             <CodeSeller />
             <POShop />
           </div>
-          {game.totalMoneyAccumulated >= 25 && (
-            <div className={styles.column}>
-              <UpgradeShop />
-            </div>
-          )}
+          <div className={styles.column}>{game.totalMoneyAccumulated >= 5 && <UpgradeShop />}</div>
         </div>
       )}
     </>

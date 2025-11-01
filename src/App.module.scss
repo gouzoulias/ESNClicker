@@ -57,10 +57,12 @@
 
 .gameLayout {
   display: flex;
+  gap: $spacing-md;
 }
 
 .column {
   display: flex;
   flex-direction: column;
-  width: $column-width;
+  flex: 1;
+  min-width: 0; // Permet au contenu de shrink si nécessaire
 }

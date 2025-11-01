@@ -5,6 +5,7 @@ Ce fichier fournit des orientations à Claude Code (claude.ai/code) lors du trav
 ## Environnement technique
 
 **Versions** :
+
 - Node.js : 22.12.0 (géré par Volta)
 - npm : 10.9.2
 - Vite : 7.1.12
@@ -58,6 +59,7 @@ src/
 #### Système de thèmes
 
 Le jeu supporte **5 thèmes de couleur** :
+
 - **Clair** (défaut) : Thème classique avec fond blanc
 - **Sombre** : Dark mode pour réduire la fatigue visuelle
 - **Matrix** : Esthétique vert phosphorescent sur fond noir
@@ -65,23 +67,27 @@ Le jeu supporte **5 thèmes de couleur** :
 - **Corporate** : Style professionnel bleu/gris
 
 Les thèmes sont implémentés via **CSS Custom Properties** dans `variables.scss` :
+
 - Définitions des couleurs dans `:root` (thème clair)
 - Surcharge via classes `body.theme-{nom}` pour les autres thèmes
 - Variables SCSS pointent vers les custom properties avec `var(--color-name)`
 - Changement de thème instantané sans recompilation
 
 **Couleurs disponibles** :
+
 - `$primary-color`, `$secondary-color`, `$background-color`
 - `$border-color`, `$text-color`, `$text-secondary`
 - `$button-hover`, `$success-*`, `$error-*`, `$warning-*`
 - `$disabled-bg`, `$disabled-text`
 
 **Sélecteur de thème** :
+
 - Composant `ThemeSelector` dans le header
 - Sauvegarde automatique du thème choisi
 - Application du thème via classe sur `<body>`
 
 **Pour ajouter un nouveau thème** :
+
 1. Dans `src/styles/variables.scss` : ajouter une section `body.theme-{nom}` avec toutes les custom properties
 2. Dans `src/Components/ThemeSelector/ThemeSelector.tsx` : ajouter le thème dans le tableau `THEMES`
 3. Dans `src/App.tsx` : ajouter la classe du nouveau thème dans `document.body.classList.remove()` (ligne 23)
@@ -97,6 +103,7 @@ Le projet utilise des alias de chemins pour simplifier les imports :
 - `@/*` → `src/*`
 
 Exemple d'import :
+
 ```typescript
 // ❌ Ancien style (éviter)
 import { gameContext } from '../../Game/GameContext';
@@ -167,6 +174,7 @@ src/
 ```
 
 **Conventions** :
+
 - Chaque composant a son propre dossier (sauf `App.tsx` à la racine)
 - Utiliser CSS Modules pour le styling (`.module.scss`)
 - Utiliser les alias de chemins (`@components`, `@game`, etc.)
@@ -195,6 +203,7 @@ Pour chaque demande de fonctionnalité ou évolution, créer une branche git dé
 Le projet utilise **Conventional Commits** pour générer automatiquement les versions et changelogs avec semantic-release.
 
 **Format** :
+
 ```
 <type>(<scope optionnel>): <description>
 
@@ -204,6 +213,7 @@ Le projet utilise **Conventional Commits** pour générer automatiquement les ve
 ```
 
 **Types disponibles** :
+
 - `feat:` - Nouvelle fonctionnalité (→ bump MINOR, ex: 1.0.0 → 1.1.0)
 - `fix:` - Correction de bug (→ bump PATCH, ex: 1.0.0 → 1.0.1)
 - `perf:` - Amélioration de performance (→ bump PATCH)
@@ -218,6 +228,7 @@ Le projet utilise **Conventional Commits** pour générer automatiquement les ve
 
 **Breaking changes** :
 Pour indiquer un changement majeur (→ bump MAJOR, ex: 1.0.0 → 2.0.0), ajouter `!` après le type ou `BREAKING CHANGE:` dans le footer :
+
 ```
 feat!: refonte complète de l'interface utilisateur
 
@@ -225,6 +236,7 @@ BREAKING CHANGE: Les anciennes sauvegardes ne sont plus compatibles
 ```
 
 **Exemples** :
+
 ```
 feat: ajouter système de thèmes de couleur avec 5 thèmes
 fix: corriger le nom de la propriété codeLines
@@ -234,6 +246,7 @@ perf: optimiser le rendu des composants avec React.memo
 ```
 
 **Important** :
+
 - Toujours écrire les messages en **français**
 - Respecter le format pour que semantic-release fonctionne
 - commitlint valide automatiquement les messages de commit
@@ -250,13 +263,11 @@ perf: optimiser le rendu des composants avec React.memo
 ⚠️ **PROCÉDURE OBLIGATOIRE** : Toute évolution du jeu DOIT inclure la mise à jour du système de sauvegarde !
 
 1. **`src/Game/GameContext.ts`** :
-
    - Ajouter les nouveaux champs au type `GameState` (les données)
    - Le type `SaveGame` s'adapte automatiquement (hérite de `GameState`)
    - Mettre à jour `gameStateDefaultValues` avec les nouvelles valeurs par défaut
 
 2. **`src/Game/Game.tsx`** :
-
    - Adapter la fonction `loadSaveGame()` pour charger les nouvelles données
    - Mettre à jour la fonction `resetGame()` si nécessaire
    - Inclure les nouveaux champs dans `currentGameState`
@@ -286,3 +297,4 @@ Voir `doc/Roadmap.md` pour la roadmap de développement actuelle. Les fonctionna
 - Mécaniques de démission des employés
 
 - n'essaie pas de lancer le serveur avec npm run dev, je m'occupe de lancer et tester le jeu
+- quand tu changes de branche, penses à faire un pull derrière pour être à jour sur la branche

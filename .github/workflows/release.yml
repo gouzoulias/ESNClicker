@@ -8,7 +8,7 @@ on:
 
 permissions:
   contents: write # Pour créer les releases et pusher les commits
-  issues: write   # Pour commenter sur les issues fermées
+  issues: write # Pour commenter sur les issues fermées
   pull-requests: write # Pour commenter sur les PRs
 
 jobs:
