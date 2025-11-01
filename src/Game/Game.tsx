@@ -163,10 +163,6 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     [addMoney, devTeamInfo, money, updateDevTeam],
   );
 
-  useEffect(() => {
-    console.log('theme', theme);
-  });
-
   const buyPO = useCallback(
     (po: PO) => {
       const poPrice: number = poTeamInfo[po].price;
