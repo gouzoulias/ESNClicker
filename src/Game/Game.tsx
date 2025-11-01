@@ -145,40 +145,66 @@ export const Game = ({ children }: React.PropsWithChildren) => {
 
   const buyDev = useCallback(
     (dev: Dev) => {
-      const devPrice: number = devTeamInfo[dev].price;
-      if (money >= devPrice) {
-        addMoney(-devPrice);
+      const devInfo = devTeamInfo[dev];
+      const hasMoneyPrice = devInfo.price !== undefined && devInfo.price > 0;
+      const hasCodeLinePrice = devInfo.priceInCodeLines !== undefined;
+
+      const canAffordMoney = !hasMoneyPrice || money >= devInfo.price!;
+      const canAffordCodeLines = !hasCodeLinePrice || codeLines >= devInfo.priceInCodeLines!;
+      const canAfford = canAffordMoney && canAffordCodeLines;
+
+      if (canAfford) {
+        if (hasMoneyPrice) {
+          addMoney(-devInfo.price!);
+        }
+        if (hasCodeLinePrice) {
+          setCodeLines((prevState) => prevState - devInfo.priceInCodeLines!);
+        }
         updateDevTeam((prevDev, devInfo) =>
           prevDev === dev
             ? ({
                 ...devInfo,
                 numberOwned: devInfo.numberOwned + 1,
-                price: devInfo.price * PriceIncrease,
+                price: devInfo.price ? devInfo.price * PriceIncrease : devInfo.price,
+                priceInCodeLines: devInfo.priceInCodeLines ? devInfo.priceInCodeLines * PriceIncrease : devInfo.priceInCodeLines,
               } as ProductionItemInfo)
             : devInfo,
         );
       }
     },
-    [addMoney, devTeamInfo, money, updateDevTeam],
+    [addMoney, codeLines, devTeamInfo, money, updateDevTeam],
   );
 
   const buyPO = useCallback(
     (po: PO) => {
-      const poPrice: number = poTeamInfo[po].price;
-      if (money >= poPrice) {
-        addMoney(-poPrice);
+      const poInfo = poTeamInfo[po];
+      const hasMoneyPrice = poInfo.price !== undefined && poInfo.price > 0;
+      const hasCodeLinePrice = poInfo.priceInCodeLines !== undefined;
+
+      const canAffordMoney = !hasMoneyPrice || money >= poInfo.price!;
+      const canAffordCodeLines = !hasCodeLinePrice || codeLines >= poInfo.priceInCodeLines!;
+      const canAfford = canAffordMoney && canAffordCodeLines;
+
+      if (canAfford) {
+        if (hasMoneyPrice) {
+          addMoney(-poInfo.price!);
+        }
+        if (hasCodeLinePrice) {
+          setCodeLines((prevState) => prevState - poInfo.priceInCodeLines!);
+        }
         updatePOTeam((prevPO, poInfo) =>
           prevPO === po
             ? ({
                 ...poInfo,
                 numberOwned: poInfo.numberOwned + 1,
-                price: poInfo.price * PriceIncrease,
+                price: poInfo.price ? poInfo.price * PriceIncrease : poInfo.price,
+                priceInCodeLines: poInfo.priceInCodeLines ? poInfo.priceInCodeLines * PriceIncrease : poInfo.priceInCodeLines,
               } as ProductionItemInfo)
             : poInfo,
         );
       }
     },
-    [addMoney, money, poTeamInfo, updatePOTeam],
+    [addMoney, codeLines, money, poTeamInfo, updatePOTeam],
   );
 
   const buyAux = useCallback((aux: Aux) => {
