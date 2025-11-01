@@ -148,7 +148,6 @@ export const Game = ({ children }: React.PropsWithChildren) => {
     (dev: Dev) => {
       const devPrice: number = devTeamInfo[dev].price;
       if (money >= devPrice) {
-        console.log('addMoney : ', -devPrice);
         addMoney(-devPrice);
         updateDevTeam((prevDev, devInfo) =>
           prevDev === dev

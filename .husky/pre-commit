@@ -1,6 +1,15 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Formatter le code avec Prettier
+echo "Running Prettier..."
+npm run format
+
+# Vérifier le linter
+echo "Running ESLint..."
+npm run lint
+
+# Mettre à jour le fichier de code pour le visualiseur
 echo "// src/Game/Game.tsx" >src/assets/code.txt
 cat src/Game/Game.tsx >>src/assets/code.txt
 

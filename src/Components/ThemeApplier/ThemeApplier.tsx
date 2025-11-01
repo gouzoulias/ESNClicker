@@ -9,7 +9,6 @@ export const ThemeApplier = () => {
   const game = useContext(gameContext);
 
   useEffect(() => {
-    console.log('Applying theme:', game.theme);
     // Retirer toutes les classes de thème
     document.body.classList.remove('theme-dark', 'theme-matrix', 'theme-cyberpunk', 'theme-corporate');
 
@@ -17,7 +16,6 @@ export const ThemeApplier = () => {
     if (game.theme !== 'light') {
       document.body.classList.add(`theme-${game.theme}`);
     }
-    console.log('Body classes:', document.body.className);
   }, [game.theme]);
 
   return null; // Ce composant ne rend rien
