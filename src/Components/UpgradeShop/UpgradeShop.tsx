@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import styles from './UpgradeShop.module.scss';
 import { gameContext } from '@game/GameContext';
 import { Upgrade, UpgradeInfos } from '@game/Upgrade';
@@ -29,31 +29,6 @@ export const UpgradeShop = () => {
         .value(),
     [game.boughtUpgrade, game.totalCodeLinesAccumulated, game.codePrice],
   );
-
-  useEffect(() => {
-    console.log('game.boughtUpgrade', game.boughtUpgrade);
-
-    console.log(
-      'first filter : ',
-      _.chain(Upgrade)
-        .filter((upgrade) => game.boughtUpgrade[upgrade] === false)
-        .sortBy((upgrade) => UpgradeInfos[upgrade].price)
-        .value(),
-    );
-    console.log(
-      'second filter : ',
-      _.chain(Upgrade)
-        .filter((upgrade) => game.boughtUpgrade[upgrade] === false)
-        .filter((upgrade) => {
-          const minCodeLines = UpgradeInfos[upgrade].minCodeLines;
-          return !minCodeLines || game.totalCodeLinesAccumulated >= minCodeLines;
-        })
-        .sortBy((upgrade) => UpgradeInfos[upgrade].price)
-        .value(),
-    );
-
-    console.log('availableUpgrades', availableUpgrades);
-  }, [availableUpgrades, game.boughtUpgrade, game.totalCodeLinesAccumulated]);
 
   return (
     <div>
