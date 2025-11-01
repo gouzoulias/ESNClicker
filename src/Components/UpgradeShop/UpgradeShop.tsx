@@ -46,8 +46,7 @@ export const UpgradeShop = () => {
               </p>
               <p>{upgradeInfo.description}</p>
               <p>
-                Acheter pour{' '}
-                {hasMoneyPrice && <b>{formatNumber(upgradeInfo.price!, false)} €</b>}
+                Acheter pour {hasMoneyPrice && <b>{formatNumber(upgradeInfo.price!, false)} €</b>}
                 {hasMoneyPrice && hasCodeLinePrice && ' + '}
                 {hasCodeLinePrice && <b>{formatNumber(upgradeInfo.priceInCodeLines!, false)} lignes</b>}
               </p>
