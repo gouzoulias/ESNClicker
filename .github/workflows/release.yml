@@ -1,0 +1,40 @@
+name: Release
+
+# Se déclenche sur chaque push sur main
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write # Pour créer les releases et pusher les commits
+  issues: write   # Pour commenter sur les issues fermées
+  pull-requests: write # Pour commenter sur les PRs
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout du code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Récupère tout l'historique pour semantic-release
+
+      # 2. Setup Node.js avec la version du projet
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+          cache: 'npm'
+
+      # 3. Installation des dépendances
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Exécution de semantic-release
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release

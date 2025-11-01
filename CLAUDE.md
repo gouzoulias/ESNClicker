@@ -190,7 +190,54 @@ src/
 
 Pour chaque demande de fonctionnalité ou évolution, créer une branche git dédiée avec un nom descriptif lié à la tâche. Cela permet des commits incrémentaux et une revue de code plus facile.
 
-**Messages de commit** : Toujours écrire les messages de commit en français pour rester cohérent avec le projet.
+### Messages de commit - Conventional Commits
+
+Le projet utilise **Conventional Commits** pour générer automatiquement les versions et changelogs avec semantic-release.
+
+**Format** :
+```
+<type>(<scope optionnel>): <description>
+
+[corps optionnel]
+
+[notes optionnelles]
+```
+
+**Types disponibles** :
+- `feat:` - Nouvelle fonctionnalité (→ bump MINOR, ex: 1.0.0 → 1.1.0)
+- `fix:` - Correction de bug (→ bump PATCH, ex: 1.0.0 → 1.0.1)
+- `perf:` - Amélioration de performance (→ bump PATCH)
+- `docs:` - Documentation uniquement (pas de version)
+- `style:` - Formatage, point-virgules, etc. (pas de version)
+- `refactor:` - Refactoring du code (pas de version)
+- `test:` - Ajout/modification de tests (pas de version)
+- `build:` - Changements du système de build (pas de version)
+- `ci:` - Changements CI/CD (pas de version)
+- `chore:` - Maintenance générale (pas de version)
+- `revert:` - Annulation d'un commit (→ bump PATCH)
+
+**Breaking changes** :
+Pour indiquer un changement majeur (→ bump MAJOR, ex: 1.0.0 → 2.0.0), ajouter `!` après le type ou `BREAKING CHANGE:` dans le footer :
+```
+feat!: refonte complète de l'interface utilisateur
+
+BREAKING CHANGE: Les anciennes sauvegardes ne sont plus compatibles
+```
+
+**Exemples** :
+```
+feat: ajouter système de thèmes de couleur avec 5 thèmes
+fix: corriger le nom de la propriété codeLines
+docs: mettre à jour la documentation du système de sauvegarde
+refactor(game): simplifier la logique de calcul des prix
+perf: optimiser le rendu des composants avec React.memo
+```
+
+**Important** :
+- Toujours écrire les messages en **français**
+- Respecter le format pour que semantic-release fonctionne
+- commitlint valide automatiquement les messages de commit
+- Les commits sur main déclenchent automatiquement semantic-release
 
 **Co-author** : Ne pas ajouter Claude en co-author dans les commits.
 
