@@ -286,3 +286,4 @@ Voir `doc/Roadmap.md` pour la roadmap de développement actuelle. Les fonctionna
 - Mécaniques de démission des employés
 
 - n'essaie pas de lancer le serveur avec npm run dev, je m'occupe de lancer et tester le jeu
+- quand tu changes de branche, penses à faire un pull derrière pour être à jour sur la branche
