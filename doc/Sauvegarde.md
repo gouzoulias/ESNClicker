@@ -109,13 +109,11 @@ Interface accessible via le bouton "Paramètres" dans l'en-tête du jeu.
 Organisé en 3 sections :
 
 1. **Export** :
-
    - Bouton "Générer l'export"
    - Textarea avec données exportées
    - Boutons "Télécharger" et "Copier"
 
 2. **Import** :
-
    - Upload de fichier
    - Textarea pour saisie manuelle
    - Bouton "Importer"

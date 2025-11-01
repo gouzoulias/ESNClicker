@@ -32,6 +32,7 @@ Pour que le workflow fonctionne, il faut configurer **3 secrets** dans GitHub :
 **Valeur** : Ta clé API Itch.io que tu as déjà générée
 
 **Comment obtenir la clé** (si tu l'as perdue) :
+
 - Aller sur https://itch.io/user/settings/api-keys
 - Générer une nouvelle clé API
 - **Important** : Copier la clé immédiatement, elle ne sera plus visible après !
@@ -106,14 +107,14 @@ Exemple : le tag `v1.2.3` apparaîtra comme version `v1.2.3` sur Itch.io.
 
 Pour référence (venant de GitLab Runner) :
 
-| GitLab CI | GitHub Actions |
-|-----------|----------------|
+| GitLab CI        | GitHub Actions            |
+| ---------------- | ------------------------- |
 | `.gitlab-ci.yml` | `.github/workflows/*.yml` |
-| `image:` | `runs-on:` |
-| `script:` | `run:` |
-| `$CI_COMMIT_TAG` | `${{ github.ref_name }}` |
-| Variables CI/CD | Secrets |
-| `only: [tags]` | `on: push: tags:` |
+| `image:`         | `runs-on:`                |
+| `script:`        | `run:`                    |
+| `$CI_COMMIT_TAG` | `${{ github.ref_name }}`  |
+| Variables CI/CD  | Secrets                   |
+| `only: [tags]`   | `on: push: tags:`         |
 
 ## Troubleshooting
 
