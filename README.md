@@ -2,7 +2,7 @@ ESN Clicker
 
 # Installer le jeu
 
-Exectuer les lignes suivantes :
+Exécuter les lignes suivantes :
 
 ```
 npm i
@@ -10,7 +10,7 @@ npm i
 
 # Lancer le jeu
 
-Executer les lignes suivantes
+Exécuter les lignes suivantes
 
 ```
 npm run dev
