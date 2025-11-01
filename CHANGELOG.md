@@ -1,3 +1,9 @@
+## [0.1.2](https://github.com/gouzoulias/ESNClicker/compare/v0.1.1...v0.1.2) (2025-11-01)
+
+### 🐛 Corrections de bugs
+
+* corriger les fautes d'orthographe dans le README ([9d1ef75](https://github.com/gouzoulias/ESNClicker/commit/9d1ef75ccde2c8a3dac077fb78c26ee74cbc4c7f))
+
 ## [0.1.1](https://github.com/gouzoulias/ESNClicker/compare/v0.1.0...v0.1.1) (2025-11-01)
 
 ### 🐛 Corrections de bugs
