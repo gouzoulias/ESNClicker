@@ -24,6 +24,9 @@ export const DevShop = () => {
         <h2>Recrutement de Developpeurs</h2>
         {_.map(DevList, (dev) => {
           const devInfo: ProductionItemInfo = game.devTeamInfo[dev as Dev];
+          const hasMoneyPrice = devInfo.price !== undefined && devInfo.price > 0;
+          const hasCodeLinePrice = devInfo.priceInCodeLines !== undefined;
+
           return (
             shouldShowDevBuyButton(dev) && (
               <div className={styles.devList}>
@@ -32,7 +35,9 @@ export const DevShop = () => {
                 </div>
                 <div>
                   <Button onClick={() => game.buyDev(dev)} title={devInfo.description.replace('{productivity}', `${devInfo.productivity}`)}>
-                    Engager 1 pour <b>{formatNumber(devInfo.price)} €</b>
+                    Engager 1 pour {hasMoneyPrice && <b>{formatNumber(devInfo.price!)} €</b>}
+                    {hasMoneyPrice && hasCodeLinePrice && ' + '}
+                    {hasCodeLinePrice && <b>{formatNumber(devInfo.priceInCodeLines!)} lignes</b>}
                   </Button>
                 </div>
               </div>

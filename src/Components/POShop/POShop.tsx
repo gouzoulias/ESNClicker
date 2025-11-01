@@ -23,6 +23,9 @@ export const POShop = () => {
         <h2>Recrutement de Product Owners</h2>
         {_.map(POList, (po) => {
           const poInfo: ProductionItemInfo = game.poTeamInfo[po as PO];
+          const hasMoneyPrice = poInfo.price !== undefined && poInfo.price > 0;
+          const hasCodeLinePrice = poInfo.priceInCodeLines !== undefined;
+
           return (
             shouldShowPOBuyButton(po) && (
               <div className={styles.poList}>
@@ -31,7 +34,9 @@ export const POShop = () => {
                 </div>
                 <div>
                   <Button onClick={() => game.buyPO(po)} title={poInfo.description.replace('{productivity}', `${poInfo.productivity}`)}>
-                    Engager 1 pour <b>{formatNumber(poInfo.price)} €</b>
+                    Engager 1 pour {hasMoneyPrice && <b>{formatNumber(poInfo.price!)} €</b>}
+                    {hasMoneyPrice && hasCodeLinePrice && ' + '}
+                    {hasCodeLinePrice && <b>{formatNumber(poInfo.priceInCodeLines!)} lignes</b>}
                   </Button>
                 </div>
               </div>
