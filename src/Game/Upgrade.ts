@@ -16,6 +16,7 @@ export enum Upgrade {
   '5G' = '5G',
 
   // Vente plus chère
+  Prettier = 'Prettier',
   Linter = 'Linter',
 
   // Analytics
@@ -80,15 +81,21 @@ export const UpgradeInfos: Record<Upgrade, ItemInfo> = {
   },
 
   // Selling Price
+  [Upgrade.Prettier]: {
+    price: 25,
+    name: 'Prettier',
+    description: 'Formattez automatiquement votre code pour le vendre 50% plus cher !',
+  },
   [Upgrade.Linter]: {
-    price: 400,
+    price: 100,
     name: 'Linter',
-    description: 'Vous utilisez un linter, rendant votre code plus beau et permettant de le vendre à un meilleur prix !',
+    description: 'Vous utilisez un linter, rendant votre code plus beau et permettant de le vendre deux fois plus cher !',
+    minCodeLines: 500,
   },
 
   // Analytics
   [Upgrade.SpeedCounter]: {
-    price: 60,
+    price: 30,
     name: 'Compteur de vitesse',
     description: 'Affiche votre vitesse de frappe en temps réel pour optimiser votre productivité !',
   },
