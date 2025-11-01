@@ -11,9 +11,11 @@ export const CodeSeller = () => {
     game.sellCode(game.manualSellingForce);
   }, [game]);
 
+  const canSell = game.codeLines >= 5;
+
   return (
     <div className={styles.container}>
-      <Button onClick={sellCode}>
+      <Button onClick={sellCode} disabled={!canSell}>
         Vendre <b>{formatNumber(game.manualSellingForce, false)}</b> lignes de code pour{' '}
         <b>{formatNumber(game.manualSellingForce * game.codePrice, false)} €</b>
       </Button>
