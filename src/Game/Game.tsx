@@ -222,8 +222,11 @@ export const Game = ({ children }: React.PropsWithChildren) => {
           case Upgrade['5G']:
             setManualSellingForce((prevState) => prevState * 5);
             break;
+          case Upgrade.Prettier:
+            setCodePrice((prevState) => prevState * 1.5);
+            break;
           case Upgrade.Linter:
-            setCodePrice((prevState) => prevState * 1.25);
+            setCodePrice((prevState) => prevState * 2);
             break;
           case Upgrade.CofeeMachine:
             updateDevTeam((_dev, devInfo) => ({

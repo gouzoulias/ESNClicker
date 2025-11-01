@@ -13,10 +13,14 @@ export const UpgradeShop = () => {
     () =>
       _.chain(Upgrade)
         .filter((upgrade) => game.boughtUpgrade[upgrade] === false)
+        .filter((upgrade) => {
+          const minCodeLines = UpgradeInfos[upgrade].minCodeLines;
+          return !minCodeLines || game.totalCodeLinesAccumulated >= minCodeLines;
+        })
         .sortBy((upgrade) => UpgradeInfos[upgrade].price)
         .take(3)
         .value(),
-    [game.boughtUpgrade],
+    [game.boughtUpgrade, game.totalCodeLinesAccumulated],
   );
 
   return (
