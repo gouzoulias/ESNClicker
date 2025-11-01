@@ -1,10 +1,9 @@
 name: Deploy to Itch.io
 
-# Se déclenche uniquement sur les tags qui commencent par 'v' (ex: v1.0.0)
+# Se déclenche quand semantic-release crée une release GitHub
 on:
-  push:
-    tags:
-      - 'v*'
+  release:
+    types: [published]
 
 jobs:
   deploy:
