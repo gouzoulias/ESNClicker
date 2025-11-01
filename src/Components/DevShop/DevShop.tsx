@@ -12,7 +12,11 @@ export const DevShop = () => {
   const game = useContext(gameContext);
 
   const shouldShowDevBuyButton = useCallback(
-    (dev: Dev) => game.totalCodeLinesAccumulated > DevInitialInfos[dev].productivity * 0.5 && game.totalMoneyAccumulated > DevInitialInfos[dev].price * 0.5,
+    (dev: Dev) => {
+      const devInfo = DevInitialInfos[dev];
+      const moneyThreshold = devInfo.price ? devInfo.price * 0.5 : 0;
+      return game.totalCodeLinesAccumulated > devInfo.productivity * 0.5 && game.totalMoneyAccumulated > moneyThreshold;
+    },
     [game.totalCodeLinesAccumulated, game.totalMoneyAccumulated],
   );
 

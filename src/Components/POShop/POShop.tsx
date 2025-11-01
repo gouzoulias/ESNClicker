@@ -11,7 +11,11 @@ export const POShop = () => {
   const game = useContext(gameContext);
 
   const shouldShowPOBuyButton = useCallback(
-    (po: PO) => game.totalCodeLinesAccumulated > POInitialInfos[po].productivity * 0.5 && game.totalMoneyAccumulated > POInitialInfos[po].price * 0.5,
+    (po: PO) => {
+      const poInfo = POInitialInfos[po];
+      const moneyThreshold = poInfo.price ? poInfo.price * 0.5 : 0;
+      return game.totalCodeLinesAccumulated > poInfo.productivity * 0.5 && game.totalMoneyAccumulated > moneyThreshold;
+    },
     [game.totalCodeLinesAccumulated, game.totalMoneyAccumulated],
   );
 
