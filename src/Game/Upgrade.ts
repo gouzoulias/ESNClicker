@@ -22,6 +22,9 @@ export enum Upgrade {
   // Analytics
   SpeedCounter = 'SpeedCounter',
 
+  // Productivity
+  KeyboardShortcuts = 'KeyboardShortcuts',
+
   // Devs
   CofeeMachine = 'CofeeMachine',
 
@@ -36,7 +39,7 @@ export enum Upgrade {
 export const UpgradeInfos: Record<Upgrade, ItemInfo> = {
   // Manual Code
   [Upgrade.MecanicalKeyboard]: {
-    price: 100,
+    price: 50,
     name: 'Clavier mécanique',
     description: 'Vous développez plus vite',
   },
@@ -98,6 +101,13 @@ export const UpgradeInfos: Record<Upgrade, ItemInfo> = {
     price: 30,
     name: 'Compteur de vitesse',
     description: 'Affiche votre vitesse de frappe en temps réel pour optimiser votre productivité !',
+  },
+
+  // Productivity
+  [Upgrade.KeyboardShortcuts]: {
+    priceInCodeLines: 100,
+    name: 'Raccourcis clavier',
+    description: 'Apprenez les raccourcis clavier pour coder plus efficacement !',
   },
 
   // Dev Productivity

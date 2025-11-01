@@ -16,8 +16,7 @@ export const CodeSeller = () => {
   return (
     <div className={styles.container}>
       <Button onClick={sellCode} disabled={!canSell}>
-        Vendre <b>{formatNumber(game.manualSellingForce, false)}</b> lignes de code pour{' '}
-        <b>{formatNumber(game.manualSellingForce * game.codePrice, false)} €</b>
+        Vendre <b>{formatNumber(game.manualSellingForce, false)}</b> lignes de code pour <b>{formatNumber(game.manualSellingForce * game.codePrice, true)} €</b>
       </Button>
     </div>
   );

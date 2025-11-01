@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { useContext, useMemo } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import styles from './UpgradeShop.module.scss';
 import { gameContext } from '@game/GameContext';
 import { Upgrade, UpgradeInfos } from '@game/Upgrade';
@@ -12,32 +12,73 @@ export const UpgradeShop = () => {
   const availableUpgrades: string[] = useMemo(
     () =>
       _.chain(Upgrade)
+        .filter((upgrade) => !game.boughtUpgrade[upgrade])
+        .filter((upgrade) => {
+          const minCodeLines = UpgradeInfos[upgrade].minCodeLines;
+          return !minCodeLines || game.totalCodeLinesAccumulated >= minCodeLines;
+        })
+        .sortBy((upgrade) => {
+          const info = UpgradeInfos[upgrade];
+          const moneyPrice = info.price || 0;
+          const codeLinePrice = info.priceInCodeLines || 0;
+          // Convertir les lignes en argent au prix actuel du code
+          const codeLineValueInMoney = codeLinePrice * game.codePrice;
+          return moneyPrice + codeLineValueInMoney;
+        })
+        .take(3)
+        .value(),
+    [game.boughtUpgrade, game.totalCodeLinesAccumulated, game.codePrice],
+  );
+
+  useEffect(() => {
+    console.log('game.boughtUpgrade', game.boughtUpgrade);
+
+    console.log(
+      'first filter : ',
+      _.chain(Upgrade)
+        .filter((upgrade) => game.boughtUpgrade[upgrade] === false)
+        .sortBy((upgrade) => UpgradeInfos[upgrade].price)
+        .value(),
+    );
+    console.log(
+      'second filter : ',
+      _.chain(Upgrade)
         .filter((upgrade) => game.boughtUpgrade[upgrade] === false)
         .filter((upgrade) => {
           const minCodeLines = UpgradeInfos[upgrade].minCodeLines;
           return !minCodeLines || game.totalCodeLinesAccumulated >= minCodeLines;
         })
         .sortBy((upgrade) => UpgradeInfos[upgrade].price)
-        .take(3)
         .value(),
-    [game.boughtUpgrade, game.totalCodeLinesAccumulated],
-  );
+    );
+
+    console.log('availableUpgrades', availableUpgrades);
+  }, [availableUpgrades, game.boughtUpgrade, game.totalCodeLinesAccumulated]);
 
   return (
     <div>
       <h2>Améliorations</h2>
       <div className={styles.upgradeList}>
-        {_.map(availableUpgrades, (upgrade) => (
-          <Button key={upgrade} onClick={() => game.buyUpgrade(upgrade as Upgrade)}>
-            <p>
-              <b>{UpgradeInfos[upgrade as Upgrade].name}</b>
-            </p>
-            <p>{UpgradeInfos[upgrade as Upgrade].description}</p>
-            <p>
-              Acheter pour <b>{formatNumber(UpgradeInfos[upgrade as Upgrade].price, false)} €</b>
-            </p>
-          </Button>
-        ))}
+        {_.map(availableUpgrades, (upgrade) => {
+          const upgradeInfo = UpgradeInfos[upgrade as Upgrade];
+          const hasMoneyPrice = upgradeInfo.price !== undefined && upgradeInfo.price > 0;
+          const hasCodeLinePrice = upgradeInfo.priceInCodeLines !== undefined;
+
+          return (
+            <Button key={upgrade} onClick={() => game.buyUpgrade(upgrade as Upgrade)}>
+              <p>
+                <b>{upgradeInfo.name}</b>
+              </p>
+              <p>{upgradeInfo.description}</p>
+              <p>
+                Acheter pour{' '}
+                {hasMoneyPrice && <b>{formatNumber(upgradeInfo.price!, false)} €</b>}
+                {hasMoneyPrice && hasCodeLinePrice && ' + '}
+                {hasCodeLinePrice && <b>{formatNumber(upgradeInfo.priceInCodeLines!, false)} lignes</b>}
+              </p>
+            </Button>
+          );
+        })}
       </div>
     </div>
   );
